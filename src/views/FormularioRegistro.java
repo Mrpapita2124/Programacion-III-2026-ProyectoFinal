@@ -50,6 +50,7 @@ public class FormularioRegistro extends JFrame{
     private Font fontTextoCampo = new Font("Times New Roman", Font.ITALIC, 15);
     private Font fontBoton = new Font("Times New Roman", Font.BOLD, 20);
     private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
+    private Font fontBotonChico = new Font("Times New Roman", Font.BOLD, 14);
     
     
     // Fields de Texto para Usuario
@@ -131,6 +132,8 @@ public class FormularioRegistro extends JFrame{
         
         crearComponentesDeRegistro(panelComponentes);
         
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,25)));
+        
         JLabel perfil = new JLabel("Foto perfil");
         perfil.setOpaque(false);
         perfil.setFont(fontTitulo);
@@ -138,20 +141,21 @@ public class FormularioRegistro extends JFrame{
         perfil.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelComponentes.add(perfil);
         
-        
         iconoUsuario.setIcon(iconoUsuarioFinal);
         iconoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
         iconoUsuario.setPreferredSize(new Dimension(200,200));
         iconoUsuario.setVisible(true);
         panelComponentes.add(iconoUsuario);
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
        
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new BoxLayout(panelBoton, BoxLayout.Y_AXIS));
         panelBoton.setOpaque(false);
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        crearBoton(registrar, "..\\img\\icono.png","Registrarse");
-        crearBoton(seleccionar,"..\\img\\icono.png" , "Seleccionar");
+        crearBoton(registrar, "..\\img\\icono.png","Registrarse", Colores.BUTTON_COLOR1, 150, 35, fontBoton);
+        crearBoton(seleccionar,"..\\img\\icono.png" , "Seleccionar", Colores.BUTTON_COLOR2, 105, 30, fontBotonChico);
         
         seleccionar.addMouseListener(new MouseAdapter() 
         {
@@ -177,10 +181,18 @@ public class FormularioRegistro extends JFrame{
 				resetBackground(registrar);
 			}
 		});
-        //panelComponentes.add(lblErrorFoto);
+
+        
         panelComponentes.add(seleccionar);
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,25)));
+        
+        
+        // Boton checkbox "guardar"
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,25)));
+        guardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelComponentes.add(guardar);
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
         panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
         
@@ -278,7 +290,7 @@ public class FormularioRegistro extends JFrame{
                 if (textField.getText().isEmpty()) {
                     textField.setText(placeholder);
                     textField.setForeground(Color.BLACK);
-                    textField.setBackground(Colores.TABBED_TEXT_COLOR);
+                    textField.setBackground(Colores.BG_TEXT_COLOR);
                 } else {
                 	textField.setForeground(Color.BLACK);
                     textField.setBackground(Colores.TABBED_TEXT_COLOR);
@@ -287,20 +299,21 @@ public class FormularioRegistro extends JFrame{
         });
     }
     
-    private void crearBoton(JButton button, String ruta,String titulo)
+    private void crearBoton(JButton button, String ruta,String titulo, Color colorBoton, int ancho, int largo, Font font)
     {
-        int buttonWidth = 200;   
-        int buttonHeight = 50;   
+        int buttonWidth = ancho;   
+        int buttonHeight = largo;   
         
-        button.setBackground(Colores.BUTTON_COLOR1);
+        button.setBackground(colorBoton);
         button.setForeground(Color.black);
         button.setToolTipText(titulo);
-        button.setFont(fontBoton);
+        button.setFont(font);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         button.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
         
+        /*
         try 
         {
             Image icono = ImageIO.read(getClass().getResource(ruta));
@@ -310,7 +323,7 @@ public class FormularioRegistro extends JFrame{
         catch (Exception ex)
         {
             System.out.println("No se pudo poner el icono");
-        }
+        }*/
     }
     
     private JLabel crearErrorLabel() 
@@ -341,6 +354,7 @@ public class FormularioRegistro extends JFrame{
         apellidos = crearTextField("Apellido", "apellidos");
         correo = crearTextField("correo@ejemplo.com", "correo");
         contraseña = crearTextField("Contraseña", "contraseña");
+        
         
         asignarFocusListenerConPlaceholder(nombres, "Nombre");
         asignarFocusListenerConPlaceholder(apellidos, "Apellido");
@@ -404,6 +418,11 @@ public class FormularioRegistro extends JFrame{
         panelContrasenaWrapper.setOpaque(false);
         panelContrasenaWrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelContrasenaWrapper.setMaximumSize(new Dimension(400, 70));
+        
+        nombres.setBackground(Colores.BG_TEXT_COLOR);
+        apellidos.setBackground(Colores.BG_TEXT_COLOR);
+        correo.setBackground(Colores.BG_TEXT_COLOR);
+        contraseña.setBackground(Colores.BG_TEXT_COLOR);
         
         contraseña.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelContrasenaWrapper.add(contraseña);

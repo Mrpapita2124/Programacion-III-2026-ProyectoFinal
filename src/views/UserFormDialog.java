@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -73,8 +75,13 @@ public class UserFormDialog extends JDialog{
     	iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
         iconoUsuarioFinal.setDescription("..\\img\\icono.png");
     	setTitle(user == null ? "Agregar usuario" : "Editar usuario");
+    	
+    	txtErrNombre.setForeground(Color.RED);
+    	txtErrApellido.setForeground(Color.RED);
+    	txtErrCorreo.setForeground(Color.RED);
+    	txtErrContraseña.setForeground(Color.RED);
 
-    	setSize(400, 300);
+    	setSize(600, 500);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -131,6 +138,7 @@ public class UserFormDialog extends JDialog{
 		labelFoto.setHorizontalAlignment(SwingConstants.LEFT);
 		labelFoto.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+		
         iconoUsuario.setIcon(iconoUsuarioFinal);
         iconoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
         iconoUsuario.setPreferredSize(new Dimension(200,200));

@@ -1,50 +1,22 @@
 [ {
-  "nombre" : "test",
-  "apellido" : "test",
-  "correo" : "test@.com",
-  "contrasena" : "test!",
-  "foto" : ".\\images\\049f918d-7a93-4a8b-b2d9-9e9074e4fdb7.png",
-  "guardar" : true
-}, {
-  "nombre" : "Azarias",
-  "apellido" : "Collins",
-  "correo" : "azarias@.com",
-  "contrasena" : "12345!",
-  "foto" : null,
-  "guardar" : false
-}, {
   "nombre" : "tester",
   "apellido" : "user",
   "correo" : "test@.com",
   "contrasena" : "test!",
-  "foto" : ".\\images\\4bd5bf8f-8c72-44b9-a952-cd10c6ecf64a.png",
+  "foto" : ".\\images\\b99b8ac9-8856-4dbc-ba75-442cfd0f559a.png",
   "guardar" : true
 }, {
   "nombre" : "rwgfeg",
   "apellido" : "efgegf",
   "correo" : "efgvv@.com",
   "contrasena" : "wfgdg!",
-  "foto" : ".\\images\\0e756b85-20e9-45a9-8f40-cfb281f3f0bd.png",
+  "foto" : ".\\images\\a8057f86-83cc-4d72-bfb3-47dbc559898b.png",
   "guardar" : true
 }, {
-  "nombre" : "hola",
-  "apellido" : "asd",
-  "correo" : "hola@.com",
-  "contrasena" : "Jose!",
-  "foto" : ".\\images\\5b38ab3c-1e60-4a35-8076-53dd3ea47772.png",
+  "nombre" : "Azarias",
+  "apellido" : "Villaneuva Collins",
+  "correo" : "azarias@.com",
+  "contrasena" : "12345!",
+  "foto" : ".\\images\\00ad8079-8106-4369-9893-dddfa54ae926.png",
   "guardar" : true
-}, {
-  "nombre" : "hola",
-  "apellido" : "okasjofd",
-  "correo" : "sdfsddf@.com",
-  "contrasena" : "sdfsdf!",
-  "foto" : null,
-  "guardar" : true
-}, {
-  "nombre" : "dsfsdf",
-  "apellido" : "sdfsdf",
-  "correo" : "testksaalfd@.com",
-  "contrasena" : "sdfsdf!",
-  "foto" : null,
-  "guardar" : false
 } ]

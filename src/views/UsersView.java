@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -205,5 +206,16 @@ public class UsersView extends JPanel{
 
 	public void setBtnPdf(JButton btnPdf) {
 		this.btnPdf = btnPdf;
+	}
+	
+	
+	public int confirmExit() 
+	{
+	    return JOptionPane.showConfirmDialog(
+	        this,
+	        "¿Seguro que deseas eliminar el usuario? Se perderán todos los datos",
+	        "¿Seguro?",
+	        JOptionPane.YES_NO_OPTION
+	    );
 	}
 }

@@ -130,6 +130,6 @@ public class VentanaPrincipalController {
 			ventanaPrincipal.dispose();
 		}
 	}
-
+	
 	
 }

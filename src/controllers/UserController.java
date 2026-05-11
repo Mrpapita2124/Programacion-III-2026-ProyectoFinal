@@ -13,11 +13,12 @@ import services.PDFExporter;
 import tablemodels.UserTableModel;
 import views.UserFormDialog;
 import views.UsersView;
+import views.Ventana;
 import views.VentanaPrincipal;
 
 public class UserController {
 
-	private UsersView view;
+	private UsersView userView;
 	private UserRepository repo;
 	private UserTableModel model;
 	private VentanaPrincipalController ventanaPrincipalController;
@@ -27,7 +28,7 @@ public class UserController {
 	public UserController(UsersView view, VentanaPrincipalController ventanaController, List<User> users) 
 	{
 		this.model=new UserTableModel(users);
-		this.view = view;
+		this.userView = view;
 		this.ventanaPrincipalController = ventanaController;
 		
 		repo = new UserRepository();
@@ -50,7 +51,7 @@ public class UserController {
 		
 		
 		// Boton Editar ActionListener
-		this.view.getBtnEdit().addActionListener(e -> {
+		this.userView.getBtnEdit().addActionListener(e -> {
 			
 			int row = view.getSelectedRow();
 			
@@ -77,17 +78,18 @@ public class UserController {
 				JOptionPane.showMessageDialog(view, "Selecciona un usuario");
 				return;
 			}
-			try {
-				repo.delete(row);
-				ventanaPrincipalController.showUsers();
+			
+			try 
+			{
+				handleBorrarPerfil(row);
 			} 
-			catch (IOException e1) {
-				// TODO Auto-generated catch block
+			catch (IOException e1) 
+			{
 				e1.printStackTrace();
 			}
 		});
 		
-		this.view.getBtnPdf().addActionListener(e -> {
+		this.userView.getBtnPdf().addActionListener(e -> {
 			
 			generarPdf();
 		});
@@ -96,7 +98,7 @@ public class UserController {
 	
 	private void openForm(User user, VentanaPrincipalController ventanaController) {
 		
-		int row = view.getSelectedRow();
+		int row = userView.getSelectedRow();
 		System.out.println(row);
 		UserFormDialog dialog;
 		if(user==null) {
@@ -124,7 +126,7 @@ public class UserController {
 				
 			}catch(Exception e) {
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(view, e.getMessage());
+				JOptionPane.showMessageDialog(userView, e.getMessage());
 			}
 			
 		}
@@ -141,19 +143,19 @@ public class UserController {
 			
 			if(model == null) {
 				model = new UserTableModel(users);
-				view.setTableModel(model);
+				userView.setTableModel(model);
 			}else {
 				model.setUsers(users);
 			}
 			
 		}catch (IOException ex) {
-			JOptionPane.showMessageDialog(view, ex.getMessage());
+			JOptionPane.showMessageDialog(userView, ex.getMessage());
 		}
 	}
 	
 	public void generarPdf()
 	{
-		File file = view.selectPdfFile();
+		File file = userView.selectPdfFile();
 		
 		if(file == null) { return; }
 		
@@ -169,9 +171,21 @@ public class UserController {
 		catch (Exception ex) 
 		{
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(view, "Error al exportar");
+			JOptionPane.showMessageDialog(userView, "Error al exportar");
 		}
 	}
+	
+	private void handleBorrarPerfil(int row) throws IOException {
+		
+		int option = userView.confirmExit();
+
+		if (option == JOptionPane.YES_OPTION) 
+		{
+			repo.delete(row);
+			ventanaPrincipalController.showUsers();
+		}
+	}
+	
 }
 
 
