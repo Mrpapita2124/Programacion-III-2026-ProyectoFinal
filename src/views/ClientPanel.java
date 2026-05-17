@@ -1,47 +1,57 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Window;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import com.formdev.flatlaf.util.Graphics2DProxy;
+
 import modelos.Client;
 import modelos.User;
 import utils.Colores;
+import utils.PanelPersonalizable;
 
 public class ClientPanel extends JPanel {
-	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 17);
+	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
 	private JButton btnEdit;
 	private JButton btnDelete;
 	Client client;
 	public ClientPanel(Client client) 
 	{	
+		
 		this.client=client;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		setBackground(Colores.PROFILE_PANEL);
+		setAlignmentX(LEFT_ALIGNMENT);
+		setBackground(Colores.LOGIN_PANEL);
 		setVisible(true);
-		setSize(new Dimension(600,300));
-		setBorder(new LineBorder(Colores.LOGIN_PANEL, 10));
+		//setSize(new Dimension(600,300));
+		
 		JPanel clientInfo=new JPanel();
+		clientInfo.setForeground(Color.BLACK);
 		clientInfo.setOpaque(false);
 		clientInfo.setLayout(new BoxLayout(clientInfo,BoxLayout.Y_AXIS));
 		JLabel icono;
 		try {
-			icono=new JLabel(escalarImagen(this.client.getIneDireccion(), 200, 200));
+			icono=new JLabel(escalarImagen(this.client.getIneDireccion(), 230, 280));
 		} catch (Exception e) {
 			// TODO: handle exception
-			icono=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 200, 200));
+			icono=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 280, 280));
 		}
 		
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel clientName= new JLabel(this.client.getNombre());
 		clientName.setAlignmentX(Component.CENTER_ALIGNMENT);
+		clientName.setForeground(Color.BLACK);
 		JLabel clientApellido= new JLabel(this.client.getApellido());
 		clientApellido.setAlignmentX(Component.CENTER_ALIGNMENT);
+		clientApellido.setForeground(Color.BLACK);
 		btnEdit=new JButton("Editar");
 		btnDelete=new JButton("Eliminar");
 		btnEdit.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,6 +65,7 @@ public class ClientPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(30,0)));
 		add(icono);
 		add(clientInfo);
+		add(Box.createRigidArea(new Dimension(180,0)));
 		
 	}
 	private ImageIcon escalarImagen(String direccion,int x,int y) throws Exception {

@@ -28,7 +28,7 @@ public class ClientCards extends JPanel {
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	int alto;
 	public ClientCards() {
-		ArrayList<ClientPanel> clientCards = new ArrayList<ClientPanel>();
+		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
 		ClientRepository repository = new ClientRepository();
 		setBackground(Colores.BACKGROUND);
 		
@@ -53,12 +53,19 @@ public class ClientCards extends JPanel {
 			}
 			//Añade usuarios simullados"
 			for(int i=0;i<clients.size();i++) {
+				PanelPersonalizable card=new PanelPersonalizable();
+				//card.setBounds(130, 120, 950, 450);
+				card.setBackground(Colores.LOGIN_PANEL);
+				
 				
 					ClientPanel clientPanel=new ClientPanel(clients.get(i));
 					//new UserPanelController(clientPanel);
+					
 					new ClientPanelController(clientPanel);
-					clientPanel.setMaximumSize(new Dimension(600,300));
-					clientCards.add(clientPanel);
+					card.add(clientPanel);
+					//clientPanel.setMaximumSize(new Dimension(600,300));
+					clientCards.add(card);
+					
 			}
 			
 			//System.out.println(alto);
@@ -67,14 +74,15 @@ public class ClientCards extends JPanel {
 			setLayout(new GridLayout(0,2));
 			
 			
-			for(ClientPanel card : clientCards) {
+			for(JPanel card : clientCards) {
 				
 				add(card);
 			}
 			if(clients.size()%2!=0) {
-				PanelPersonalizable relleno = new PanelPersonalizable();
-				relleno.setBackground(Colores.LOGIN_PANEL);
+				JPanel relleno = new JPanel();
+				relleno.setBackground(Colores.BACKGROUND);
 				add(relleno);
+				
 			}
 		}
 			
