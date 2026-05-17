@@ -110,7 +110,7 @@ public class ClientRepository {
 	public List<Client> getClients(){
 		User user= Session.getCurrentUser();
 		List<Client> clients=new ArrayList<Client>();
-		String sql = "Select * From cliente Where id_cliente = ?";
+		String sql = "Select * From cliente Where id_usuario = ?";
 		try (
 				Connection conn = DatabaseConnection.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
