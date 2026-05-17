@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-2.0.13.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-2.0.13.jar"/>
 	<classpathentry kind="lib" path="lib/jbcrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/josec/eclipse-workspace/Programacion-III-2026-ProyectoFinal/lib/pdfbox-app-3.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

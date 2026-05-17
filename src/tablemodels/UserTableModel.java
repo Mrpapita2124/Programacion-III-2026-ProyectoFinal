@@ -89,10 +89,6 @@ public class UserTableModel extends AbstractTableModel{
 		case 4:
 			return user.isGuardar();
 		}
-		
-			
-			
-		
 		return null;
 		
 	}

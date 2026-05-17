@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import controllers.UserClientsPanelController;
 import controllers.VentanaPrincipalController;
 import modelos.User;
 import repository.UserRepository;
@@ -75,9 +76,11 @@ public class VentanaPrincipal extends JFrame
 	{
 		cardLayout = new CardLayout();
 		container = new JPanel(cardLayout);
+		UserClientsPanel panel=new UserClientsPanel();
+		new UserClientsPanelController(panel);
+		JPanel homePanel = panel;
 		
-		JPanel homePanel = new JPanel();
-		homePanel.add(new JLabel("Bienvenido al Sistema"));
+		//homePanel.add(new JLabel("Bienvenido al Sistema"));
 		
 		usersPanel = new UsersView();
 		

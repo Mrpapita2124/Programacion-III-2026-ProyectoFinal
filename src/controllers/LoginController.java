@@ -10,9 +10,11 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import exceptions.InvalidMailException;
 import modelos.User;
 import repository.LoginRepository;
 import utils.Session;
+import views.FormularioGeneralCliente;
 import views.Login;
 import views.VentanaPrincipal;
 
@@ -65,22 +67,33 @@ public class LoginController {
 	    {
 	        login.getMensajeCorreo().setText("* Correo obligatorio *");
 	        return false;
+	    }else {
+	    	try {
+				correoExceptions(correo);
+			} catch (Exception e) {
+				// TODO: handle exception
+				login.getMensajeCorreo().setText(e.getMessage());
+				return false;
+			}
 	    }
 	    
-	    if (!correo.contains("@")) 
+	    
+	    login.getMensajeCorreo().setText(" ");
+	    return true;
+	}
+	private void correoExceptions(String correo) throws InvalidMailException {
+		if (!correo.contains("@")) 
 	    {
-	        login.getMensajeCorreo().setText("* Debe contener ' @ ' *");
-	        return false;
+	        
+	        throw new InvalidMailException("* Debe contener ' @ ' *");
+	       
 	    }
 	    
 	    if (!correo.contains(".com")) 
 	    {
-	        login.getMensajeCorreo().setText("* Debe contener ' .com ' *");
-	        return false;
+	        throw new InvalidMailException("* Debe contener ' .com ' *");
+	        
 	    }
-	    
-	    login.getMensajeCorreo().setText(" ");
-	    return true;
 	}
 	
 	private boolean validarContrasena() 
@@ -98,6 +111,7 @@ public class LoginController {
 	}
 
 	private void handleRegistration() {
+		//ClientFormController form = new ClientFormController(login.getWindow());
 		new RegistroController(login.getWindow());
 		login.getWindow().dispose();
 	}

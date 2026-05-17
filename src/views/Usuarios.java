@@ -11,6 +11,7 @@ import utils.Colores;
 import utils.PanelPersonalizable;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
 
 
 public class Usuarios extends JPanel {
+	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	public Usuarios() {
 		ArrayList<UserPanel> usuarios = new ArrayList<UserPanel>();
 		UserRepository repository = new UserRepository();
