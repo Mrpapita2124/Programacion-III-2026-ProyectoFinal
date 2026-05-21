@@ -27,5 +27,6 @@ public class PanelPersonalizable extends JPanel {
 
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+        
     }
 }
