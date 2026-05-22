@@ -41,6 +41,7 @@ public class Colores {
     // Surfaces Cards
     public static final Color CARD_BG = new Color(17, 41, 55);  
     public static final Color INPUT_BG = new Color(17, 24, 39); 
+
     
     // Borders
     public static final Color DEFAULT_BORDER = new Color(17, 24, 39); 

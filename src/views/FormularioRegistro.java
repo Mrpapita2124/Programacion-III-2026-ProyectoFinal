@@ -39,18 +39,21 @@ import com.formdev.flatlaf.ui.FlatListCellBorder.Selected;
 import modelos.User;
 import repository.UserRepository;
 import utils.Colores;
+import utils.Fonts;
+import utils.GradientBackground;
 import utils.PanelPersonalizable;
+import utils.RoundedBorder;
 
 public class FormularioRegistro extends JFrame{
     
 	
 	// Puro Fonts, ya depues hare otra clase de Fonts
     public Font fuente;
-    private Font fontError = new Font("Times New Roman", Font.ITALIC, 12);
-    private Font fontTextoCampo = new Font("Times New Roman", Font.ITALIC, 15);
-    private Font fontBoton = new Font("Times New Roman", Font.BOLD, 20);
-    private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
-    private Font fontBotonChico = new Font("Times New Roman", Font.BOLD, 14);
+    private Font fontError = Fonts.setFontSegoe(2, 12);
+    private Font fontTextoCampo = Fonts.setFontSegoe(2, 15);
+    private Font fontBoton = Fonts.setFontSegoe(1, 20);
+    private Font fontTitulo = Fonts.setFontSegoe(1, 35);
+    private Font fontBotonChico = Fonts.setFontSegoe(1, 12);
     
     
     // Fields de Texto para Usuario
@@ -75,19 +78,23 @@ public class FormularioRegistro extends JFrame{
     JLabel iconoUsuario = new JLabel();
     
     //Chckboxes
-    private JCheckBox guardar= new JCheckBox("Guardar como usuario rapido");
+    private JCheckBox guardar= new JCheckBox(" Guardar como usuario rapido");
     public FormularioRegistro()
     {
     	userRepository = new UserRepository();
     	
-        iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
-        iconoUsuarioFinal.setDescription("..\\img\\icono.png");
-        setSize(850,550);
+    	GradientBackground gradientBg = new GradientBackground();
+        gradientBg.setLayout(null);
+        setContentPane(gradientBg);
+    	
+        iconoUsuarioFinal = escalarImagenLocal("..\\img\\iconoWhite.png",200,200);
+        iconoUsuarioFinal.setDescription("..\\img\\iconoWhite.png");
+        setSize(1050,650);
         setLayout(null);
         setResizable(false);
         setTitle("Registro");
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Colores.BACKGROUND);
+       // getContentPane().setBackground(Colores.BACKGROUND);
         
         Toolkit tk = Toolkit.getDefaultToolkit();
 		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
@@ -95,13 +102,9 @@ public class FormularioRegistro extends JFrame{
 		this.setCursor(myCursor);
         
         PanelPersonalizable fondo = new PanelPersonalizable();
-        fondo.setBounds(75, 50, 680, 450);
+        fondo.setBounds(165, 90, 680, 450);
+        fondo.setBorder(new RoundedBorder(Colores.INPUT_BORDER, 20, 2));
         fondo.setBackground(Colores.LOGIN_PANEL);
-        
-        // Shadow
-        PanelPersonalizable fondo2 = new PanelPersonalizable();
-        fondo2.setBounds(72, 46, 687, 457);
-        fondo2.setBackground(Colores.SHADOW_COLOR);
         
 
         JPanel panelComponentes = new JPanel();
@@ -114,15 +117,25 @@ public class FormularioRegistro extends JFrame{
         panelComponentes.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        JLabel saludo = new JLabel("Registrate"); 
+        
+        
+        ImageIcon originalIcon = new ImageIcon("src/img/registerWhite.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        ImageIcon iconoRegistrar = new ImageIcon(scaledImage);
+        
+        JLabel saludo = new JLabel(" Registrate", iconoRegistrar, JLabel.LEFT);
+        saludo.setHorizontalTextPosition(JLabel.RIGHT);  
+        saludo.setVerticalTextPosition(JLabel.CENTER); 
+        
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
-        saludo.setForeground(Colores.TEXT_COLOR);
+        saludo.setForeground(Colores.PRIMARY_HEADINGS);
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,50)));
         panelComponentes.add(saludo);
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,35)));
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,65)));
 
         lblErrorNombre = crearErrorLabel();
         lblErrorApellido = crearErrorLabel();
@@ -138,9 +151,11 @@ public class FormularioRegistro extends JFrame{
         JLabel perfil = new JLabel("Foto perfil");
         perfil.setOpaque(false);
         perfil.setFont(fontTitulo);
-        perfil.setForeground(Colores.TEXT_COLOR);
+        perfil.setForeground(Colores.LOGIN_PANEL_TEXT);
         perfil.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelComponentes.add(perfil);
+        
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
         
         iconoUsuario.setIcon(iconoUsuarioFinal);
         iconoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -156,7 +171,7 @@ public class FormularioRegistro extends JFrame{
         panelBoton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         crearBoton(registrar, "..\\img\\icono.png","Registrarse", Colores.BUTTON_COLOR1, 150, 35, fontBoton);
-        crearBoton(seleccionar,"..\\img\\icono.png" , "Seleccionar", Colores.BUTTON_COLOR2, 105, 30, fontBotonChico);
+        crearBoton(seleccionar,"..\\img\\icono.png" , "Seleccionar", Colores.BUTTON_COLOR2, 105, 25, fontBotonChico);
         
         seleccionar.addMouseListener(new MouseAdapter() 
         {
@@ -184,6 +199,7 @@ public class FormularioRegistro extends JFrame{
 		});
 
         
+        
         panelComponentes.add(seleccionar);
         panelComponentes.add(Box.createRigidArea(new Dimension(0,25)));
         
@@ -191,9 +207,11 @@ public class FormularioRegistro extends JFrame{
         // Boton checkbox "guardar"
         panelComponentes.add(Box.createRigidArea(new Dimension(0,25)));
         guardar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        guardar.setForeground(Colores.LOGIN_PANEL_TEXT);
+        guardar.setFont(Fonts.setFontSegoe(2, 15));
         panelComponentes.add(guardar);
         
-        panelComponentes.add(Box.createRigidArea(new Dimension(0,10)));
+        panelComponentes.add(Box.createRigidArea(new Dimension(0,15)));
         panelBoton.add(registrar);
         panelComponentes.add(panelBoton);
         
@@ -204,7 +222,7 @@ public class FormularioRegistro extends JFrame{
         JScrollPane scrollPanel= new JScrollPane(panelComponentes);
 		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(70, 50, 710, 450);
+		scrollPanel.setBounds(145, 90, 710, 450);
 		scrollPanel.getViewport().setOpaque(false);
 		scrollPanel.setOpaque(false);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(20); // Hacer que el scroll se baje mas rapido
@@ -213,9 +231,9 @@ public class FormularioRegistro extends JFrame{
 		scrollPanel.getVerticalScrollBar().setOpaque(false);
 		scrollPanel.getViewport().setBackground(Colores.BACKGROUND);
 		
+		
 		add(scrollPanel);
         add(fondo);
-        add(fondo2);
 
         setVisible(true);
     }
@@ -318,6 +336,8 @@ public class FormularioRegistro extends JFrame{
         button.setMaximumSize(new Dimension(buttonWidth, buttonHeight));
         button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         button.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
+        
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         /*
         try 

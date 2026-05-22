@@ -155,7 +155,7 @@ public class Ventana extends JFrame{
 		PanelPersonalizable fondo1=new PanelPersonalizable();
 		fondo1.setBounds(725, 120, 450, 450);
 		fondo1.setBackground(Colores.LOGIN_PANEL1);
-		fondo1.setBorder(new RoundedBorder(Colores.LOGIN_PANEL_BORDER, 20, 2));
+		fondo1.setBorder(new RoundedBorder(Colores.DEFAULT_BORDER, 20, 2));
 		add(fondo1);
 		
 		

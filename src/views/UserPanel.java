@@ -16,10 +16,11 @@ import javax.swing.border.LineBorder;
 
 import modelos.User;
 import utils.Colores;
+import utils.Fonts;
 
 public class UserPanel extends JPanel {
-	private Font fontNombre = new Font("Segoe UI", Font.BOLD, 16);
-	private Font fontEmail = new Font("Segoe UI", Font.PLAIN, 12);
+	private Font fontNombre = Fonts.FONT_SEGOE_BOLD;
+	private Font fontEmail = Fonts.FONT_SEGOE;
 	private JButton session;
 	private User user;
 	private boolean seleccionado = false;

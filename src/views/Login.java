@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import utils.Colores;
+import utils.Fonts;
 import utils.PanelPersonalizable;
 
 
@@ -34,9 +36,11 @@ public class Login extends JPanel{
 	public int x;
 	public int y;
 	public boolean logrado;
-	private Font fontTexto = new Font("Times New Roman", Font.ITALIC, 17);
-	private Font fontBoton = new Font("Times New Roman", Font.BOLD, 17);
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 30);
+	
+	private Font fontTexto = Fonts.setFontSegoe(2, 17); 
+	private Font fontBoton = Fonts.setFontSegoe(1, 17);
+	private Font fontTitulo = Fonts.setFontSegoe(1, 30);
+	
 	JLabel mensajeCorreo = new JLabel(" ");
 	JLabel mensajeContraseña = new JLabel(" ");
 	JTextField correo = new JTextField(30);
@@ -80,7 +84,6 @@ public class Login extends JPanel{
 		botonesPanel.setLayout(new BoxLayout(botonesPanel, BoxLayout.Y_AXIS));
 		botonesPanel.setBackground(Colores.LOGIN_PANEL1);
 		botonesPanel.setBorder(new EmptyBorder(0,15,0,0));
-		
 		
 		crearBoton(buttonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
 		
@@ -220,6 +223,8 @@ public class Login extends JPanel{
 		button.setToolTipText(descripcion);
 		button.setFont(fontBoton);
 		button.setIconTextGap(10);
+		
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		try 
 		{
