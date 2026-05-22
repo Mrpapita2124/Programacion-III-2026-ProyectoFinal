@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -27,7 +28,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import controllers.LoginController;
 import utils.Colores;
+import utils.GradientBackground;
 import utils.PanelPersonalizable;
+import utils.RoundedBorder;
 
 
 public class Ventana extends JFrame{
@@ -45,7 +48,12 @@ public class Ventana extends JFrame{
 		Image icono = tk.getImage("src\\img\\icono.png");
 		setIconImage(icono);	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la penstaña, si no se queda abrierta.
-		getContentPane().setBackground(Colores.BACKGROUND);
+		
+		// Gradient
+		GradientBackground gradientPanel = new GradientBackground();
+		gradientPanel.setLayout(null);  // Keep your null layout
+		setContentPane(gradientPanel);
+		
 		
 		addWindowListener(new WindowListener() {
 			
@@ -108,55 +116,49 @@ public class Ventana extends JFrame{
 		add(login);
 		
 		//Agregar a los usuarios
-		Usuarios usuarios= new Usuarios();
-		
-		JScrollPane scrollUsuarios= new JScrollPane(usuarios);
+		Usuarios usuarios = new Usuarios();
+
+		JScrollPane scrollUsuarios = new JScrollPane(usuarios);
 		scrollUsuarios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollUsuarios.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollUsuarios.setBounds(140, 140, 600, 400);
-		
+		scrollUsuarios.setBounds(140, 140, 400, 450); 
+
 		scrollUsuarios.setOpaque(false);
+		scrollUsuarios.getViewport().setOpaque(false);
+		scrollUsuarios.setBorder(null);
+
 		scrollUsuarios.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 		    @Override
 		    protected void configureScrollBarColors() {
-		        this.thumbColor = Colores.BUTTON_COLOR1;       // color del "pulgar" (la parte que arrastras)
-		        this.trackColor = Color.LIGHT_GRAY; // color del fondo
+		        this.thumbColor = Colores.BUTTON_COLOR1;
+		        this.trackColor = new Color(0, 0, 0, 0); // Transparent track
 		    }
 		    @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            private JButton createZeroButton() {
-                JButton button = new JButton();
-                button.setPreferredSize(new Dimension(0, 0));
-                return button;
-            }
-
-
-		    
+		    protected JButton createDecreaseButton(int orientation) {
+		        return createZeroButton();
+		    }
+		    @Override
+		    protected JButton createIncreaseButton(int orientation) {
+		        return createZeroButton();
+		    }
+		    private JButton createZeroButton() {
+		        JButton button = new JButton();
+		        button.setPreferredSize(new Dimension(0, 0));
+		        return button;
+		    }
 		});
 		scrollUsuarios.getVerticalScrollBar().setUnitIncrement(20);
-		scrollUsuarios.getVerticalScrollBar().setOpaque(false);
-		scrollUsuarios.setBorder(null);
+
 		add(scrollUsuarios);
 		
 		
 		PanelPersonalizable fondo1=new PanelPersonalizable();
-		fondo1.setBounds(130, 120, 950, 450);
-		fondo1.setBackground(Colores.LOGIN_PANEL);
+		fondo1.setBounds(725, 120, 450, 450);
+		fondo1.setBackground(Colores.LOGIN_PANEL1);
+		fondo1.setBorder(new RoundedBorder(Colores.LOGIN_PANEL_BORDER, 20, 2));
 		add(fondo1);
 		
-		// Shadow of Login Panel
-		PanelPersonalizable fondo2=new PanelPersonalizable();
-		fondo2.setBounds(127, 117, 957, 457);
-		fondo2.setBackground(Colores.SHADOW_COLOR);
-		add(fondo2);
+		
 		
 		
 		setVisible(true);  // Siempre agrega el set visible antes del final.

@@ -47,14 +47,14 @@ public class Login extends JPanel{
 	public Login(){	
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new EmptyBorder(50,50,50,50));
+		setBorder(new EmptyBorder(50,100,50,0));
 		setBackground(Colores.LOGIN_PANEL);
 		
 		configurarMensajes();
 		configurarTextos();
 		
 		JLabel saludo = new JLabel("  Bienvenido!");
-		saludo.setForeground(Color.BLACK);
+		saludo.setForeground(Colores.LOGIN_PANEL_TEXT);
 		saludo.setFont(fontTitulo);
 		add(saludo);
 		
@@ -78,7 +78,7 @@ public class Login extends JPanel{
 	{
 		PanelPersonalizable botonesPanel = new PanelPersonalizable();
 		botonesPanel.setLayout(new BoxLayout(botonesPanel, BoxLayout.Y_AXIS));
-		botonesPanel.setBackground(Colores.LOGIN_PANEL);
+		botonesPanel.setBackground(Colores.LOGIN_PANEL1);
 		botonesPanel.setBorder(new EmptyBorder(0,15,0,0));
 		
 		

@@ -12,7 +12,7 @@ public class UserPanelController {
 	UserPanel userPanel;
 	public UserPanelController(UserPanel userPanel) {
 		this.userPanel=userPanel;
-		this.userPanel.getSession().addActionListener(e -> {
+		this.userPanel.getSessionButton().addActionListener(e -> {
 			Session.login(this.userPanel.getUser());
 			
 			if(Session.getRol().toLowerCase().equals("admin")) 

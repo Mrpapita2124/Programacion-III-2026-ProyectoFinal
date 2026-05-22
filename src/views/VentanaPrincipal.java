@@ -18,6 +18,7 @@ import controllers.UserClientsPanelController;
 import controllers.VentanaPrincipalController;
 import modelos.User;
 import repository.UserRepository;
+import utils.Session;
 import utils.ThemeManager;
 
 public class VentanaPrincipal extends JFrame 
@@ -37,7 +38,7 @@ public class VentanaPrincipal extends JFrame
 	public VentanaPrincipal() 
 	{
 		setSize(800, 600);
-		setTitle("Mi aplicación");
+		setTitle(Session.getCurrentUser().getNombre() + " " + Session.getCurrentUser().getApellido());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		

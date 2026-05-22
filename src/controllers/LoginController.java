@@ -113,7 +113,7 @@ public class LoginController {
 	private void handleRegistration() {
 		//ClientFormController form = new ClientFormController(login.getWindow());
 		new RegistroController(login.getWindow());
-		login.getWindow().dispose();
+		
 	}
 
 	private void handleLogin() throws IOException {

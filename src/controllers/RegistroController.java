@@ -151,6 +151,7 @@ public class RegistroController {
 		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
+			loginWindow.dispose();
 			new Ventana();
 			formularioRegsitro.getWindow().dispose();
 		}
