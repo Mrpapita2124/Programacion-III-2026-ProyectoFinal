@@ -22,6 +22,7 @@ public class ClientPanel extends JPanel {
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
 	private JButton btnEdit;
 	private JButton btnDelete;
+	private JButton btnInfo;
 	Client client;
 	public ClientPanel(Client client) 
 	{	
@@ -54,6 +55,7 @@ public class ClientPanel extends JPanel {
 		clientApellido.setForeground(Color.BLACK);
 		btnEdit=new JButton("Editar");
 		btnDelete=new JButton("Eliminar");
+		btnInfo=new JButton("Info");
 		btnEdit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		clientName.setFont(fontTexto);
@@ -62,6 +64,7 @@ public class ClientPanel extends JPanel {
 		clientInfo.add(clientApellido);
 		clientInfo.add(btnEdit);
 		clientInfo.add(btnDelete);
+		clientInfo.add(btnInfo);
 		add(Box.createRigidArea(new Dimension(30,0)));
 		add(icono);
 		add(clientInfo);
@@ -130,6 +133,12 @@ public class ClientPanel extends JPanel {
 	}
 	public void setBtnDelete(JButton btnDelete) {
 		this.btnDelete = btnDelete;
+	}
+	public JButton getBtnInfo() {
+		return btnInfo;
+	}
+	public void setBtnInfo(JButton btnInfo) {
+		this.btnInfo = btnInfo;
 	}
 	
 }
