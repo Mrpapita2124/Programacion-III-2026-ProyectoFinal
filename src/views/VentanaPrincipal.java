@@ -33,12 +33,12 @@ public class VentanaPrincipal extends JFrame
 	
 	private CardLayout cardLayout;
 	private JPanel container;
-	
+	JPanel homePanel;
 	
 	public VentanaPrincipal() 
 	{
 		setSize(800, 600);
-		setTitle(Session.getCurrentUser().getNombre() + " " + Session.getCurrentUser().getApellido());
+		setTitle("Mi aplicación");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -59,6 +59,17 @@ public class VentanaPrincipal extends JFrame
 
 		setVisible(true);
 	}
+	public void reload() 
+	{
+		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
+    	ThemeManager.applySavedTheme();
+    	container.remove(homePanel);
+    	createClientsView();
+    	revalidate();
+    	repaint();
+    	showView(HOME);
+    	
+	}
 	
 	public void createNavbar() 
 	{
@@ -77,9 +88,9 @@ public class VentanaPrincipal extends JFrame
 	{
 		cardLayout = new CardLayout();
 		container = new JPanel(cardLayout);
-		UserClientsPanel panel=new UserClientsPanel();
+		UserClientsPanel panel=new UserClientsPanel(this);
 		new UserClientsPanelController(panel);
-		JPanel homePanel = panel;
+		homePanel = panel;
 		
 		//homePanel.add(new JLabel("Bienvenido al Sistema"));
 		
@@ -87,6 +98,17 @@ public class VentanaPrincipal extends JFrame
 		
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
+		
+		add(container, BorderLayout.CENTER);
+		
+	}
+	private void createClientsView() 
+	{
+		
+		UserClientsPanel panel=new UserClientsPanel(this);
+		new UserClientsPanelController(panel);
+		JPanel homePanel = panel;
+		container.add(homePanel, HOME);
 		
 		add(container, BorderLayout.CENTER);
 		
@@ -210,4 +232,3 @@ public class VentanaPrincipal extends JFrame
 	}
 	
 }
-	

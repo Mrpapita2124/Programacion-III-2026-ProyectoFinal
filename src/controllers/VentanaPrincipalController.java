@@ -77,6 +77,7 @@ public class VentanaPrincipalController {
 	}
 	
 	
+	
 	private void guardarWindowPreferences() {
 		Dimension size = ventanaPrincipal.getSize();
 		Point point = ventanaPrincipal.getLocation();

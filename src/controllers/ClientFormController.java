@@ -264,7 +264,7 @@ public class ClientFormController {
 			if(this.formularioCliente.isEdit()){
 				System.out.println("sdfsdfsdf");
 				int idClient=this.formularioCliente.getClient().getIdCliente();
-				clientRepository.update(new Client(idUsuario,idClient, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "regular"));
+				clientRepository.update(new Client(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "regular"));
 			}else {
 				clientRepository.save(new Client(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "regular"));
 

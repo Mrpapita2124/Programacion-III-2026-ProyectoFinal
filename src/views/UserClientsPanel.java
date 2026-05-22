@@ -19,7 +19,11 @@ import utils.Colores;
 public class UserClientsPanel extends JPanel {
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	private JButton btnRegister;
-	public UserClientsPanel() {
+	ClientCards clients;
+	JScrollPane scrollClients;
+	VentanaPrincipal ancestro;
+	public UserClientsPanel(VentanaPrincipal ancestro) {
+		this.ancestro=ancestro;
 		setBackground(Colores.BACKGROUND);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//navBAr
@@ -36,9 +40,8 @@ public class UserClientsPanel extends JPanel {
         saludo.setForeground(Colores.TEXT_COLOR);
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(saludo);
-		
-		ClientCards clients= new ClientCards();
-		JScrollPane scrollClients= new JScrollPane(clients);
+		createClientList(ancestro);
+		scrollClients= new JScrollPane(clients);
 		scrollClients.setMaximumSize(new Dimension(1200,clients.getAlto()));
 		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -76,8 +79,30 @@ public class UserClientsPanel extends JPanel {
 	public JButton getBtnRegister() {
 		return btnRegister;
 	}
+	
+	public ClientCards getClients() {
+		return clients;
+	}
+	public void setClients(ClientCards clients) {
+		this.clients = clients;
+	}
+	public JScrollPane getScrollClients() {
+		return scrollClients;
+	}
+	public void setScrollClients(JScrollPane scrollClients) {
+		this.scrollClients = scrollClients;
+	}
+	public void createClientList(VentanaPrincipal ventana) {
+		clients= new ClientCards(this,ventana);
+	}
 	public void setBtnRegister(JButton btnRegister) {
 		this.btnRegister = btnRegister;
+	}
+	public VentanaPrincipal getAncestro() {
+		return ancestro;
+	}
+	public void setAncestro(VentanaPrincipal ancestro) {
+		this.ancestro = ancestro;
 	}
 	
 }

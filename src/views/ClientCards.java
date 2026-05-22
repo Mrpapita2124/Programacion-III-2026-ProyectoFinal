@@ -27,12 +27,14 @@ import java.util.List;
 public class ClientCards extends JPanel {
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	int alto;
-	public ClientCards() {
+	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) {
 		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
+		
 		ClientRepository repository = new ClientRepository();
 		setBackground(Colores.BACKGROUND);
 		
 		List<Client> clients = repository.getClients(); 
+		System.out.println(clients.size());
 		if (clients.isEmpty()) {
 			JLabel voidMessage = new JLabel("No tienes clientes"); 
 			voidMessage.setOpaque(false);
@@ -61,7 +63,7 @@ public class ClientCards extends JPanel {
 					ClientPanel clientPanel=new ClientPanel(clients.get(i));
 					//new UserPanelController(clientPanel);
 					
-					new ClientPanelController(clientPanel);
+					new ClientPanelController(clientPanel,userPanel,ventana);
 					card.add(clientPanel);
 					//clientPanel.setMaximumSize(new Dimension(600,300));
 					clientCards.add(card);
