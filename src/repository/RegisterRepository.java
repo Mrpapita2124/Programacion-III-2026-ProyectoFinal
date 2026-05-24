@@ -27,7 +27,7 @@ public class RegisterRepository {
 			stmt.setString(2, apellido);
 			stmt.setString(3, correo);
 			stmt.setString(4, PasswordUtils.hashPassword(contrasena));
-			stmt.setString(5, "1000");
+			stmt.setDouble(5, 1000);
 			stmt.setString(6, foto);
 			stmt.setBoolean(7, guardar);
 			stmt.setString(8, "comun");

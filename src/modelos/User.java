@@ -11,6 +11,7 @@ public class User {
 	private String apellido;
 	private String correo;
 	private String contrasena;
+	private double capacidadPrestamo;
 	private String foto;
 	private String rol;
 	private boolean guardar;
@@ -52,13 +53,14 @@ public class User {
 		this.guardar=guardar;
 	}
 	
-	public User(int id, String nombre, String apellido, String email, String contrasena,String foto, boolean guardar, String rol) {
+	public User(int id, String nombre, String apellido, String email, String contrasena, double capacidadPrestamo,String foto, boolean guardar, String rol) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = email;
 		this.contrasena = contrasena;
+		this.capacidadPrestamo=capacidadPrestamo;
 		this.foto=foto;
 		this.guardar=guardar;
 		this.rol = rol;
@@ -111,6 +113,14 @@ public class User {
 	
 	public String getApellido() {
 		return apellido;
+	}
+
+	public double getCapacidadPrestamo() {
+		return capacidadPrestamo;
+	}
+
+	public void setCapacidadPrestamo(double capacidadPrestamo) {
+		this.capacidadPrestamo = capacidadPrestamo;
 	}
 
 	public void setApellido(String apellido) {

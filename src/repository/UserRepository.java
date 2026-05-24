@@ -31,7 +31,7 @@ public class UserRepository {
 			stmt.setString(2, user.getApellido());
 			stmt.setString(3, user.getCorreo());
 			stmt.setString(4, PasswordUtils.hashPassword(user.getContrasena()));
-			stmt.setString(5, "1000");
+			stmt.setDouble(5, 10000);
 			stmt.setString(6, user.getFoto());
 			stmt.setBoolean(7, user.isGuardar());
 			stmt.setString(8, "comun");
@@ -65,6 +65,7 @@ public class UserRepository {
 	            rs.getString("apellido"),
 	            rs.getString("correo_electronico"),
 	            rs.getString("contraseña"),
+	            rs.getDouble("capacidad_prestamo"),
 	            rs.getString("url_foto"),
 	            rs.getBoolean("guardar"),
 	            rs.getString("rol")
@@ -124,6 +125,40 @@ public class UserRepository {
 			pst.setInt(8, updatedUser.getId()); 
 
 			int affectedRows = pst.executeUpdate();
+
+			if(affectedRows > 0) {
+				//System.out.println("Cambios guardados");
+				return true;
+			}			
+
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		//System.out.println("No se hicieron cambios");
+		return false;
+	}
+	public boolean update(User updatedUser) throws IOException {
+
+		String sql = "UPDATE usuario SET nombre = ?, apellido = ?, correo_electronico = ?,"
+				+ " contraseña = ?, capacidad_prestamo = ?, url_foto = ?, rol = ?, guardar = ? "
+				+ "WHERE id_usuario = ?";
+
+		try (Connection connection = DatabaseConnection.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql)) {
+
+			pst.setString(1, updatedUser.getNombre());
+			pst.setString(2, updatedUser.getApellido());
+			pst.setString(3, updatedUser.getCorreo());
+			pst.setString(4, PasswordUtils.hashPassword(updatedUser.getContrasena()));
+			pst.setDouble(5, updatedUser.getCapacidadPrestamo());
+			pst.setString(6, updatedUser.getFoto());
+			pst.setString(7, updatedUser.getRol());
+			pst.setBoolean(8, updatedUser.isGuardar());
+			pst.setInt(9, updatedUser.getId()); 
+
+			int affectedRows = pst.executeUpdate();
+			System.out.println("sadfadsf" + affectedRows);
 
 			if(affectedRows > 0) {
 				//System.out.println("Cambios guardados");

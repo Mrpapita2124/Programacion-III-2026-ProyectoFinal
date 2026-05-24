@@ -25,15 +25,18 @@ public class VentanaPrincipal extends JFrame
 {
 	public static final String HOME = "HOME";
 	public static final String USERS = "USERS";
+	public static final String PRESTAMOS = "PRESTAMOS";
 	
 	private JMenuItem mItemExit;
 	private JButton btnUsers;
 	private JButton btnHome;
+	private JButton btnPrestamo;
 	private UsersView usersPanel;
 	
 	private CardLayout cardLayout;
 	private JPanel container;
 	JPanel homePanel;
+	JPanel prestamosPanel;
 	
 	public VentanaPrincipal() 
 	{
@@ -70,6 +73,19 @@ public class VentanaPrincipal extends JFrame
     	showView(HOME);
     	
 	}
+	public void reloadPrestamos(boolean cambiarVista) 
+	{
+		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
+    	ThemeManager.applySavedTheme();
+    	container.remove(prestamosPanel);
+    	createPrestamosView();
+    	revalidate();
+    	repaint();
+    	if(cambiarVista)showView(PRESTAMOS);
+    	
+    	
+    	
+	}
 	
 	public void createNavbar() 
 	{
@@ -77,9 +93,10 @@ public class VentanaPrincipal extends JFrame
 		
 		btnHome = new JButton("Inicio");
 		btnUsers = new JButton("Usuarios");
-		
+		btnPrestamo= new JButton("Prestamos");
 		
 		navbar.add(btnHome);
+		navbar.add(btnPrestamo);
 		navbar.add(btnUsers);
 		add(navbar, BorderLayout.NORTH);
 	}
@@ -91,14 +108,24 @@ public class VentanaPrincipal extends JFrame
 		UserClientsPanel panel=new UserClientsPanel(this);
 		new UserClientsPanelController(panel);
 		homePanel = panel;
-		
+		UserPrestamosPanel prestamosCards= new UserPrestamosPanel(this);
+		prestamosPanel=prestamosCards;
 		//homePanel.add(new JLabel("Bienvenido al Sistema"));
 		
 		usersPanel = new UsersView();
 		
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
+		container.add(prestamosPanel,PRESTAMOS);
+		add(container, BorderLayout.CENTER);
 		
+	}
+	private void createPrestamosView() 
+	{
+		
+		UserPrestamosPanel prestamosCards= new UserPrestamosPanel(this);
+		prestamosPanel=prestamosCards;
+		container.add(prestamosPanel, PRESTAMOS);
 		add(container, BorderLayout.CENTER);
 		
 	}
@@ -199,6 +226,12 @@ public class VentanaPrincipal extends JFrame
 		this.btnUsers = btnUsers;
 	}
 
+	public JButton getBtnPrestamo() {
+		return btnPrestamo;
+	}
+	public void setBtnPrestamo(JButton btnPrestamo) {
+		this.btnPrestamo = btnPrestamo;
+	}
 	public JButton getBtnHome() {
 		return btnHome;
 	}

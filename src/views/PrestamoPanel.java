@@ -14,46 +14,54 @@ import javax.swing.border.LineBorder;
 import com.formdev.flatlaf.util.Graphics2DProxy;
 
 import modelos.Client;
+import modelos.Prestamo;
 import modelos.User;
+import repository.EstadoPrestamoRepository;
 import utils.Colores;
 import utils.PanelPersonalizable;
 
-public class ClientPanel extends JPanel {
+public class PrestamoPanel extends JPanel {
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
 	private JButton btnEdit;
 	private JButton btnDelete;
 	private JButton btnInfo;
 	private JButton btnMoney;
-	Client client;
-	public ClientPanel(Client client) 
+	private Prestamo prestamo;
+	public PrestamoPanel(Prestamo prestamo) 
 	{	
-		
-		this.client=client;
+		EstadoPrestamoRepository estados=new EstadoPrestamoRepository();
+		this.prestamo=prestamo;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setAlignmentX(LEFT_ALIGNMENT);
 		setBackground(Colores.LOGIN_PANEL);
 		setVisible(true);
 		//setSize(new Dimension(600,300));
 		
-		JPanel clientInfo=new JPanel();
-		clientInfo.setForeground(Color.BLACK);
-		clientInfo.setOpaque(false);
-		clientInfo.setLayout(new BoxLayout(clientInfo,BoxLayout.Y_AXIS));
+		JPanel prestamoInfo=new JPanel();
+		prestamoInfo.setForeground(Color.BLACK);
+		prestamoInfo.setOpaque(false);
+		prestamoInfo.setLayout(new BoxLayout(prestamoInfo,BoxLayout.Y_AXIS));
 		JLabel icono;
-		try {
-			icono=new JLabel(escalarImagen(this.client.getIneDireccion(), 230, 280));
-		} catch (Exception e) {
+		
 			// TODO: handle exception
-			icono=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 280, 280));
+		if(estados.getClientPrestamosEstado(prestamo).equals("correcto")) {
+			icono=new JLabel(escalarImagenLocal("..\\img\\greenMoney.png", 280, 280));
+		}else {
+			icono=new JLabel(escalarImagenLocal("..\\img\\redMoney.png", 280, 280));
 		}
+			
+		
 		
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
-		JLabel clientName= new JLabel(this.client.getNombre());
+		JLabel clientName= new JLabel(this.prestamo.getNombre());
 		clientName.setAlignmentX(Component.CENTER_ALIGNMENT);
 		clientName.setForeground(Color.BLACK);
-		JLabel clientApellido= new JLabel(this.client.getApellido());
+		JLabel clientApellido= new JLabel(this.prestamo.getApellido());
 		clientApellido.setAlignmentX(Component.CENTER_ALIGNMENT);
 		clientApellido.setForeground(Color.BLACK);
+		JLabel prestamoCantidad= new JLabel(String.valueOf(this.prestamo.getMonto()));
+		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
+		prestamoCantidad.setForeground(Color.BLACK);
 		btnEdit=new JButton("Editar");
 		btnDelete=new JButton("Eliminar");
 		btnInfo=new JButton("Info");
@@ -62,15 +70,16 @@ public class ClientPanel extends JPanel {
 		
 		clientName.setFont(fontTexto);
 		clientApellido.setFont(fontTexto);
-		clientInfo.add(clientName);
-		clientInfo.add(clientApellido);
-		clientInfo.add(btnEdit);
-		clientInfo.add(btnDelete);
-		clientInfo.add(btnInfo);
-		clientInfo.add(btnMoney);
+		prestamoInfo.add(clientName);
+		prestamoInfo.add(clientApellido);
+		prestamoInfo.add(prestamoCantidad);
+		prestamoInfo.add(btnEdit);
+		prestamoInfo.add(btnDelete);
+		prestamoInfo.add(btnInfo);
+		prestamoInfo.add(btnMoney);
 		add(Box.createRigidArea(new Dimension(30,0)));
 		add(icono);
-		add(clientInfo);
+		add(prestamoInfo);
 		add(Box.createRigidArea(new Dimension(180,0)));
 		
 	}
@@ -115,12 +124,6 @@ public class ClientPanel extends JPanel {
 	}
 	public void setBtnMoney(JButton btnMoney) {
 		this.btnMoney = btnMoney;
-	}
-	public Client getClient() {
-		return client;
-	}
-	public void setClient(Client client) {
-		this.client = client;
 	}
 	public Window getWindow() {
 		return SwingUtilities.getWindowAncestor(this);

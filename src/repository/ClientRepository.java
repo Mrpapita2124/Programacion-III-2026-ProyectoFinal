@@ -9,6 +9,7 @@ import java.util.List;
 
 import config.DatabaseConnection;
 import modelos.Client;
+import modelos.EstadoPrestamo;
 import modelos.User;
 import utils.Session;
 

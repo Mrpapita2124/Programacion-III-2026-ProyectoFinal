@@ -44,7 +44,7 @@ public class VentanaPrincipalController {
 				ventanaPrincipal.dispose();
 			}
 		});
-		
+		ventanaPrincipal.getBtnPrestamo().addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.PRESTAMOS));
 		ventanaPrincipal.getBtnUsers().addActionListener(e -> {
 			try {
 				showUsers();
