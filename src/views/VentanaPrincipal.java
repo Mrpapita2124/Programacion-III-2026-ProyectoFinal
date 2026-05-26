@@ -18,6 +18,7 @@ import controllers.UserClientsPanelController;
 import controllers.VentanaPrincipalController;
 import modelos.User;
 import repository.UserRepository;
+import utils.GradientBackground;
 import utils.Session;
 import utils.ThemeManager;
 
@@ -117,6 +118,8 @@ public class VentanaPrincipal extends JFrame
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
 		container.add(prestamosPanel,PRESTAMOS);
+		
+		
 		add(container, BorderLayout.CENTER);
 		
 	}

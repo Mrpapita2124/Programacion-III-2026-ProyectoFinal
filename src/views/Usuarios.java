@@ -38,18 +38,18 @@ public class Usuarios extends JPanel {
 			setOpaque(false); 
 			setBorder(new EmptyBorder(10, 20, 10, 20));
 			
-			JLabel titleQuick = new JLabel("CUENTAS GUARDADAS");
-			titleQuick.setFont(new Font("Segoe UI", Font.BOLD, 12));
-			titleQuick.setForeground(Colores.SECONDARY_HEADINGS);
-			titleQuick.setAlignmentX(Component.CENTER_ALIGNMENT);
-			add(titleQuick);
+			JLabel titulo = new JLabel("CUENTAS GUARDADAS");
+			titulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+			titulo.setForeground(Colores.SECONDARY_HEADINGS);
+			titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+			add(titulo);
 			add(Box.createRigidArea(new Dimension(0, 5)));
 			
-			JLabel titleSign = new JLabel("Inicia Sesion");
-			titleSign.setFont(new Font("Segoe UI", Font.BOLD, 28));
-			titleSign.setForeground(Colores.PRIMARY_HEADINGS);
-			titleSign.setAlignmentX(Component.CENTER_ALIGNMENT);
-			add(titleSign);
+			JLabel subTitulo = new JLabel("Inicia Sesion");
+			subTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
+			subTitulo.setForeground(Colores.PRIMARY_HEADINGS);
+			subTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+			add(subTitulo);
 			add(Box.createRigidArea(new Dimension(0, 20)));
 			
 			

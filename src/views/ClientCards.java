@@ -11,7 +11,9 @@ import repository.ClientRepository;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
 import utils.Colores;
+import utils.Fonts;
 import utils.PanelPersonalizable;
+import utils.RoundedBorder;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -24,17 +26,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClientCards extends JPanel {
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
+public class ClientCards extends PanelPersonalizable 
+{
+	private Font fontTitulo = Fonts.setFontSegoe(1,15);
 	int alto;
-	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) {
+	
+	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) 
+	{
 		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
 		
 		ClientRepository repository = new ClientRepository();
-		setBackground(Colores.BACKGROUND);
+		
+		setBackground(Colores.CARD_BG);
+		setBorder(new RoundedBorder(Colores.INPUT_BORDER, 20, 2));
 		
 		List<Client> clients = repository.getClients(); 
-		System.out.println(clients.size());
+
+		
 		if (clients.isEmpty()) {
 			JLabel voidMessage = new JLabel("No tienes clientes"); 
 			voidMessage.setOpaque(false);
@@ -42,6 +50,8 @@ public class ClientCards extends JPanel {
 			voidMessage.setForeground(Color.WHITE);
 			voidMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 			alto=300;
+			
+			add(Box.createRigidArea(new Dimension(0, 45)));
 			add(voidMessage);
 			
 		}else {

@@ -16,10 +16,11 @@ import com.formdev.flatlaf.util.Graphics2DProxy;
 import modelos.Client;
 import modelos.User;
 import utils.Colores;
+import utils.Fonts;
 import utils.PanelPersonalizable;
 
 public class ClientPanel extends JPanel {
-	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
+	private Font fontTexto = Fonts.setFontSegoe(0,15);
 	private JButton btnEdit;
 	private JButton btnDelete;
 	private JButton btnInfo;

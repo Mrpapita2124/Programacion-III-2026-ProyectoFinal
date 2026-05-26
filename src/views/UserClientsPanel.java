@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,16 +16,26 @@ import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
+import utils.Fonts;
 
 public class UserClientsPanel extends JPanel {
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
+	
+	private Font fontTitulo = Fonts.setFontSegoe(1,25);
+	
 	private JButton btnRegister;
 	ClientCards clients;
 	JScrollPane scrollClients;
 	VentanaPrincipal ancestro;
-	public UserClientsPanel(VentanaPrincipal ancestro) {
+	
+	
+	public UserClientsPanel(VentanaPrincipal ancestro) 
+	{
 		this.ancestro=ancestro;
-		setBackground(Colores.BACKGROUND);
+		
+		
+		setBackground(Colores.COLOR_GRADIENT1);
+		
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//navBAr
 		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -33,19 +44,25 @@ public class UserClientsPanel extends JPanel {
 		navbar.setMaximumSize(new Dimension(1600,25));
 		add(navbar);
 		
+		add(Box.createRigidArea(new Dimension(0, 200)));
 		
 		JLabel saludo = new JLabel("Tus clientes"); 
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
-        saludo.setForeground(Colores.TEXT_COLOR);
+        saludo.setForeground(Colores.PRIMARY_HEADINGS);
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(saludo);
+		
+		add(Box.createRigidArea(new Dimension(0, 30)));
+		
 		createClientList(ancestro);
+		
 		scrollClients= new JScrollPane(clients);
 		scrollClients.setMaximumSize(new Dimension(1200,clients.getAlto()));
 		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollClients.setOpaque(false);
+		
 		scrollClients.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 		    @Override
 		    protected void configureScrollBarColors() {
