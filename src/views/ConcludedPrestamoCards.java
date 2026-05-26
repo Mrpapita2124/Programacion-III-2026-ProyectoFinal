@@ -27,20 +27,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PrestamoCards extends JPanel {
+public class ConcludedPrestamoCards extends JPanel {
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	int alto=0;
-	public PrestamoCards(VentanaPrincipal ventana) {
+	public ConcludedPrestamoCards(VentanaPrincipal ventana) {
 		ArrayList<JPanel> prestamoCards = new ArrayList<JPanel>();
 		
 		PrestamoRepository repository = new PrestamoRepository();
 		setBackground(Colores.BACKGROUND);
 		
-		List<Prestamo> prestamos = repository.getAllActivePrestamos();
-		System.out.println("asdasdfaSDFASDFG"+ prestamos.size());
+		List<Prestamo> prestamos = repository.getAllConcludePrestamos();
+		
 		
 		if (prestamos.isEmpty()) {
-			JLabel voidMessage = new JLabel("No tienes prestamos"); 
+			JLabel voidMessage = new JLabel("No tienes prestamos Conclusos"); 
 			voidMessage.setOpaque(false);
 			voidMessage.setFont(fontTitulo);
 			voidMessage.setForeground(Color.WHITE);
@@ -62,10 +62,10 @@ public class PrestamoCards extends JPanel {
 				PanelPersonalizable card=new PanelPersonalizable();
 				//card.setBounds(130, 120, 950, 450);
 				card.setBackground(Colores.LOGIN_PANEL);
-					
 				
-					PrestamoPanel prestamoPanel=new PrestamoPanel(prestamos.get(i));
-					new PrestamoPanelController(prestamoPanel, ventana);
+				
+					ConcludedPrestamoPanel prestamoPanel=new ConcludedPrestamoPanel(prestamos.get(i));
+					
 					//new UserPanelController(clientPanel);
 					
 					//new ClientPanelController(clientPanel,userPanel,ventana);

@@ -21,6 +21,7 @@ public class UserPrestamosPanel extends JPanel {
 	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
 	
 	PrestamoCards prestamos;
+	ConcludedPrestamoCards concludedPrestamos;
 	JScrollPane scrollClients;
 	VentanaPrincipal ancestro;
 	public UserPrestamosPanel(VentanaPrincipal ancestro) {
@@ -28,6 +29,7 @@ public class UserPrestamosPanel extends JPanel {
 		setBackground(Colores.BACKGROUND);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//navBAr
+		concludedPrestamos= new ConcludedPrestamoCards(ancestro);
 		prestamos=new PrestamoCards(ancestro);
 		
 		
@@ -38,8 +40,15 @@ public class UserPrestamosPanel extends JPanel {
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(saludo);
 		//createClientList(ancestro);
-		scrollClients= new JScrollPane(prestamos);
-		scrollClients.setMaximumSize(new Dimension(1200,prestamos.getAlto()));
+		JPanel allPrestamos= new JPanel();
+		allPrestamos.setSize(new Dimension(1200,concludedPrestamos.getAlto()+prestamos.getAlto()));
+		allPrestamos.setLayout(new BoxLayout(allPrestamos, BoxLayout.Y_AXIS));
+		allPrestamos.add(prestamos);
+		allPrestamos.add(concludedPrestamos);
+		
+		scrollClients= new JScrollPane(allPrestamos);
+		scrollClients.setMaximumSize(new Dimension(1200,600));
+		scrollClients.setSize(new Dimension(1200,concludedPrestamos.getAlto()+prestamos.getAlto()));
 		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollClients.setOpaque(false);

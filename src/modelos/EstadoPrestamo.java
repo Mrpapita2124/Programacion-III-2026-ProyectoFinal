@@ -5,17 +5,19 @@ import java.sql.Date;
 public class EstadoPrestamo {
     private int id_estado_prestamo;
     private int id_prestamo;
+    private int quincenasRestantes;
     private double monto_restante;
     private Date fecha_proximo_pago;
     private double monto_proximo_pago;
     private String estado;
     private double dinero_atrasado;
 
-    public EstadoPrestamo(int id_estado_prestamo, int id_prestamo, double monto_restante,
+    public EstadoPrestamo(int id_estado_prestamo, int id_prestamo,int quincenasRestantes, double monto_restante,
                           Date fecha_proximo_pago, double monto_proximo_pago,
                           String estado, double dinero_atrasado) {
         this.id_estado_prestamo = id_estado_prestamo;
         this.id_prestamo = id_prestamo;
+        this.quincenasRestantes=quincenasRestantes;
         this.monto_restante = monto_restante;
         this.fecha_proximo_pago = fecha_proximo_pago;
         this.monto_proximo_pago = monto_proximo_pago;
@@ -23,10 +25,11 @@ public class EstadoPrestamo {
         this.dinero_atrasado = dinero_atrasado;
     }
 
-    public EstadoPrestamo(int id_prestamo, double monto_restante,
+    public EstadoPrestamo(int id_prestamo,int quincenasRestantes, double monto_restante,
                           Date fecha_proximo_pago, double monto_proximo_pago,
                           String estado, double dinero_atrasado) {
         this.id_prestamo = id_prestamo;
+        this.quincenasRestantes=quincenasRestantes;
         this.monto_restante = monto_restante;
         this.fecha_proximo_pago = fecha_proximo_pago;
         this.monto_proximo_pago = monto_proximo_pago;
@@ -52,6 +55,14 @@ public class EstadoPrestamo {
 
 	public double getMonto_restante() {
 		return monto_restante;
+	}
+
+	public int getQuincenasRestantes() {
+		return quincenasRestantes;
+	}
+
+	public void setQuincenasRestantes(int quincenasRestantes) {
+		this.quincenasRestantes = quincenasRestantes;
 	}
 
 	public void setMonto_restante(double monto_restante) {

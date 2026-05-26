@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import utils.ThemeManager;
+import utils.Updater;
 import views.Ventana;
 
 

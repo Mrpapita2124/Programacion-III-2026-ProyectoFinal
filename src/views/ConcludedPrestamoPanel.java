@@ -21,21 +21,12 @@ import repository.EstadoPrestamoRepository;
 import utils.Colores;
 import utils.PanelPersonalizable;
 
-public class PrestamoPanel extends JPanel {
+public class ConcludedPrestamoPanel extends JPanel {
 	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
-	private JButton btnComplete;
-	private JButton btnDelete;
-	private JButton btnInfo;
-	private JButton btnDebt;
-	EstadoPrestamoRepository estadoRepository;
 	private Prestamo prestamo;
-	public PrestamoPanel(Prestamo prestamo) 
+	public ConcludedPrestamoPanel(Prestamo prestamo) 
 	{	
-		estadoRepository=new EstadoPrestamoRepository();
 		this.prestamo=prestamo;
-		
-		EstadoPrestamo estadoPrestamo=estadoRepository.getEstadoPrestamoFromPrestamo(prestamo);
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + estadoPrestamo.getId_estado_prestamo());
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setAlignmentX(LEFT_ALIGNMENT);
 		setBackground(Colores.LOGIN_PANEL);
@@ -47,16 +38,7 @@ public class PrestamoPanel extends JPanel {
 		prestamoInfo.setOpaque(false);
 		prestamoInfo.setLayout(new BoxLayout(prestamoInfo,BoxLayout.Y_AXIS));
 		JLabel icono;
-		
-			// TODO: handle exception
-		if(estadoPrestamo.getEstado().equals("correcto")) {
-			icono=new JLabel(escalarImagenLocal("..\\img\\greenMoney.png", 280, 280));
-		}else {
-			icono=new JLabel(escalarImagenLocal("..\\img\\redMoney.png", 280, 280));
-		}
-			
-		
-		
+		icono=new JLabel(escalarImagenLocal("..\\img\\check.png", 280, 280));
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel clientName= new JLabel(this.prestamo.getNombre());
 		clientName.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -67,10 +49,7 @@ public class PrestamoPanel extends JPanel {
 		JLabel prestamoCantidad= new JLabel(String.valueOf(this.prestamo.getMonto()));
 		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
 		prestamoCantidad.setForeground(Color.BLACK);
-		btnComplete=new JButton("Registrar pago");
-		btnDelete=new JButton("Eliminar");
-		btnInfo=new JButton("Info");
-		btnDebt=new JButton("Pagar deuda");
+		
 		
 		
 		clientName.setFont(fontTexto);
@@ -78,15 +57,6 @@ public class PrestamoPanel extends JPanel {
 		prestamoInfo.add(clientName);
 		prestamoInfo.add(clientApellido);
 		prestamoInfo.add(prestamoCantidad);
-		if(estadoPrestamo.getQuincenasRestantes()!=0) {
-			prestamoInfo.add(btnComplete);
-		}
-		
-		prestamoInfo.add(btnDelete);
-		prestamoInfo.add(btnInfo);
-		if(estadoPrestamo.getEstado().equals("atrasado")) {
-			prestamoInfo.add(btnDebt);
-		}
 
 		add(Box.createRigidArea(new Dimension(30,0)));
 		add(icono);
@@ -123,40 +93,19 @@ public class PrestamoPanel extends JPanel {
 	    iconoFinal.setDescription(direccion);
 	    return iconoFinal;
 	}
-	public JButton getSession() {
-		return btnComplete;
-	}
-	public void setSession(JButton session) {
-		this.btnComplete = session;
-	}
+	
 
 	public Window getWindow() {
 		return SwingUtilities.getWindowAncestor(this);
 	}
-	public JButton getBtnComplete() {
-		return btnComplete;
-	}
-	public void setBtnComplete(JButton btnEdit) {
-		this.btnComplete = btnEdit;
-	}
+
 	public Font getFontTexto() {
 		return fontTexto;
 	}
 	public void setFontTexto(Font fontTexto) {
 		this.fontTexto = fontTexto;
 	}
-	public JButton getBtnDelete() {
-		return btnDelete;
-	}
-	public void setBtnDelete(JButton btnDelete) {
-		this.btnDelete = btnDelete;
-	}
-	public JButton getBtnInfo() {
-		return btnInfo;
-	}
-	public void setBtnInfo(JButton btnInfo) {
-		this.btnInfo = btnInfo;
-	}
+
 	public Prestamo getPrestamo() {
 		return prestamo;
 	}

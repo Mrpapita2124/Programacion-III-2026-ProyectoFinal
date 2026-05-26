@@ -64,7 +64,7 @@ public class ClientPanelController {
 	private void deleteEverythingFromClient(Client client) {
 		List<Prestamo> prestamos=prestamoRepository.getClientPrestamos(client);
 		for(Prestamo prestamo:prestamos) {
-			estadoPrestamoRepository.deleteFromCliente(prestamo);
+			estadoPrestamoRepository.deleteFromPrestamo(prestamo);
 		}
 		prestamoRepository.deleteFromCliente(client);
 		
