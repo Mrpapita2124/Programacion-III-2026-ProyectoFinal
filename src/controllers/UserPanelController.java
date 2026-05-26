@@ -16,7 +16,7 @@ public class UserPanelController {
 		this.userPanel.getSessionButton().addActionListener(e -> {
 			Session.login(this.userPanel.getUser());
 			Updater update= new Updater();
-			//update.updateEverything();
+			update.updateEverything();
 			if(Session.getRol().toLowerCase().equals("admin")) 
 			{
 				JOptionPane.showMessageDialog(this.userPanel.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);

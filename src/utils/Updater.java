@@ -39,7 +39,7 @@ public class Updater {
 					}
 					estado.setFecha_proximo_pago(java.sql.Date.valueOf(estado.getFecha_proximo_pago().toLocalDate().plusDays(15)));
 					estado.setMonto_restante(estado.getMonto_restante()+estado.getMonto_proximo_pago()*(prestamo.getInteres_retraso()/100));
-					estado.setDinero_atrasado(estado.getDinero_atrasado()+estado.getMonto_proximo_pago()*(prestamo.getInteres_retraso()/100));
+					estado.setDinero_atrasado(estado.getDinero_atrasado()+estado.getMonto_proximo_pago()+estado.getMonto_proximo_pago()*(prestamo.getInteres_retraso()/100));
 					estado.setQuincenasRestantes(estado.getQuincenasRestantes()-1);
 					prestamo.setMonto_total(prestamo.getMonto_total()+prestamo.getMonto_quincenal()*(prestamo.getInteres_retraso()/100));
 					estadoRepository.update(estado);

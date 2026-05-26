@@ -130,6 +130,12 @@ public class PrestamoPanel extends JPanel {
 		this.btnComplete = session;
 	}
 
+	public JButton getBtnDebt() {
+		return btnDebt;
+	}
+	public void setBtnDebt(JButton btnDebt) {
+		this.btnDebt = btnDebt;
+	}
 	public Window getWindow() {
 		return SwingUtilities.getWindowAncestor(this);
 	}

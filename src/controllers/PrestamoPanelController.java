@@ -22,6 +22,7 @@ import views.ClientInfoView;
 import views.ClientPanel;
 import views.FormularioGeneralCliente;
 import views.FormularioGeneralPrestamo;
+import views.PayDebtView;
 import views.PrestamoPanel;
 import views.UserClientsPanel;
 import views.VentanaPrincipal;
@@ -53,7 +54,7 @@ public class PrestamoPanelController {
 		});
 		this.prestamoPanel.getBtnInfo().addActionListener(e -> {
 		});
-		
+		this.prestamoPanel.getBtnDebt().addActionListener(e -> new PayDebtController(new PayDebtView(estadoPrestamo,ventana,this.prestamoPanel.getPrestamo())));
 	}
 	private void deletePrestamo(Prestamo prestamo) {
 		double earned=prestamo.getMonto_total()-estadoPrestamo.getMonto_restante();
