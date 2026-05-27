@@ -34,16 +34,16 @@ public class ClientCards extends PanelPersonalizable
 	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) 
 	{
 		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
-		
 		ClientRepository repository = new ClientRepository();
 		
-		setBackground(Colores.CARD_BG);
-		setBorder(new RoundedBorder(Colores.INPUT_BORDER, 20, 2));
+		setBackground(Colores.COLOR_GRADIENT1);
+		setOpaque(true);
 		
 		List<Client> clients = repository.getClients(); 
 
 		
-		if (clients.isEmpty()) {
+		if (clients.isEmpty()) 
+		{
 			JLabel voidMessage = new JLabel("No tienes clientes"); 
 			voidMessage.setOpaque(false);
 			voidMessage.setFont(fontTitulo);
@@ -57,33 +57,29 @@ public class ClientCards extends PanelPersonalizable
 		}else {
 			alto=0;
 			//define alto
-			if(clients.size()%2==0) {
+			if(clients.size()%2 == 0) {
 				
-				alto=(clients.size()/2)*300;
+				alto=(clients.size()/2) * 200;
 			}else {
-				alto=((clients.size()/2)+1)*300;
+				alto=((clients.size()/2)+1) * 200;
 			}
+			
 			//Añade usuarios simullados"
 			for(int i=0;i<clients.size();i++) {
+				
 				PanelPersonalizable card=new PanelPersonalizable();
-				//card.setBounds(130, 120, 950, 450);
 				card.setBackground(Colores.LOGIN_PANEL);
+				card.setOpaque(true);
 				
+				ClientPanel clientPanel=new ClientPanel(clients.get(i));
+				new ClientPanelController(clientPanel,userPanel,ventana);
+				clientPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 				
-					ClientPanel clientPanel=new ClientPanel(clients.get(i));
-					//new UserPanelController(clientPanel);
-					
-					new ClientPanelController(clientPanel,userPanel,ventana);
-					card.add(clientPanel);
-					//clientPanel.setMaximumSize(new Dimension(600,300));
-					clientCards.add(card);
-					
+				card.add(clientPanel);
+				clientCards.add(card);
 			}
 			
-			//System.out.println(alto);
-			
-			setOpaque(false);
-			setLayout(new GridLayout(0,2));
+			setLayout(new GridLayout(0,2, 15, 15));
 			
 			
 			for(JPanel card : clientCards) {
@@ -91,10 +87,11 @@ public class ClientCards extends PanelPersonalizable
 				add(card);
 			}
 			if(clients.size()%2!=0) {
-				JPanel relleno = new JPanel();
-				relleno.setBackground(Colores.BACKGROUND);
-				add(relleno);
 				
+				JPanel relleno = new JPanel();
+	            relleno.setBackground(Colores.COLOR_GRADIENT1);
+	            relleno.setOpaque(true);
+	            add(relleno);
 			}
 		}
 			

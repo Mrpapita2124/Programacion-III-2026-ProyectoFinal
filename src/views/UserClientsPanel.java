@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -41,12 +42,18 @@ public class UserClientsPanel extends JPanel {
 		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		btnRegister = new JButton("Registrar Usuario");
 		navbar.add(btnRegister);
-		navbar.setMaximumSize(new Dimension(1600,25));
+		navbar.setMaximumSize(new Dimension(1600,32));
 		add(navbar);
 		
-		add(Box.createRigidArea(new Dimension(0, 200)));
+		// Las ClientesEstadisticas que apenas cree
+		ClientesEstadisticas statsPanel = new ClientesEstadisticas();
+	    statsPanel.setMaximumSize(new Dimension(1600, 150));
+	    statsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    add(statsPanel);
 		
-		JLabel saludo = new JLabel("Tus clientes"); 
+		add(Box.createRigidArea(new Dimension(0, 45)));
+		
+		JLabel saludo = new JLabel("Lista de Clientes"); 
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
         saludo.setForeground(Colores.PRIMARY_HEADINGS);
@@ -58,7 +65,7 @@ public class UserClientsPanel extends JPanel {
 		createClientList(ancestro);
 		
 		scrollClients= new JScrollPane(clients);
-		scrollClients.setMaximumSize(new Dimension(1200,clients.getAlto()));
+		scrollClients.setMaximumSize(new Dimension(1600,clients.getAlto()));
 		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollClients.setOpaque(false);
@@ -91,6 +98,8 @@ public class UserClientsPanel extends JPanel {
 		scrollClients.getVerticalScrollBar().setUnitIncrement(20);
 		scrollClients.getVerticalScrollBar().setOpaque(false);
 		scrollClients.setBorder(null);
+		
+		scrollClients.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 		add(scrollClients);
 	}
 	public JButton getBtnRegister() {
@@ -111,6 +120,12 @@ public class UserClientsPanel extends JPanel {
 	}
 	public void createClientList(VentanaPrincipal ventana) {
 		clients= new ClientCards(this,ventana);
+	
+		// Esto hace como un tipo refresh
+		if (scrollClients != null) 
+		{
+	        scrollClients.setMaximumSize(new Dimension(1600, clients.getAlto()));
+	    }
 	}
 	public void setBtnRegister(JButton btnRegister) {
 		this.btnRegister = btnRegister;

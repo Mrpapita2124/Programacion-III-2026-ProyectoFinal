@@ -48,12 +48,16 @@ public class ClientInfoView extends JFrame {
 	private JLabel txtCurp;
 	private JLabel txtReputacion;
 	private JPanel clientFullInfoPanel;
-	public ClientInfoView(Client client){
+	
+	
+	public ClientInfoView(Client client)
+	{
 		this.client = client;
 		PDDocument document;
 		JLabel ineFoto;
 		JLabel comprobanteClient=new JLabel();
 		try {
+			
 			document = Loader.loadPDF(new File(client.getComprobanteDomicilio()));
 			PDFRenderer render = new PDFRenderer(document);
 			BufferedImage imagen = render.renderImageWithDPI(0, 150);
@@ -62,12 +66,16 @@ public class ClientInfoView extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		try {
 			ineFoto=new JLabel(escalarImagen(this.client.getIneDireccion(), 230, 280));
 		} catch (Exception e) {
 			// TODO: handle exception
 			ineFoto=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 280, 280));
 		}
+		
+		
 		ineFoto.setBounds(60, 60, 230, 280);
 		comprobanteClient.setBounds(60, 360, 230, 280);
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -81,6 +89,8 @@ public class ClientInfoView extends JFrame {
 		Image icono = tk.getImage("src\\img\\icono.png");
 		setIconImage(icono);	
 		setVisible(true);
+		
+		
 		addWindowListener(new WindowListener() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -125,6 +135,8 @@ public class ClientInfoView extends JFrame {
 			}
 			
 		});
+		
+		
 		ImageIcon cursorImage = new ImageIcon("src\\img\\pointer_b.png");
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
 		this.setCursor(myCursor);
