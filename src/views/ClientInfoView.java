@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
@@ -12,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -25,6 +27,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import modelos.Client;
 
 import utils.Colores;
+import utils.GradientBackground;
 import utils.PanelPersonalizable;
 
 public class ClientInfoView extends JFrame {
@@ -56,12 +59,21 @@ public class ClientInfoView extends JFrame {
 		PDDocument document;
 		JLabel ineFoto;
 		JLabel comprobanteClient=new JLabel();
+
+		int sizeXComprobante = 280;
+		int sizeYComprobante = 330;
+		
+		int sizeXIne = 360;
+		int sizeYIne = 230;
+		
 		try {
 			
 			document = Loader.loadPDF(new File(client.getComprobanteDomicilio()));
 			PDFRenderer render = new PDFRenderer(document);
 			BufferedImage imagen = render.renderImageWithDPI(0, 150);
-			comprobanteClient.setIcon(escalarBufferedImagen(imagen, client.getComprobanteDomicilio(), 230, 280));		
+			
+			
+			comprobanteClient.setIcon(escalarBufferedImagen(imagen, client.getComprobanteDomicilio(), sizeXComprobante, sizeYComprobante));		
 			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,21 +81,21 @@ public class ClientInfoView extends JFrame {
 		
 		
 		try {
-			ineFoto=new JLabel(escalarImagen(this.client.getIneDireccion(), 230, 280));
+			ineFoto=new JLabel(escalarImagen(this.client.getIneDireccion(), 360, 230));
 		} catch (Exception e) {
 			// TODO: handle exception
-			ineFoto=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 280, 280));
+			ineFoto=new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 360, 230));
 		}
 		
 		
-		ineFoto.setBounds(60, 60, 230, 280);
-		comprobanteClient.setBounds(60, 360, 230, 280);
+		ineFoto.setBounds(60, 60, sizeXIne, sizeYIne);
+		comprobanteClient.setBounds(100, 310, sizeXComprobante, sizeYComprobante);
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		
 		setLayout(null);
-		setSize(750, 750);
+		setSize(1250, 750);
 		setResizable(false);
-		setTitle("Información de "+ this.client.getNombre() + " " + this.client.getApellido());  // Nombre de la Ventana
+		setTitle("Información de "+ this.client.getNombre() + " " + this.client.getApellido()); 
 		setLocationRelativeTo(null);
 		getContentPane().setBackground(Colores.BACKGROUND);
 		Image icono = tk.getImage("src\\img\\icono.png");
@@ -141,9 +153,15 @@ public class ClientInfoView extends JFrame {
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
 		this.setCursor(myCursor);
 		PanelPersonalizable bg1 = new PanelPersonalizable();
-		bg1.setBounds(50, 50, 625, 600);
+		bg1.setBounds(50, 50, 830, 600);
 		bg1.setBackground(Colores.LOGIN_PANEL);
-		setValuess(client);
+		
+		GradientBackground gradientPanel = new GradientBackground();
+		gradientPanel.setLayout(null);  
+		setContentPane(gradientPanel);
+		
+		
+		setValues(client);
 		add(clientFullInfoPanel);
 		add(ineFoto);
 		add(comprobanteClient);
@@ -168,8 +186,8 @@ public class ClientInfoView extends JFrame {
         
         return iconoFinal;
 	}
+	
 	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
-		System.out.println("nigga");
 	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
 	
 	   
@@ -181,6 +199,7 @@ public class ClientInfoView extends JFrame {
 	    iconoFinal.setDescription(direccion);
 	    return iconoFinal;
 	}
+	
 	private ImageIcon escalarBufferedImagen(BufferedImage imagen, String direccion,int x,int y) {
     	
         ImageIcon iconoOriginal = new ImageIcon(imagen);
@@ -194,69 +213,59 @@ public class ClientInfoView extends JFrame {
         iconoFinal.setDescription(direccion);
         return iconoFinal;
     }
-	private void setValuess(Client client) {
+	
+	private void setValues(Client client) {
 		// INICIALIZACIÓN Y ASIGNACIÓN DE VALORES
 		clientFullInfoPanel=new JPanel();
 		clientFullInfoPanel.setLayout(new BoxLayout(clientFullInfoPanel, BoxLayout.Y_AXIS));
-		clientFullInfoPanel.setBounds(350, 50, 350, 600);
+		clientFullInfoPanel.setBounds(500, 100, 350, 600);
 		clientFullInfoPanel.setOpaque(false);
 		clientFullInfoPanel.setForeground(Color.BLACK);
-		txtIdCliente = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Id cliente: " + String.valueOf(client.getIdCliente()) + "</body></html>");
-
-		txtIdUser = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Id usuario: " + String.valueOf(client.getIdUser()) + "</body></html>");
-
-		txtNombre = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Nombre: " + client.getNombre() + "</body></html>");
-
-		txtApellido = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Apellido: " + client.getApellido() + "</body></html>");
-
-		txtEdad = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Edad: " + String.valueOf(client.getEdad()) + "</body></html>");
-
-		txtDomicilio = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Domicilio: " + client.getDomicilio() + "</body></html>");
-
-		txtCelular = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Celular: " + client.getCelular() + "</body></html>");
-
-		txtCorreo = new JLabel("<html><body style='width: 200px; overflow-wrap: break-word;'>Correo electrónico: " + client.getCorreoElectronico() + "</body></html>");
-
-		txtEmpleo = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Empleo: " + client.getEmpleo() + "</body></html>");
-
-		txtDomicilioEmpleo = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Domicilio empleo: " + client.getDomicilioEmpleo() + "</body></html>");
-
-		txtTelfEmpleo = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Teléfono empleo: " + client.getTelfEmpleo() + "</body></html>");
-
-		txtIngresos = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Ingresos mensuales: " + String.valueOf(client.getIngresosMensuales()) + "</body></html>");
-
-		txtBanco = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Banco: " + client.getBanco() + "</body></html>");
-
-		txtCuentaBancaria = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Cuenta bancaria: " + client.getCuentaBancaria() + "</body></html>");
-
-		txtCurp = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>CURP: " + client.getCurp() + "</body></html>");
-
-		txtReputacion = new JLabel("<html><body style='width: 300px; overflow-wrap: break-word;'>Reputación: " + client.getReputacion() + "</body></html>");
-		txtIdCliente.setForeground(Color.BLACK);
-		txtIdUser.setForeground(Color.BLACK);
-		txtNombre.setForeground(Color.BLACK);
-		txtApellido.setForeground(Color.BLACK);
-		txtEdad.setForeground(Color.BLACK);
-	
-		txtDomicilio.setForeground(Color.BLACK);
-	
-		txtCelular.setForeground(Color.BLACK);
-		txtCorreo.setForeground(Color.BLACK);
-		txtEmpleo.setForeground(Color.BLACK);
-		txtDomicilioEmpleo.setForeground(Color.BLACK);
-		txtTelfEmpleo.setForeground(Color.BLACK);
-		txtIngresos.setForeground(Color.BLACK);
-		txtBanco.setForeground(Color.BLACK);
-		txtCuentaBancaria.setForeground(Color.BLACK);
-		txtCurp.setForeground(Color.BLACK);
-		txtReputacion.setForeground(Color.BLACK);
+		
+		
+		
+		txtIdCliente = new JLabel("Id cliente: " + String.valueOf(client.getIdCliente()));
+		txtIdUser = new JLabel("Id usuario: " + String.valueOf(client.getIdUser()));
+		txtNombre = new JLabel("Nombre: " + client.getNombre());
+		txtApellido = new JLabel("Apellido: " + client.getApellido());
+		txtEdad = new JLabel("Edad: " + String.valueOf(client.getEdad()));
+		txtDomicilio = new JLabel("Domicilio: " + client.getDomicilio());
+		txtCelular = new JLabel("Celular: " + client.getCelular());
+		txtCorreo = new JLabel("Correo electrónico: " + client.getCorreoElectronico());
+		txtEmpleo = new JLabel("Empleo: " + client.getEmpleo());
+		txtDomicilioEmpleo = new JLabel("Domicilio empleo: " + client.getDomicilioEmpleo());
+		txtTelfEmpleo = new JLabel("Teléfono empleo: " + client.getTelfEmpleo());
+		txtIngresos = new JLabel("Ingresos mensuales: " + String.valueOf(client.getIngresosMensuales()));
+		txtBanco = new JLabel("Banco: " + client.getBanco());
+		txtCuentaBancaria = new JLabel("Cuenta bancaria: " + client.getCuentaBancaria());
+		txtCurp = new JLabel("CURP: " + client.getCurp());
+		txtReputacion = new JLabel("Reputación: " + client.getReputacion());
+		
+		
+		Color txtColor = Colores.PRIMARY_HEADINGS;
+		
+		txtIdCliente.setForeground(txtColor);
+		txtIdUser.setForeground(txtColor);
+		txtNombre.setForeground(txtColor);
+		txtApellido.setForeground(txtColor);
+		txtEdad.setForeground(txtColor);
+		txtDomicilio.setForeground(txtColor);
+		txtCelular.setForeground(txtColor);
+		txtCorreo.setForeground(txtColor);
+		txtEmpleo.setForeground(txtColor);
+		txtDomicilioEmpleo.setForeground(txtColor);
+		txtTelfEmpleo.setForeground(txtColor);
+		txtIngresos.setForeground(txtColor);
+		txtBanco.setForeground(txtColor);
+		txtCuentaBancaria.setForeground(txtColor);
+		txtCurp.setForeground(txtColor);
+		txtReputacion.setForeground(txtColor);
 		
 		txtIdCliente.setFont(fontTexto);
 		txtIdUser.setFont(fontTexto);
 		txtNombre.setFont(fontTexto);
 		txtApellido.setFont(fontTexto);
 		txtEdad.setFont(fontTexto);
-
 		txtDomicilio.setFont(fontTexto);
 		txtCelular.setFont(fontTexto);
 		txtCorreo.setFont(fontTexto);

@@ -246,6 +246,45 @@ public class PrestamoRepository {
 			}
 		return prestamos;
 	}
+	public List<Prestamo> getAllActivePrestamosFromClient(Client client){
+		
+		List<Prestamo> prestamos=new ArrayList<Prestamo>();
+		String sql = "Select p.*,c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente=c.id_cliente Where estado=?. id_cliente=?";
+		try (
+				Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+			){
+				stmt.setString(1, "activo");
+				stmt.setString(1, client.getIdCliente());
+				ResultSet rs=stmt.executeQuery();
+				while(rs.next()) {
+					Prestamo prestamo = new Prestamo(
+					        rs.getInt("id_prestamo"),
+					        rs.getInt("id_usuario"),
+					        rs.getInt("id_cliente"),
+					        rs.getString("estado"),
+					        rs.getDouble("monto"),
+					        rs.getInt("numero_quincenas"),
+					        rs.getDouble("monto_quincenal"),
+					        rs.getDouble("monto_total"),
+					        rs.getDouble("interes"),
+					        rs.getDouble("interes_retraso"),
+					        rs.getDate("fecha"),   
+					        rs.getString("nombre"),
+					        rs.getString("apellido"),
+					        rs.getString("ine")
+					);
+
+					prestamos.add(prestamo);
+				}
+				
+				
+				
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+		return prestamos;
+	}
 	public List<Prestamo> getAllConcludePrestamos(){
 		
 		List<Prestamo> prestamos=new ArrayList<Prestamo>();
