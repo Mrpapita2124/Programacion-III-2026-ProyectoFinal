@@ -3,21 +3,15 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.io.IOException;
 
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 import javax.swing.*;
 
 import controllers.UserClientsPanelController;
-import controllers.VentanaPrincipalController;
-import modelos.User;
-import repository.UserRepository;
 import utils.GradientBackground;
 import utils.Session;
 import utils.ThemeManager;
@@ -46,7 +40,6 @@ public class VentanaPrincipal extends JFrame
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		
 		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
     	ThemeManager.applySavedTheme();
     	
@@ -56,13 +49,25 @@ public class VentanaPrincipal extends JFrame
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
 		this.setCursor(myCursor);
 		
+		setupGradientBackground();
+		
 		setMenu();
 		
 		createNavbar();
 		createViews();
 
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 	}
+	
+	private void setupGradientBackground() 
+	{
+		GradientBackground gradientPanel = new GradientBackground();
+		gradientPanel.setLayout(new BorderLayout());
+		
+		setContentPane(gradientPanel);
+	}
+	
 	public void reload() 
 	{
 		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
@@ -74,6 +79,7 @@ public class VentanaPrincipal extends JFrame
     	showView(HOME);
     	
 	}
+	
 	public void reloadPrestamos(boolean cambiarVista) 
 	{
 		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
@@ -91,13 +97,14 @@ public class VentanaPrincipal extends JFrame
 	public void createNavbar() 
 	{
 		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		navbar.setOpaque(true);
 		
 		btnHome = new JButton("Inicio");
 		btnUsers = new JButton("Usuarios");
-		btnPrestamo= new JButton("Prestamos");
+		//btnPrestamo= new JButton("Prestamos");
 		
 		navbar.add(btnHome);
-		navbar.add(btnPrestamo);
+		//navbar.add(btnPrestamo);
 		navbar.add(btnUsers);
 		add(navbar, BorderLayout.NORTH);
 	}
@@ -106,6 +113,8 @@ public class VentanaPrincipal extends JFrame
 	{
 		cardLayout = new CardLayout();
 		container = new JPanel(cardLayout);
+		container.setOpaque(false);
+		
 		UserClientsPanel panel=new UserClientsPanel(this);
 		new UserClientsPanelController(panel);
 		homePanel = panel;
@@ -123,6 +132,7 @@ public class VentanaPrincipal extends JFrame
 		add(container, BorderLayout.CENTER);
 		
 	}
+	
 	private void createPrestamosView() 
 	{
 		
@@ -132,6 +142,7 @@ public class VentanaPrincipal extends JFrame
 		add(container, BorderLayout.CENTER);
 		
 	}
+	
 	private void createClientsView() 
 	{
 		

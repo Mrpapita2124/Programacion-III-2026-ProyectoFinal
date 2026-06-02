@@ -34,12 +34,12 @@ public class ClientCards extends PanelPersonalizable
 	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) 
 	{
 		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
-		ClientRepository repository = new ClientRepository();
+		ClientRepository clientRepository = new ClientRepository();
 		
-		setBackground(Colores.COLOR_GRADIENT1);
-		setOpaque(true);
+		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
 		
-		List<Client> clients = repository.getClients(); 
+		List<Client> clients = clientRepository.getClients(); 
 
 		
 		if (clients.isEmpty()) 
@@ -59,23 +59,24 @@ public class ClientCards extends PanelPersonalizable
 			//define alto
 			if(clients.size()%2 == 0) {
 				
-				alto=(clients.size()/2) * 200;
+				alto=(clients.size()/2) * 300;
 			}else {
-				alto=((clients.size()/2)+1) * 200;
+				alto=((clients.size()/2)+1) * 300;
 			}
 			
 			//Añade usuarios simullados"
 			for(int i=0;i<clients.size();i++) {
 				
-				PanelPersonalizable card=new PanelPersonalizable();
-				card.setBackground(Colores.LOGIN_PANEL);
+				PanelPersonalizable card = new PanelPersonalizable();
+				card.setBackground(Colores.CLIENT_CARD_BG);
+				card.setBorder(new RoundedBorder(Colores.DEFAULT_BORDER, 20, 2));
 				card.setOpaque(true);
 				
-				ClientPanel clientPanel=new ClientPanel(clients.get(i));
-				new ClientPanelController(clientPanel,userPanel,ventana);
-				clientPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+				ClientCardPanel clientListPanel = new ClientCardPanel(clients.get(i));
+				new ClientPanelController(clientListPanel,userPanel,ventana);
+				clientListPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 				
-				card.add(clientPanel);
+				card.add(clientListPanel);
 				clientCards.add(card);
 			}
 			
@@ -89,44 +90,15 @@ public class ClientCards extends PanelPersonalizable
 			if(clients.size()%2!=0) {
 				
 				JPanel relleno = new JPanel();
-	            relleno.setBackground(Colores.COLOR_GRADIENT1);
-	            relleno.setOpaque(true);
+				relleno.setBackground(new Color(0, 0, 0, 0));
+	            relleno.setOpaque(false);
 	            add(relleno);
 			}
 		}
 			
 			setVisible(true);
-		
-		
-		
-		
 	}
-	private ImageIcon escalarImagen(String direccion,int x,int y) {
-	    	//System.out.println(direccion);
-	        ImageIcon iconoOriginal = new ImageIcon(direccion);
 	
-	       
-	        Image imagenEscalada = iconoOriginal.getImage()
-	                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
-	
-	        
-	        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
-	        iconoFinal.setDescription(direccion);
-	        return iconoFinal;
-	}
-	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
-    	System.out.println(direccion);
-        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
-
-       
-        Image imagenEscalada = iconoOriginal.getImage()
-                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
-
-        
-        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
-        iconoFinal.setDescription(direccion);
-        return iconoFinal;
-	}
 	public int getAlto() {
 		return alto;
 	}

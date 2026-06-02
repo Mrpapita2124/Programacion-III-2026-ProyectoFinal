@@ -191,4 +191,24 @@ public class ClientRepository {
 		return null;
 	}
 	
+	public int getTotalNumeroDeCliente()
+	{
+	    User user = Session.getCurrentUser();
+	    String sql = "SELECT COUNT(*) as total FROM cliente WHERE id_usuario = ?";
+	    
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, user.getId());
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt("total");
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return 0;
+	}
 }

@@ -18,6 +18,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
 import utils.Fonts;
+import utils.RoundedBorder;
 
 public class UserClientsPanel extends JPanel {
 	
@@ -33,13 +34,15 @@ public class UserClientsPanel extends JPanel {
 	{
 		this.ancestro=ancestro;
 		
-		
-		setBackground(Colores.COLOR_GRADIENT1);
-		
+		// Make panel transparent to show gradient
+		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		//navBAr
 		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		navbar.setOpaque(true); // Make navbar transparent
 		btnRegister = new JButton("Registrar Usuario");
 		navbar.add(btnRegister);
 		navbar.setMaximumSize(new Dimension(1600,32));
@@ -47,6 +50,7 @@ public class UserClientsPanel extends JPanel {
 		
 		// Las ClientesEstadisticas que apenas cree
 		ClientesEstadisticas statsPanel = new ClientesEstadisticas();
+		statsPanel.setOpaque(false); // Make stats panel transparent
 	    statsPanel.setMaximumSize(new Dimension(1600, 150));
 	    statsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    add(statsPanel);
@@ -69,6 +73,7 @@ public class UserClientsPanel extends JPanel {
 		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollClients.setOpaque(false);
+		scrollClients.getViewport().setOpaque(false); // Make viewport transparent
 		
 		scrollClients.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 		    @Override
@@ -102,6 +107,7 @@ public class UserClientsPanel extends JPanel {
 		scrollClients.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 		add(scrollClients);
 	}
+	
 	public JButton getBtnRegister() {
 		return btnRegister;
 	}
@@ -109,15 +115,19 @@ public class UserClientsPanel extends JPanel {
 	public ClientCards getClients() {
 		return clients;
 	}
+	
 	public void setClients(ClientCards clients) {
 		this.clients = clients;
 	}
+	
 	public JScrollPane getScrollClients() {
 		return scrollClients;
 	}
+	
 	public void setScrollClients(JScrollPane scrollClients) {
 		this.scrollClients = scrollClients;
 	}
+	
 	public void createClientList(VentanaPrincipal ventana) {
 		clients= new ClientCards(this,ventana);
 	
@@ -127,12 +137,15 @@ public class UserClientsPanel extends JPanel {
 	        scrollClients.setMaximumSize(new Dimension(1600, clients.getAlto()));
 	    }
 	}
+	
 	public void setBtnRegister(JButton btnRegister) {
 		this.btnRegister = btnRegister;
 	}
+	
 	public VentanaPrincipal getAncestro() {
 		return ancestro;
 	}
+	
 	public void setAncestro(VentanaPrincipal ancestro) {
 		this.ancestro = ancestro;
 	}

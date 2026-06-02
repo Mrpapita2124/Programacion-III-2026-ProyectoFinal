@@ -10,19 +10,19 @@ import repository.ClientRepository;
 import repository.EstadoPrestamoRepository;
 import repository.PrestamoRepository;
 import views.ClientInfoView;
-import views.ClientPanel;
+import views.ClientCardPanel;
 import views.FormularioGeneralCliente;
 import views.FormularioGeneralPrestamo;
 import views.UserClientsPanel;
 import views.VentanaPrincipal;
 
 public class ClientPanelController {
-	private ClientPanel clientPanel;
+	private ClientCardPanel clientPanel;
 	private ClientRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
 
-	public ClientPanelController(ClientPanel clientPanel,UserClientsPanel userPanel, VentanaPrincipal ventana) {
+	public ClientPanelController(ClientCardPanel clientPanel,UserClientsPanel userPanel, VentanaPrincipal ventana) {
 		clientRepository=new ClientRepository();
 		prestamoRepository=new PrestamoRepository();
 		estadoPrestamoRepository = new EstadoPrestamoRepository();

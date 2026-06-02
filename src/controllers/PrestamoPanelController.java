@@ -19,16 +19,16 @@ import repository.PrestamoRepository;
 import repository.UserRepository;
 import utils.Session;
 import views.ClientInfoView;
-import views.ClientPanel;
+import views.ClientCardPanel;
 import views.FormularioGeneralCliente;
 import views.FormularioGeneralPrestamo;
 import views.PayDebtView;
-import views.PrestamoPanel;
+import views.PrestamoInfoPanel;
 import views.UserClientsPanel;
 import views.VentanaPrincipal;
 
 public class PrestamoPanelController {
-	private PrestamoPanel prestamoPanel;
+	private PrestamoInfoPanel prestamoPanel;
 	private ClientRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
@@ -36,7 +36,7 @@ public class PrestamoPanelController {
 	private EstadoPrestamo estadoPrestamo;
 	private VentanaPrincipal ventana;
 
-	public PrestamoPanelController(PrestamoPanel prestamoPanel, VentanaPrincipal ventana) {
+	public PrestamoPanelController(PrestamoInfoPanel prestamoPanel, VentanaPrincipal ventana) {
 		this.ventana=ventana;
 		userRepository=new UserRepository();
 		clientRepository=new ClientRepository();

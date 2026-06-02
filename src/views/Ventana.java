@@ -1,29 +1,17 @@
 package views;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import controllers.LoginController;
@@ -151,16 +139,13 @@ public class Ventana extends JFrame{
 
 		add(scrollUsuarios);
 		
-		
 		PanelPersonalizable fondo1=new PanelPersonalizable();
 		fondo1.setBounds(725, 120, 450, 450);
 		fondo1.setBackground(Colores.LOGIN_PANEL1);
 		fondo1.setBorder(new RoundedBorder(Colores.DEFAULT_BORDER, 20, 2));
 		add(fondo1);
 		
-		
-		
-		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);  // Siempre agrega el set visible antes del final.
 	}
 	

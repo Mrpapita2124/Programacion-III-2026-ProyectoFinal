@@ -41,12 +41,10 @@ public class Colores {
     // Surfaces Cards
     public static final Color CARD_BG = new Color(17, 41, 55);  
     public static final Color INPUT_BG = new Color(17, 24, 39); 
-
+    public static final Color CLIENT_CARD_BG = new Color(17, 41, 68); 
     
     // Borders
-    public static final Color DEFAULT_BORDER = new Color(17, 24, 39); 
-    public static final Color INPUT_BORDER = new Color(17, 24, 39); 
-    public static final Color HOVER_ACCENT = new Color(17, 24, 39); 
+    public static final Color DEFAULT_BORDER = new Color(55, 65, 81);  
     
     // Text
     public static final Color PRIMARY_HEADINGS = new Color(243, 244, 246); 
@@ -54,6 +52,7 @@ public class Colores {
     public static final Color SECONDARY_HEADINGS = new Color(156, 163, 175);
     public static final Color PLACEHOLDER = new Color(107, 114, 128);
     public static final Color BUTTON_TEXT = new Color(255, 255, 255);
+    public static final Color VALUES_TEXT = new Color(237, 230, 242);
     
     // Accent Colors
     public static final Color AVATAR_GRADIENT1 = new Color(59, 130, 246);

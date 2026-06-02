@@ -89,7 +89,7 @@ public class FormularioRegistro extends JFrame{
     	
         iconoUsuarioFinal = escalarImagenLocal("..\\img\\iconoWhite.png",200,200);
         iconoUsuarioFinal.setDescription("..\\img\\iconoWhite.png");
-        setSize(1050,650);
+        setSize(1050,700);
         setLayout(null);
         setResizable(false);
         setTitle("Registro");
@@ -101,9 +101,12 @@ public class FormularioRegistro extends JFrame{
 		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0,0), "Cursor");
 		this.setCursor(myCursor);
         
+		int panelY = 40;
+		int panelAlto = 600;
+		
         PanelPersonalizable fondo = new PanelPersonalizable();
-        fondo.setBounds(165, 90, 680, 450);
-        fondo.setBorder(new RoundedBorder(Colores.INPUT_BORDER, 20, 2));
+        fondo.setBounds(165, panelY, 680, panelAlto);
+        fondo.setBorder(new RoundedBorder(Colores.DEFAULT_BORDER, 20, 2));
         fondo.setBackground(Colores.LOGIN_PANEL);
         
 
@@ -222,7 +225,7 @@ public class FormularioRegistro extends JFrame{
         JScrollPane scrollPanel= new JScrollPane(panelComponentes);
 		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(145, 90, 710, 450);
+		scrollPanel.setBounds(145, panelY, 710, panelAlto);
 		scrollPanel.getViewport().setOpaque(false);
 		scrollPanel.setOpaque(false);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(20); // Hacer que el scroll se baje mas rapido

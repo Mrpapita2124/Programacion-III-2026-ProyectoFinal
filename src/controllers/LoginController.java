@@ -1,11 +1,15 @@
 package controllers;
 
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,6 +17,7 @@ import javax.swing.event.DocumentListener;
 import exceptions.InvalidMailException;
 import modelos.User;
 import repository.LoginRepository;
+import utils.Colores;
 import utils.Session;
 import views.FormularioGeneralCliente;
 import views.Login;
@@ -221,5 +226,9 @@ public class LoginController {
 				handleRegistration();
 			}
 		});
+		
+		
 	}
+	
+	
 }

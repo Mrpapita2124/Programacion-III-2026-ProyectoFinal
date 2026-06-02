@@ -20,9 +20,9 @@ import utils.Session;
 public class PrestamoRepository {
 	
 	public boolean save(Prestamo prestamo) {
-		EstadoPrestamoRepository estadoRepo= new EstadoPrestamoRepository();
+	    EstadoPrestamoRepository estadoRepo = new EstadoPrestamoRepository();
 	    User user = Session.getCurrentUser();
-	    String sql = "insert into prestamo (id_usuario, id_cliente, estado, monto, numero_quincenas,monto_quincenal, monto_total, interes, interes_retraso, fecha) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	    String sql = "insert into prestamo (id_usuario, id_cliente, estado, monto, numero_quincenas, monto_quincenal, monto_total, interes, interes_retraso, fecha) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	    try (
 	        Connection conn = DatabaseConnection.getConnection();
@@ -40,14 +40,27 @@ public class PrestamoRepository {
 	        stmt.setDate(10, prestamo.getFecha());              
 
 	        stmt.executeUpdate();
+	        
 	        try (ResultSet rs = stmt.getGeneratedKeys()) {
 	            if (rs.next()) {
-	                 // devuelve el id_prestamo
-	            	LocalDate fecha=prestamo.getFecha().toLocalDate();
-	            	fecha=fecha.plusDays(15);
-	            	Date nuevaFecha=Date.valueOf(fecha);
-	            	EstadoPrestamo estadoPrestamo= new EstadoPrestamo(rs.getInt(1),prestamo.getNumero_quincenas(),prestamo.getMonto_total(), nuevaFecha, prestamo.getMonto_quincenal(), "correcto", 0);
-	            	estadoRepo.save(estadoPrestamo);
+	                int idPrestamo = rs.getInt(1);  
+	                
+	                LocalDate fecha = prestamo.getFecha().toLocalDate();
+	                fecha = fecha.plusDays(15);
+	                Date nuevaFecha = Date.valueOf(fecha);
+	                
+	                
+	                EstadoPrestamo estadoPrestamo = new EstadoPrestamo(
+	                    0,                           // id_estado_prestamo (autogenerado, poner 0)
+	                    idPrestamo,                  
+	                    prestamo.getNumero_quincenas(),  
+	                    prestamo.getMonto_total(),   
+	                    nuevaFecha,                 
+	                    prestamo.getMonto_quincenal(),  
+	                    "correcto",                  
+	                    0                            
+	                );
+	                estadoRepo.save(estadoPrestamo);
 	            }
 	        }
 	        
@@ -58,6 +71,7 @@ public class PrestamoRepository {
 	    }
 	    return false;
 	}
+	
 	public boolean update(Prestamo prestamo) {
 	    String sql = "UPDATE prestamo SET id_usuario = ?, id_cliente = ?, estado = ?, monto = ?, numero_quincenas = ?, monto_quincenal = ?, monto_total = ?, interes = ?, interes_retraso = ?, fecha = ? WHERE id_prestamo = ?";
 
@@ -165,6 +179,7 @@ public class PrestamoRepository {
 			}
 		return prestamos;
 	}
+	
 	public Prestamo getPrestamoById(int idPrestamo) {
 	    Prestamo prestamo = null;
 	    String sql = "SELECT p.*, c.nombre, c.apellido, c.ine " +
@@ -246,16 +261,17 @@ public class PrestamoRepository {
 			}
 		return prestamos;
 	}
-	public List<Prestamo> getAllActivePrestamosFromClient(Client client){
+	
+	public List<Prestamo> getAllActivePrestamosFromUser(){
 		
 		List<Prestamo> prestamos=new ArrayList<Prestamo>();
-		String sql = "Select p.*,c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente=c.id_cliente Where estado=?. id_cliente=?";
+		String sql = "Select p.*, c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente = c.id_cliente Where p.estado=? AND p.id_usuario=?";
 		try (
 				Connection conn = DatabaseConnection.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 			){
 				stmt.setString(1, "activo");
-				stmt.setString(1, client.getIdCliente());
+				stmt.setInt(2, Session.getCurrentUser().getId());
 				ResultSet rs=stmt.executeQuery();
 				while(rs.next()) {
 					Prestamo prestamo = new Prestamo(
@@ -285,6 +301,7 @@ public class PrestamoRepository {
 			}
 		return prestamos;
 	}
+	
 	public List<Prestamo> getAllConcludePrestamos(){
 		
 		List<Prestamo> prestamos=new ArrayList<Prestamo>();
@@ -323,6 +340,7 @@ public class PrestamoRepository {
 			}
 		return prestamos;
 	}
+	
 	public boolean deleteFromCliente(Client client) {
 		EstadoPrestamoRepository estadoRepo= new EstadoPrestamoRepository();
 	    User user = Session.getCurrentUser();
@@ -345,6 +363,7 @@ public class PrestamoRepository {
 	    }
 	    return false;
 	}
+	
 	public boolean delete(Prestamo prestamo) {
 	    User user = Session.getCurrentUser();
 	    String sql = "Delete From prestamo Where id_prestamo=?";
@@ -367,4 +386,24 @@ public class PrestamoRepository {
 	    return false;
 	}
 	
+	public int getTotalNumeroDePrestamos()
+	{
+	    User user = Session.getCurrentUser();
+	    String sql = "SELECT COUNT(*) FROM prestamo WHERE id_usuario = ?";
+	    
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, user.getId());
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return 0;
+	}
 }

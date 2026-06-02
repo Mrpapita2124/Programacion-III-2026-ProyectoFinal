@@ -133,14 +133,16 @@ public class EstadoPrestamoRepository {
 	                rs.getInt("id_prestamo"),
 	                rs.getInt("quincenas_restantes"),
 	                rs.getDouble("monto_restante"),
-	                rs.getDate("fecha_proximo_pago"),   // devuelve java.sql.Date
+	                rs.getDate("fecha_proximo_pago"),
 	                rs.getDouble("monto_proximo_pago"),
 	                rs.getString("estado"),
 	                rs.getDouble("dinero_atrasado")
 	            );
-	        }else {
-	        	System.out.println("me quiero matar");
+	            System.out.println("Estado encontrado para préstamo: " + prestamo.getId_prestamo());
+	        } else {
+	            System.out.println("No se encontró estado para préstamo ID: " + prestamo.getId_prestamo());
 	        }
+	        
 	        return estadoPrestamo;
 	        
 	    } catch (SQLException ex) {
@@ -148,6 +150,7 @@ public class EstadoPrestamoRepository {
 	    }
 	    return null;
 	}
+	
 	public boolean update(EstadoPrestamo estadoPrestamo) {
 	    String sql = "UPDATE estado_prestamo SET id_prestamo = ?, quincenas_restantes = ?, monto_restante = ?, fecha_proximo_pago = ?, monto_proximo_pago = ?, estado = ?, dinero_atrasado = ? WHERE id_estado_prestamo = ?";
 

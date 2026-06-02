@@ -5,22 +5,19 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Window;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 
-import com.formdev.flatlaf.util.Graphics2DProxy;
 
 import modelos.Client;
-import modelos.User;
 import utils.Colores;
 import utils.Fonts;
-import utils.PanelPersonalizable;
 
-public class ClientPanel extends JPanel {
+
+public class ClientCardPanel extends JPanel 
+{
 	private Font fontTexto = Fonts.setFontSegoe(0,25);
 	private JButton btnEdit;
 	private JButton btnDelete;
@@ -29,35 +26,41 @@ public class ClientPanel extends JPanel {
 	Client client;
 	
 
-	public ClientPanel(Client client) 
+	public ClientCardPanel(Client client) 
 	{	
 		this.client = client;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setAlignmentX(LEFT_ALIGNMENT);
-		setBackground(Colores.LOGIN_PANEL);
+		
+		setBackground(Colores.CLIENT_CARD_BG);
+		
 		setVisible(true);
 		setBorder(BorderFactory.createEmptyBorder(12, 10, 10, 10));
 		
 		JLabel icono;
 		try {
-			icono = new JLabel(escalarImagen(this.client.getIneDireccion(), 180, 120));
+			icono = new JLabel(escalarImagen(this.client.getIneDireccion(), 180, 160));
 		} catch (Exception e) {
-			icono = new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 180, 120));
+			icono = new JLabel(escalarImagenLocal("..\\img\\LicenseDefault.png", 180, 160));
 		}
 		
-		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
+		icono.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		JPanel clienteInfo = new JPanel();
-		clienteInfo.setForeground(Color.BLACK);
-		clienteInfo.setOpaque(false);
-		clienteInfo.setLayout(new BoxLayout(clienteInfo, BoxLayout.Y_AXIS));
+		JPanel clienteInfoPanel = new JPanel();
+		clienteInfoPanel.setForeground(Color.BLACK);
+		clienteInfoPanel.setOpaque(false);
+		clienteInfoPanel.setLayout(new BoxLayout(clienteInfoPanel, BoxLayout.Y_AXIS));
 		
 		JPanel nombreStatusPanel = new JPanel();
 		nombreStatusPanel.setLayout(new BoxLayout(nombreStatusPanel, BoxLayout.X_AXIS));
 		nombreStatusPanel.setOpaque(false);
 		nombreStatusPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		JLabel clienteNombre = new JLabel(this.client.getNombre() + " " + this.client.getApellido());
+		
+		String clientNombreFormato = this.client.getNombre() + " " + this.client.getApellido();
+		clientNombreFormato = clientNombreFormato.length() > 15 ? clientNombreFormato.substring(0, 15) + "..." : clientNombreFormato;
+		
+		JLabel clienteNombre = new JLabel(clientNombreFormato);
 		clienteNombre.setForeground(Colores.PRIMARY_HEADINGS);
 		clienteNombre.setFont(Fonts.setFontSegoe(1, 25));
 		
@@ -84,46 +87,79 @@ public class ClientPanel extends JPanel {
 		prestamosStatus.setForeground(Colores.BG_TEXT_COLOR);
 		prestamosStatus.setFont(Fonts.setFontSegoe(0, 12));
 		
-		// Botones de Card
-		btnEdit = new JButton("Editar");
-		btnDelete = new JButton("Eliminar");
-		btnInfo = new JButton("Info");
-		btnMoney = new JButton("Hacer prestamo");
 		
-		crearBoton(btnEdit, Colores.BUTTON_COLOR1);
-		crearBoton(btnDelete, Colores.BUTTON_COLOR1);
-		crearBoton(btnInfo, Colores.BUTTON_COLOR1);
-		crearBoton(btnMoney, Colores.BUTTON_COLOR1);
+		btnEdit = new JButton();
+		btnDelete = new JButton();
+		btnInfo = new JButton();
+		btnMoney = new JButton();
+		
+		int iconSize = 40;
+		
+		try {
+			btnEdit.setIcon(escalarImagen("src\\img\\cliente_edit_icon.png", iconSize, iconSize));
+			btnDelete.setIcon(escalarImagen("src\\img\\cliente_delete_icon.png", iconSize, iconSize));
+			btnInfo.setIcon(escalarImagen("src\\img\\cliente_info_icon.png", iconSize, iconSize));
+			btnMoney.setIcon(escalarImagen("src\\img\\cliente_prestamo_icon.png", iconSize, iconSize));
+		} 
+		catch (Exception e) {
+			btnEdit.setText("E");
+			btnDelete.setText("D");
+			btnInfo.setText("I");
+			btnMoney.setText("M");
+		}
+		
+		configurarBotonIcono(btnEdit, iconSize);
+		configurarBotonIcono(btnDelete, iconSize);
+		configurarBotonIcono(btnInfo, iconSize);
+		configurarBotonIcono(btnMoney, iconSize);
+		
+		btnEdit.setToolTipText("Editar cliente");
+		btnDelete.setToolTipText("Eliminar cliente");
+		btnInfo.setToolTipText("Ver información");
+		btnMoney.setToolTipText("Hacer préstamo");
 		
 		
 		// Panel horizontal para botones
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.setOpaque(false);
-		buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		int buttonWidth = 8;
+		buttonPanel.add(Box.createHorizontalGlue());
+
 		buttonPanel.add(btnEdit);
-		buttonPanel.add(Box.createRigidArea(new Dimension(8, 0)));
-		buttonPanel.add(btnDelete);
-		buttonPanel.add(Box.createRigidArea(new Dimension(8, 0)));
+		buttonPanel.add(Box.createRigidArea(new Dimension(buttonWidth, 0)));
 		buttonPanel.add(btnInfo);
-		buttonPanel.add(Box.createRigidArea(new Dimension(8, 0)));
+		buttonPanel.add(Box.createRigidArea(new Dimension(buttonWidth, 0)));
 		buttonPanel.add(btnMoney);
+		buttonPanel.add(Box.createRigidArea(new Dimension(buttonWidth, 0)));
+		buttonPanel.add(btnDelete);
+		buttonPanel.add(Box.createRigidArea(new Dimension(40, 0)));
 		
-		clienteInfo.add(Box.createRigidArea(new Dimension(0, 0)));
-		clienteInfo.add(nombreStatusPanel);  
-		clienteInfo.add(Box.createRigidArea(new Dimension(0, 8)));
-		clienteInfo.add(clienteCorreo);
-		clienteInfo.add(Box.createRigidArea(new Dimension(0, 2)));
-		clienteInfo.add(prestamosStatus);
-		clienteInfo.add(Box.createRigidArea(new Dimension(0, 25)));
-		clienteInfo.add(buttonPanel);
+		
+		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 0)));
+		clienteInfoPanel.add(nombreStatusPanel);  
+		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 8)));
+		clienteInfoPanel.add(clienteCorreo);
+		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 2)));
+		clienteInfoPanel.add(prestamosStatus);
+		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+		clienteInfoPanel.add(buttonPanel);
 		
 		add(icono);
 		add(Box.createRigidArea(new Dimension(15, 0)));
-		add(clienteInfo);
+		add(clienteInfoPanel);
 	}
 	
+
+	private void configurarBotonIcono(JButton button, int iconoSize) {
+		button.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		button.setContentAreaFilled(false);  
+		button.setFocusPainted(false);
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setPreferredSize(new Dimension(iconoSize+10, iconoSize+10));
+	}
 	
 	private ImageIcon escalarImagen(String direccion,int x,int y) throws Exception {
     	//System.out.println(direccion);
@@ -141,6 +177,7 @@ public class ClientPanel extends JPanel {
         
         return iconoFinal;
 	}
+	
 	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
 		System.out.println("nigga");
 	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
@@ -153,16 +190,6 @@ public class ClientPanel extends JPanel {
 	    ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
 	    iconoFinal.setDescription(direccion);
 	    return iconoFinal;
-	}
-	
-	private void crearBoton(JButton button, Color bgColor) 
-	{
-	    button.setBackground(bgColor);
-	    button.setForeground(Colores.PRIMARY_HEADINGS);
-	    button.setFocusPainted(false);
-	    button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-	    button.setFont(Fonts.setFontSegoe(1, 12));
-	    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 	
 	

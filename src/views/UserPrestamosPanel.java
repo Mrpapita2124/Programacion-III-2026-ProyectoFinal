@@ -1,13 +1,12 @@
 package views;
 
-import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,98 +15,113 @@ import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
+import utils.Fonts;
 
 public class UserPrestamosPanel extends JPanel {
-	private Font fontTitulo = new Font("Times New Roman", Font.BOLD, 35);
+
+	private Font fontTitulo = Fonts.setFontSegoe(1, 25);
 	
 	PrestamoCards prestamos;
 	ConcludedPrestamoCards concludedPrestamos;
-	JScrollPane scrollClients;
+	JScrollPane scrollPrestamos;
 	VentanaPrincipal ancestro;
+	
 	public UserPrestamosPanel(VentanaPrincipal ancestro) {
-		this.ancestro=ancestro;
-		setBackground(Colores.BACKGROUND);
+		this.ancestro = ancestro;
+		
+		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//navBAr
-		concludedPrestamos= new ConcludedPrestamoCards(ancestro);
-		prestamos=new PrestamoCards(ancestro);
 		
+		add(Box.createRigidArea(new Dimension(0, 25)));
 		
-		JLabel saludo = new JLabel("Tus clientes"); 
-        saludo.setOpaque(false);
-        saludo.setFont(fontTitulo);
-        saludo.setForeground(Colores.TEXT_COLOR);
-        saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(saludo);
-		//createClientList(ancestro);
-		JPanel allPrestamos= new JPanel();
-		allPrestamos.setSize(new Dimension(1200,concludedPrestamos.getAlto()+prestamos.getAlto()));
+		JLabel heading = new JLabel("Mis Préstamos"); 
+		heading.setOpaque(false);
+		heading.setFont(fontTitulo);
+		heading.setForeground(Colores.PRIMARY_HEADINGS);
+		heading.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(heading);
+		
+		add(Box.createRigidArea(new Dimension(0, 50)));
+		
+		JPanel allPrestamos = new JPanel();
 		allPrestamos.setLayout(new BoxLayout(allPrestamos, BoxLayout.Y_AXIS));
+		allPrestamos.setOpaque(false);
+		
+		prestamos = new PrestamoCards(ancestro);
+		prestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(prestamos);
+		
+		
+		concludedPrestamos = new ConcludedPrestamoCards(ancestro);
+		concludedPrestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(concludedPrestamos);
 		
-		scrollClients= new JScrollPane(allPrestamos);
-		scrollClients.setMaximumSize(new Dimension(1200,600));
-		scrollClients.setSize(new Dimension(1200,concludedPrestamos.getAlto()+prestamos.getAlto()));
-		scrollClients.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollClients.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollClients.setOpaque(false);
-		scrollClients.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-		    @Override
-		    protected void configureScrollBarColors() {
-		        this.thumbColor = Colores.BUTTON_COLOR1;       // color del "pulgar" (la parte que arrastras)
-		        this.trackColor = Color.LIGHT_GRAY; // color del fondo
-		    }
-		    @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            private JButton createZeroButton() {
-                JButton button = new JButton();
-                button.setPreferredSize(new Dimension(0, 0));
-                return button;
-            }
-
-
-		    
+		// Scroll
+		scrollPrestamos = new JScrollPane(allPrestamos);
+		scrollPrestamos.setMaximumSize(new Dimension(1400, 600));
+		scrollPrestamos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPrestamos.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPrestamos.setOpaque(false);
+		scrollPrestamos.getViewport().setOpaque(false);
+		scrollPrestamos.setBorder(null);
+		scrollPrestamos.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
+		
+		scrollPrestamos.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = Colores.BUTTON_COLOR1;
+				this.trackColor = Color.LIGHT_GRAY;
+			}
+			@Override
+			protected JButton createDecreaseButton(int orientation) {
+				return createZeroButton();
+			}
+			@Override
+			protected JButton createIncreaseButton(int orientation) {
+				return createZeroButton();
+			}
+			private JButton createZeroButton() {
+				JButton button = new JButton();
+				button.setPreferredSize(new Dimension(0, 0));
+				return button;
+			}
 		});
-		scrollClients.getVerticalScrollBar().setUnitIncrement(20);
-		scrollClients.getVerticalScrollBar().setOpaque(false);
-		scrollClients.setBorder(null);
-		add(scrollClients);
+		scrollPrestamos.getVerticalScrollBar().setUnitIncrement(20);
+		scrollPrestamos.getVerticalScrollBar().setOpaque(false);
+		
+		add(scrollPrestamos);
 	}
-	
 	
 	public PrestamoCards getPrestamos() {
 		return prestamos;
 	}
 
-
 	public void setPrestamos(PrestamoCards prestamos) {
 		this.prestamos = prestamos;
 	}
+	
+	public ConcludedPrestamoCards getConcludedPrestamos() {
+		return concludedPrestamos;
+	}
 
-	public JScrollPane getScrollClients() {
-		return scrollClients;
+	public void setConcludedPrestamos(ConcludedPrestamoCards concludedPrestamos) {
+		this.concludedPrestamos = concludedPrestamos;
 	}
-	public void setScrollClients(JScrollPane scrollClients) {
-		this.scrollClients = scrollClients;
+
+	public JScrollPane getScrollPrestamos() {
+		return scrollPrestamos;
 	}
-	/*public void createClientList(VentanaPrincipal ventana) {
-		clients= new ClientCards(this,ventana);
-	}*/
+	
+	public void setScrollPrestamos(JScrollPane scrollPrestamos) {
+		this.scrollPrestamos = scrollPrestamos;
+	}
 	
 	public VentanaPrincipal getAncestro() {
 		return ancestro;
 	}
+	
 	public void setAncestro(VentanaPrincipal ancestro) {
 		this.ancestro = ancestro;
 	}
-	
 }

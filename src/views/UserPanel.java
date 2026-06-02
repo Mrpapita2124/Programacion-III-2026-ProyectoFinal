@@ -39,7 +39,7 @@ public class UserPanel extends JPanel {
 		setOpaque(true);
 		
 		setBorder(BorderFactory.createCompoundBorder(
-			new LineBorder(Colores.INPUT_BORDER, 1, true),
+			new LineBorder(Colores.DEFAULT_BORDER, 1, true),
 			new EmptyBorder(12, 20, 12, 20)
 		));
 
@@ -253,12 +253,12 @@ public class UserPanel extends JPanel {
 				new LineBorder(Colores.FOCUS_RING, 2, true),
 				new EmptyBorder(11, 19, 11, 19)
 			));
-			setBackground(Colores.INPUT_BORDER);
+			setBackground(Colores.DEFAULT_BORDER);
 		} 
 		else 
 		{
 			setBorder(BorderFactory.createCompoundBorder(
-				new LineBorder(Colores.INPUT_BORDER, 1, true),
+				new LineBorder(Colores.DEFAULT_BORDER, 1, true),
 				new EmptyBorder(12, 20, 12, 20)
 			));
 			setBackground(Colores.CARD_BG);
