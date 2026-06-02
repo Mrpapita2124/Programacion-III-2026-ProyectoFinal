@@ -1,15 +1,17 @@
-package views;
+package views.prestamo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.PrestamoPanelController;
+import controllers.prestamo.PrestamoPanelController;
 import modelos.Prestamo;
 import repository.PrestamoRepository;
 import utils.Colores;
 import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
+import views.PrestamoInfoPanel;
+import views.VentanaPrincipal;
 
 import java.awt.Color;
 import java.awt.Component;

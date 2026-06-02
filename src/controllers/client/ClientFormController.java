@@ -1,4 +1,4 @@
-package controllers;
+package controllers.client;
 
 import java.awt.Color; 
 import java.awt.Window;
@@ -25,10 +25,10 @@ import repository.RegisterRepository;
 import repository.UserRepository;
 import utils.Colores;
 import utils.Session;
-import views.FormularioGeneralCliente;
-import views.FormularioRegistro;
 import views.Login;
 import views.Ventana;
+import views.formulario.FormularioGeneralCliente;
+import views.formulario.FormularioRegistro;
 
 import java.io.File;
 import java.nio.file.Files;

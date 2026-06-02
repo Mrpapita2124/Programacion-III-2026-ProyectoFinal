@@ -20,9 +20,9 @@ import modelos.User;
 import repository.RegisterRepository;
 import repository.UserRepository;
 import utils.Colores;
-import views.FormularioRegistro;
 import views.Login;
 import views.Ventana;
+import views.formulario.FormularioRegistro;
 
 import java.io.File;
 import java.nio.file.Files;

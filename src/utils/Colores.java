@@ -20,6 +20,8 @@ public class Colores {
     
     public static final Color BUTTON_COLOR1 = new Color(245, 158, 11);
     public static final Color BUTTON_COLOR2 = new Color(162, 153, 143);
+    public static final Color BUTTON_COLOR3 = new Color(196, 193, 251);
+    public static final Color BUTTON_COLOR4 = new Color(17, 41, 55);
     
     public static final Color TABBED_TEXT_COLOR = Color.LIGHT_GRAY;
     

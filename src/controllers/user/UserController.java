@@ -1,4 +1,4 @@
-package controllers;
+package controllers.user;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -7,14 +7,15 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import controllers.VentanaPrincipalController;
 import modelos.User;
 import repository.UserRepository;
 import services.PDFExporter;
 import tablemodels.UserTableModel;
-import views.UserFormDialog;
-import views.UsersView;
 import views.Ventana;
 import views.VentanaPrincipal;
+import views.user.UserFormDialog;
+import views.user.UsersView;
 
 public class UserController {
 

@@ -1,4 +1,4 @@
-package views;
+package views.client;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -16,7 +16,7 @@ import utils.Colores;
 import utils.Fonts;
 
 
-public class ClientCardPanel extends JPanel 
+public class ClientPanel extends JPanel 
 {
 	private Font fontTexto = Fonts.setFontSegoe(0,25);
 	private JButton btnEdit;
@@ -26,7 +26,7 @@ public class ClientCardPanel extends JPanel
 	Client client;
 	
 
-	public ClientCardPanel(Client client) 
+	public ClientPanel(Client client) 
 	{	
 		this.client = client;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

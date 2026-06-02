@@ -1,4 +1,4 @@
-package views;
+package views.formulario;
 
 import java.awt.Color;
 

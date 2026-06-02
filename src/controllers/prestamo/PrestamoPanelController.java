@@ -1,4 +1,4 @@
-package controllers;
+package controllers.prestamo;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import controllers.PayDebtController;
 import modelos.Client;
 import modelos.EstadoPrestamo;
 import modelos.Prestamo;
@@ -18,18 +19,17 @@ import repository.EstadoPrestamoRepository;
 import repository.PrestamoRepository;
 import repository.UserRepository;
 import utils.Session;
-import views.ClientInfoView;
-import views.ClientCardPanel;
-import views.FormularioGeneralCliente;
-import views.FormularioGeneralPrestamo;
 import views.PayDebtView;
 import views.PrestamoInfoPanel;
-import views.UserClientsPanel;
 import views.VentanaPrincipal;
+import views.client.ClientInfoView;
+import views.client.ClientPanel;
+import views.formulario.FormularioGeneralCliente;
+import views.formulario.FormularioGeneralPrestamo;
+import views.user.UserClientsPanel;
 
 public class PrestamoPanelController {
 	private PrestamoInfoPanel prestamoPanel;
-	private ClientRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
 	private UserRepository userRepository;
@@ -39,7 +39,6 @@ public class PrestamoPanelController {
 	public PrestamoPanelController(PrestamoInfoPanel prestamoPanel, VentanaPrincipal ventana) {
 		this.ventana=ventana;
 		userRepository=new UserRepository();
-		clientRepository=new ClientRepository();
 		prestamoRepository=new PrestamoRepository();
 		estadoPrestamoRepository = new EstadoPrestamoRepository();
 		this.prestamoPanel = prestamoPanel;
@@ -56,6 +55,8 @@ public class PrestamoPanelController {
 		});
 		this.prestamoPanel.getBtnDebt().addActionListener(e -> new PayDebtController(new PayDebtView(estadoPrestamo,ventana,this.prestamoPanel.getPrestamo())));
 	}
+	
+	
 	private void deletePrestamo(Prestamo prestamo) {
 		double earned=prestamo.getMonto_total()-estadoPrestamo.getMonto_restante();
 		User user= Session.getCurrentUser();
@@ -71,6 +72,7 @@ public class PrestamoPanelController {
 		}
 		this.ventana.reloadPrestamos(true);
 	}
+	
 	private void completarPrestamo(Prestamo prestamo) {
 		
 		if(estadoPrestamo.getQuincenasRestantes()>1) {

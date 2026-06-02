@@ -1,4 +1,4 @@
-package views;
+package views.client;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -17,6 +17,7 @@ import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
 import utils.Session;
+import views.VentanaPrincipal;
 
 
 public class ClientesEstadisticas extends PanelPersonalizable {

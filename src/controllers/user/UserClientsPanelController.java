@@ -1,11 +1,12 @@
-package controllers;
+package controllers.user;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import views.FormularioGeneralCliente;
-import views.UserClientsPanel;
+import controllers.client.ClientFormController;
 import views.VentanaPrincipal;
+import views.formulario.FormularioGeneralCliente;
+import views.user.UserClientsPanel;
 
 public class UserClientsPanelController {
 	UserClientsPanel clientPanel;
@@ -13,6 +14,8 @@ public class UserClientsPanelController {
 	public UserClientsPanelController(UserClientsPanel clientPanel) {
 		this.clientPanel = clientPanel;
 		VentanaPrincipal ventana= this.clientPanel.getAncestro();
+		
+		
 		this.clientPanel.getBtnRegister().addActionListener(e -> {
 			FormularioGeneralCliente form=new FormularioGeneralCliente();
 			
@@ -23,6 +26,12 @@ public class UserClientsPanelController {
 					ventana.reload();
 				}
 			});
+		});
+		
+		this.clientPanel.getBtnFilter().addActionListener(e -> {
+			
+			// AQUIII
+			System.out.println("\nFILTER PERO EN CLIENTES!");
 		});
 	}
 	

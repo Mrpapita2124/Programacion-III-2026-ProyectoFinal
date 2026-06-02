@@ -11,10 +11,14 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-import controllers.UserClientsPanelController;
+import controllers.user.UserClientsPanelController;
+import controllers.user.UserPrestamosPnlController;
 import utils.GradientBackground;
 import utils.Session;
 import utils.ThemeManager;
+import views.user.UserClientsPanel;
+import views.user.UserPrestamosPanel;
+import views.user.UsersView;
 
 public class VentanaPrincipal extends JFrame 
 {
@@ -118,9 +122,10 @@ public class VentanaPrincipal extends JFrame
 		UserClientsPanel panel=new UserClientsPanel(this);
 		new UserClientsPanelController(panel);
 		homePanel = panel;
-		UserPrestamosPanel prestamosCards= new UserPrestamosPanel(this);
-		prestamosPanel=prestamosCards;
-		//homePanel.add(new JLabel("Bienvenido al Sistema"));
+
+		UserPrestamosPanel prestamosCards = new UserPrestamosPanel(this);
+	    new UserPrestamosPnlController(prestamosCards);
+	    prestamosPanel = prestamosCards;
 		
 		usersPanel = new UsersView();
 		
@@ -135,9 +140,10 @@ public class VentanaPrincipal extends JFrame
 	
 	private void createPrestamosView() 
 	{
+		UserPrestamosPanel prestamosCards = new UserPrestamosPanel(this);
+		UserPrestamosPnlController userPrestamosPnlController = new UserPrestamosPnlController(prestamosCards);
 		
-		UserPrestamosPanel prestamosCards= new UserPrestamosPanel(this);
-		prestamosPanel=prestamosCards;
+		prestamosPanel = prestamosCards;  
 		container.add(prestamosPanel, PRESTAMOS);
 		add(container, BorderLayout.CENTER);
 		

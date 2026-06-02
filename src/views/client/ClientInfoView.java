@@ -1,4 +1,4 @@
-package views;
+package views.client;
 
 import java.awt.Color;
 import java.awt.Cursor;

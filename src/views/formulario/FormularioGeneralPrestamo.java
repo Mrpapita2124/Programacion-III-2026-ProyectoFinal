@@ -1,4 +1,4 @@
-package views;
+package views.formulario;
 
 import java.awt.Color;
 
@@ -54,6 +54,7 @@ import modelos.User;
 import repository.UserRepository;
 import utils.Colores;
 import utils.PanelPersonalizable;
+import views.VentanaPrincipal;
 
 public class FormularioGeneralPrestamo extends JFrame{
     

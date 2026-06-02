@@ -1,15 +1,18 @@
-package views;
+package views.user;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,13 +21,17 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
 import utils.Fonts;
-import utils.RoundedBorder;
+import views.VentanaPrincipal;
+import views.client.ClientCards;
+import views.client.ClientesEstadisticas;
 
 public class UserClientsPanel extends JPanel {
 	
 	private Font fontTitulo = Fonts.setFontSegoe(1,25);
+	private Font fontBotones = Fonts.setFontSegoe(0,14);
 	
 	private JButton btnRegister;
+	private JButton btnFilter;
 	ClientCards clients;
 	JScrollPane scrollClients;
 	VentanaPrincipal ancestro;
@@ -40,15 +47,16 @@ public class UserClientsPanel extends JPanel {
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		//navBAr
+		/*
+		//navBar
 		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		navbar.setOpaque(true); // Make navbar transparent
 		btnRegister = new JButton("Registrar Usuario");
 		navbar.add(btnRegister);
 		navbar.setMaximumSize(new Dimension(1600,32));
 		add(navbar);
+		*/
 		
-		// Las ClientesEstadisticas que apenas cree
 		ClientesEstadisticas statsPanel = new ClientesEstadisticas();
 		statsPanel.setOpaque(false); // Make stats panel transparent
 	    statsPanel.setMaximumSize(new Dimension(1600, 150));
@@ -57,12 +65,60 @@ public class UserClientsPanel extends JPanel {
 		
 		add(Box.createRigidArea(new Dimension(0, 45)));
 		
+		
+		JPanel titlePanel = new JPanel(new BorderLayout());
+		titlePanel.setOpaque(false);
+		titlePanel.setMaximumSize(new Dimension(1600, 50));
+		titlePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		JLabel saludo = new JLabel("Lista de Clientes"); 
         saludo.setOpaque(false);
         saludo.setFont(fontTitulo);
         saludo.setForeground(Colores.PRIMARY_HEADINGS);
-        saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(saludo);
+        titlePanel.add(saludo, BorderLayout.WEST);
+        
+
+        JPanel panelDeBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
+        panelDeBotones.setOpaque(false);
+        
+        // BOTON FILTAR PAPITAAAA ----------------
+        
+        btnFilter = new JButton("Filtrar");
+        btnFilter.setFont(fontBotones);
+        btnFilter.setBackground(Colores.BUTTON_COLOR4);
+        btnFilter.setForeground(Color.WHITE);
+        btnFilter.setFocusPainted(false);
+        btnFilter.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+        btnFilter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        btnRegister = new JButton("Registrar Cliente");
+        btnRegister.setFont(fontBotones);
+        btnRegister.setBackground(Colores.BUTTON_COLOR3);
+        btnRegister.setForeground(Color.BLACK);
+        btnRegister.setFocusPainted(false);
+        btnRegister.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+        btnRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        int iconSize = 20;
+		
+		try 
+		{
+			btnRegister.setIcon(escalarImagen("src\\img\\cliente_agregar.png", iconSize, iconSize));
+			btnFilter.setIcon(escalarImagen("src\\img\\cliente_filtrar.png", iconSize, iconSize));
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("No se cargo lo iconos de agregar cliente y filtar cliente!");
+		}
+        
+        panelDeBotones.add(btnFilter);
+        panelDeBotones.add(btnRegister);
+        
+        titlePanel.add(panelDeBotones, BorderLayout.EAST);
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+
+        
+        add(titlePanel);
 		
 		add(Box.createRigidArea(new Dimension(0, 30)));
 		
@@ -112,6 +168,10 @@ public class UserClientsPanel extends JPanel {
 		return btnRegister;
 	}
 	
+	public JButton getBtnFilter() {
+		return btnFilter;
+	}
+	
 	public ClientCards getClients() {
 		return clients;
 	}
@@ -142,12 +202,34 @@ public class UserClientsPanel extends JPanel {
 		this.btnRegister = btnRegister;
 	}
 	
+	public void setBtnFilter(JButton btnFilter) {
+		this.btnFilter = btnFilter;
+	}
+	
 	public VentanaPrincipal getAncestro() {
 		return ancestro;
 	}
 	
 	public void setAncestro(VentanaPrincipal ancestro) {
 		this.ancestro = ancestro;
+	}
+	
+	
+	private ImageIcon escalarImagen(String direccion,int x,int y) throws Exception {
+    	//System.out.println(direccion);
+        ImageIcon iconoOriginal = new ImageIcon(direccion);
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        
+        if(iconoFinal.getDescription().equals("null"));
+        
+        return iconoFinal;
 	}
 	
 }

@@ -1,32 +1,34 @@
-package controllers;
+package controllers.client;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import controllers.prestamo.PrestamoFormController;
 import modelos.Client;
 import modelos.Prestamo;
 import repository.ClientRepository;
 import repository.EstadoPrestamoRepository;
 import repository.PrestamoRepository;
-import views.ClientInfoView;
-import views.ClientCardPanel;
-import views.FormularioGeneralCliente;
-import views.FormularioGeneralPrestamo;
-import views.UserClientsPanel;
 import views.VentanaPrincipal;
+import views.client.ClientInfoView;
+import views.client.ClientPanel;
+import views.formulario.FormularioGeneralCliente;
+import views.formulario.FormularioGeneralPrestamo;
+import views.user.UserClientsPanel;
 
 public class ClientPanelController {
-	private ClientCardPanel clientPanel;
+	private ClientPanel clientPanel;
 	private ClientRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
 
-	public ClientPanelController(ClientCardPanel clientPanel,UserClientsPanel userPanel, VentanaPrincipal ventana) {
+	public ClientPanelController(ClientPanel clientPanel,UserClientsPanel userPanel, VentanaPrincipal ventana) {
 		clientRepository=new ClientRepository();
 		prestamoRepository=new PrestamoRepository();
 		estadoPrestamoRepository = new EstadoPrestamoRepository();
 		this.clientPanel = clientPanel;
+		
 		this.clientPanel.getBtnEdit().addActionListener(e -> {
 			FormularioGeneralCliente form=new FormularioGeneralCliente(this.clientPanel.getClient());
 			
@@ -57,6 +59,7 @@ public class ClientPanelController {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
 	                ventana.reloadPrestamos(true);
+	                ventana.reload();
 	            }
 			});
 		});

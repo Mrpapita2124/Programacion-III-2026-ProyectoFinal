@@ -19,9 +19,9 @@ import modelos.User;
 import repository.LoginRepository;
 import utils.Colores;
 import utils.Session;
-import views.FormularioGeneralCliente;
 import views.Login;
 import views.VentanaPrincipal;
+import views.formulario.FormularioGeneralCliente;
 
 
 public class LoginController {

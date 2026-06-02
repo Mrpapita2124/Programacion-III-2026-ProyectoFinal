@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import config.Config;
+import controllers.user.UserController;
 import modelos.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;

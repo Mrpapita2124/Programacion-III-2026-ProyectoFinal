@@ -299,6 +299,7 @@ public class PrestamoRepository {
 			}catch(SQLException ex) {
 				ex.printStackTrace();
 			}
+		
 		return prestamos;
 	}
 	

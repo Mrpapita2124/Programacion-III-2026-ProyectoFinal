@@ -3,11 +3,12 @@ package views;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.UserPanelController;
+import controllers.user.UserPanelController;
 import modelos.User;
 import repository.UserRepository;
 import tablemodels.UserTableModel;
 import utils.Colores;
+import views.user.UserPanel;
 
 import java.awt.*;
 import java.io.IOException;

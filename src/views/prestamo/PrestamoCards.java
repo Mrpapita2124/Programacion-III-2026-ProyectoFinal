@@ -1,15 +1,17 @@
-package views;
+package views.prestamo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.PrestamoPanelController;
+import controllers.prestamo.PrestamoPanelController;
 import modelos.Prestamo;
 import repository.PrestamoRepository;
 import utils.Colores;
 import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
+import views.PrestamoInfoPanel;
+import views.VentanaPrincipal;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,7 +24,7 @@ import java.util.List;
 
 public class PrestamoCards extends PanelPersonalizable 
 {
-	private Font fontTitulo = Fonts.setFontSegoe(1,15);
+	private Font fontTitulo = Fonts.setFontSegoe(1,12);
 	int alto;
 	
 	public PrestamoCards(VentanaPrincipal ventana) 
@@ -34,6 +36,8 @@ public class PrestamoCards extends PanelPersonalizable
 		setBackground(new Color(0, 0, 0, 0));
 		
 		List<Prestamo> prestamos = prestamoRepo.getAllActivePrestamosFromUser();
+		
+		
 
 		if (prestamos.isEmpty()) 
 		{

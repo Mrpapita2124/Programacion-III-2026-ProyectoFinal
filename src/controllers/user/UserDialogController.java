@@ -1,4 +1,4 @@
-package controllers;
+package controllers.user;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -28,8 +28,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import modelos.User;
 import repository.UserRepository;
 import utils.Colores;
-import views.UserFormDialog;
 import views.Ventana;
+import views.user.UserFormDialog;
 
 public class UserDialogController {
 

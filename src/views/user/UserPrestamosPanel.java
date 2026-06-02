@@ -1,13 +1,18 @@
-package views;
+package views.user;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,11 +21,16 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import utils.Colores;
 import utils.Fonts;
+import views.VentanaPrincipal;
+import views.prestamo.ConcludedPrestamoCards;
+import views.prestamo.PrestamoCards;
 
 public class UserPrestamosPanel extends JPanel {
 
-	private Font fontTitulo = Fonts.setFontSegoe(1, 25);
+	private Font fontTitulo = Fonts.setFontSegoe(1, 35);
+	private Font fontBotones = Fonts.setFontSegoe(0, 14);
 	
+	private JButton btnFilter;
 	PrestamoCards prestamos;
 	ConcludedPrestamoCards concludedPrestamos;
 	JScrollPane scrollPrestamos;
@@ -35,12 +45,54 @@ public class UserPrestamosPanel extends JPanel {
 		
 		add(Box.createRigidArea(new Dimension(0, 25)));
 		
-		JLabel heading = new JLabel("Mis Préstamos"); 
-		heading.setOpaque(false);
-		heading.setFont(fontTitulo);
-		heading.setForeground(Colores.PRIMARY_HEADINGS);
-		heading.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(heading);
+		JPanel panelTitulo = new JPanel(new BorderLayout());
+		panelTitulo.setOpaque(false);
+		panelTitulo.setMaximumSize(new Dimension(1200, 50));
+		panelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		JPanel izqPanel = new JPanel();
+		izqPanel.setOpaque(false);
+		izqPanel.setPreferredSize(new Dimension(80, 30));
+		
+		JLabel tituloLbl = new JLabel("Mis Préstamos"); 
+		tituloLbl.setOpaque(false);
+		tituloLbl.setFont(fontTitulo);
+		tituloLbl.setForeground(Colores.PRIMARY_HEADINGS);
+		
+		JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
+		btnPanel.setOpaque(false);
+		
+		// BOTON FILTAR PERO EN PRESTAMOOSSS
+		
+		btnFilter = new JButton("Filtrar");
+		btnFilter.setFont(fontBotones);
+		btnFilter.setBackground(Colores.BUTTON_COLOR4);
+		btnFilter.setForeground(Color.WHITE);
+		btnFilter.setFocusPainted(false);
+		btnFilter.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+		btnFilter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		int iconSize = 20;
+		
+		try 
+		{
+			btnFilter.setIcon(escalarImagen("src\\img\\cliente_filtrar.png", iconSize, iconSize));
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("No se cargo lo iconos de filtar cliente!");
+		}
+		
+		btnPanel.add(btnFilter);
+		
+		panelTitulo.add(izqPanel, BorderLayout.WEST);
+		panelTitulo.add(tituloLbl, BorderLayout.CENTER);
+		panelTitulo.add(btnPanel, BorderLayout.EAST);
+		
+		panelTitulo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		add(panelTitulo);
+		
+		
 		
 		add(Box.createRigidArea(new Dimension(0, 50)));
 		
@@ -52,10 +104,10 @@ public class UserPrestamosPanel extends JPanel {
 		prestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(prestamos);
 		
-		
 		concludedPrestamos = new ConcludedPrestamoCards(ancestro);
 		concludedPrestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(concludedPrestamos);
+		
 		
 		// Scroll
 		scrollPrestamos = new JScrollPane(allPrestamos);
@@ -93,6 +145,14 @@ public class UserPrestamosPanel extends JPanel {
 		add(scrollPrestamos);
 	}
 	
+	public JButton getBtnFilter() {
+		return btnFilter;
+	}
+	
+	public void setBtnFilter(JButton btnFilter) {
+		this.btnFilter = btnFilter;
+	}
+	
 	public PrestamoCards getPrestamos() {
 		return prestamos;
 	}
@@ -123,5 +183,22 @@ public class UserPrestamosPanel extends JPanel {
 	
 	public void setAncestro(VentanaPrincipal ancestro) {
 		this.ancestro = ancestro;
+	}
+	
+	private ImageIcon escalarImagen(String direccion,int x,int y) throws Exception {
+    	//System.out.println(direccion);
+        ImageIcon iconoOriginal = new ImageIcon(direccion);
+
+       
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+        
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        
+        if(iconoFinal.getDescription().equals("null"));
+        
+        return iconoFinal;
 	}
 }

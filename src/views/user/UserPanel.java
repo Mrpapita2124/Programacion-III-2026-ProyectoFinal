@@ -1,4 +1,4 @@
-package views;
+package views.user;
 
 import java.awt.Color;
 import java.awt.Component;

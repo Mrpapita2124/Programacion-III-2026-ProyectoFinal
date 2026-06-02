@@ -1,13 +1,14 @@
-package controllers;
+package controllers.user;
 
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import controllers.VentanaPrincipalController;
 import utils.Session;
 import utils.Updater;
-import views.UserPanel;
 import views.VentanaPrincipal;
+import views.user.UserPanel;
 
 public class UserPanelController {
 	UserPanel userPanel;

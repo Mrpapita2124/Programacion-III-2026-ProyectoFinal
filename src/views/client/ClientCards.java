@@ -1,10 +1,10 @@
-package views;
+package views.client;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.ClientPanelController;
-import controllers.UserPanelController;
+import controllers.client.ClientPanelController;
+import controllers.user.UserPanelController;
 import modelos.Client;
 import modelos.User;
 import repository.ClientRepository;
@@ -14,6 +14,8 @@ import utils.Colores;
 import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
+import views.VentanaPrincipal;
+import views.user.UserClientsPanel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -72,7 +74,7 @@ public class ClientCards extends PanelPersonalizable
 				card.setBorder(new RoundedBorder(Colores.DEFAULT_BORDER, 20, 2));
 				card.setOpaque(true);
 				
-				ClientCardPanel clientListPanel = new ClientCardPanel(clients.get(i));
+				ClientPanel clientListPanel = new ClientPanel(clients.get(i));
 				new ClientPanelController(clientListPanel,userPanel,ventana);
 				clientListPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 				

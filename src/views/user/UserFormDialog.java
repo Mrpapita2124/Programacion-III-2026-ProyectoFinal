@@ -1,4 +1,4 @@
-package views;
+package views.user;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,8 +38,8 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controllers.UserDialogController;
 import controllers.VentanaPrincipalController;
+import controllers.user.UserDialogController;
 import modelos.User;
 import repository.UserRepository;
 import utils.Colores;
