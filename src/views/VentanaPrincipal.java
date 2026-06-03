@@ -3,7 +3,7 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Cursor;
-
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -25,6 +25,7 @@ public class VentanaPrincipal extends JFrame
 	public static final String HOME = "HOME";
 	public static final String USERS = "USERS";
 	public static final String PRESTAMOS = "PRESTAMOS";
+	public static final String FILTROS = "FILTROS";
 	
 	private JMenuItem mItemExit;
 	private JButton btnUsers;
@@ -36,10 +37,12 @@ public class VentanaPrincipal extends JFrame
 	private JPanel container;
 	JPanel homePanel;
 	JPanel prestamosPanel;
+	JPanel filterPanel;
 	
 	public VentanaPrincipal() 
 	{
 		setSize(800, 600);
+		setLayout(null);
 		setTitle(Session.getCurrentUser().getNombre() + " " + Session.getCurrentUser().getApellido());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -61,6 +64,11 @@ public class VentanaPrincipal extends JFrame
 		createViews();
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		
+		
+		
+		
 		setVisible(true);
 	}
 	
@@ -126,12 +134,16 @@ public class VentanaPrincipal extends JFrame
 		UserPrestamosPanel prestamosCards = new UserPrestamosPanel(this);
 	    new UserPrestamosPnlController(prestamosCards);
 	    prestamosPanel = prestamosCards;
-		
+	    
 		usersPanel = new UsersView();
+		
+		FilterView filtros= new FilterView();
+		filterPanel=filtros;
 		
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
 		container.add(prestamosPanel,PRESTAMOS);
+		container.add(filterPanel, FILTROS);
 		
 		
 		add(container, BorderLayout.CENTER);

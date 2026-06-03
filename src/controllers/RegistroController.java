@@ -112,7 +112,7 @@ public class RegistroController {
 				String ruta = formularioRegsitro.getIconDescription();
 	    		String original = ruta;
 	    		System.out.println(ruta);
-	    		if(!original.equals("..\\img\\iconoWhite.png")) {
+	    		if(!original.equals("/img/iconoWhite.png")) {
 	    			
 		    			
 		    		

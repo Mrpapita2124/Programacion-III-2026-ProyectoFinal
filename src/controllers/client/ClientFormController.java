@@ -130,7 +130,7 @@ public class ClientFormController {
 				String ruta = formularioCliente.getIconDescription();
 	    		String original = ruta;
 	    		System.out.println(ruta);
-	    		if(!original.equals("..\\img\\icono.png")) {
+	    		if(!original.equals("/img/icono.png")) {
 	    			
 		    			
 		    		
@@ -168,7 +168,7 @@ public class ClientFormController {
 			String ruta = formularioCliente.getComprobanteIconClientDirection();
     		String original = ruta;
     		System.out.println(ruta);
-    		if(!original.equals("..\\img\\DocumentDefaultIcon.png")) {
+    		if(!original.equals("/img/DocumentDefaultIcon.png")) {
     			
 	    			
 	    		
@@ -264,9 +264,9 @@ public class ClientFormController {
 			if(this.formularioCliente.isEdit()){
 				System.out.println("sdfsdfsdf");
 				int idClient=this.formularioCliente.getClient().getIdCliente();
-				clientRepository.update(new Client(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "regular"));
+				clientRepository.update(new Client(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp,this.formularioCliente.getClient().getReputacion()));
 			}else {
-				clientRepository.save(new Client(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "regular"));
+				clientRepository.save(new Client(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "no medido"));
 
 			}
 			
@@ -281,7 +281,7 @@ public class ClientFormController {
 		String ruta = icon.getDescription();
 		
     	
-    	if (ruta=="..\\img\\LicenseDefault.png") 
+    	if (ruta=="/img/LicenseDefault.png") 
     	{
     		formularioCliente.getLblErrorFoto().setText("La foto es obligatoria");
 			return false;
@@ -295,7 +295,7 @@ public class ClientFormController {
 		String ruta = icon.getDescription();
 		
     	
-    	if (ruta=="..\\img\\DocumentDefaultIcon.png") 
+    	if (ruta=="/img/DocumentDefaultIcon.png") 
     	{
     		formularioCliente.getLblErrorDocumento().setText("Elk documento es obligatoria");
 			return false;

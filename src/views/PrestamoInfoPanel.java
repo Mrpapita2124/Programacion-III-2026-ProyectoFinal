@@ -48,9 +48,11 @@ public class PrestamoInfoPanel extends JPanel {
 		int iconoSize = 60;
 		
 		if(estadoPrestamo != null && estadoPrestamo.getEstado().equals("correcto")) {
-			icono = new JLabel(escalarImagenLocal("..\\img\\greenMoney.png", iconoSize, iconoSize));  
+			icono = new JLabel(escalarImagenLocal("/img/greenMoney.png", iconoSize, iconoSize));  
+		} else if(estadoPrestamo != null && estadoPrestamo.getEstado().equals("atrasado")){
+			icono = new JLabel(escalarImagenLocal("/img/redMoney.png", iconoSize, iconoSize));  
 		} else {
-			icono = new JLabel(escalarImagenLocal("..\\img\\check.png", iconoSize, iconoSize));  
+			icono = new JLabel(escalarImagenLocal("/img/check.png", iconoSize, iconoSize));  
 		}
 		
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);

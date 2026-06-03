@@ -31,7 +31,7 @@ public class UserClientsPanelController {
 		this.clientPanel.getBtnFilter().addActionListener(e -> {
 			
 			// AQUIII
-			System.out.println("\nFILTER PERO EN CLIENTES!");
+			ventana.showView(ventana.FILTROS);
 		});
 	}
 	

@@ -87,8 +87,8 @@ public class FormularioRegistro extends JFrame{
         gradientBg.setLayout(null);
         setContentPane(gradientBg);
     	
-        iconoUsuarioFinal = escalarImagenLocal("..\\img\\iconoWhite.png",200,200);
-        iconoUsuarioFinal.setDescription("..\\img\\iconoWhite.png");
+        iconoUsuarioFinal = escalarImagenLocal("/img/iconoWhite.png",200,200);
+        iconoUsuarioFinal.setDescription("/img/iconoWhite.png");
         setSize(1050,700);
         setLayout(null);
         setResizable(false);

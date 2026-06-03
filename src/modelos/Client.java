@@ -51,6 +51,30 @@ public class Client {
 		this.curp = curp;
 		this.reputacion = reputacion;
 	}
+	public Client(int idCliente, int idUser, String nombre, String apellido, int edad, String ineDireccion,
+			String domimcilio, String comprobanteDomimcilio, String celular, String correoElectronico, String empleo,
+			String domicilioEmpleo, String telfEmpleo, double ingresosMensuales, String banco, String cuentaBancaria,
+			String curp) {
+		super();
+		this.idCliente = idCliente;
+		this.idUser = idUser;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.edad = edad;
+		this.ineDireccion = ineDireccion;
+		this.domicilio = domimcilio;
+		this.comprobanteDomicilio = comprobanteDomimcilio;
+		this.celular = celular;
+		this.correoElectronico = correoElectronico;
+		this.empleo = empleo;
+		this.domicilioEmpleo = domicilioEmpleo;
+		this.telfEmpleo = telfEmpleo;
+		this.ingresosMensuales = ingresosMensuales;
+		this.banco = banco;
+		this.cuentaBancaria = cuentaBancaria;
+		this.curp = curp;
+		
+	}
 	
 	public Client(int idUser, String nombre, String apellido, int edad, String ineDireccion, String domimcilio,
 			String comprobanteDomimcilio, String celular, String correoElectronico, String empleo,

@@ -119,11 +119,11 @@ public class FormularioGeneralCliente extends JFrame{
     	edit=false;
     	userRepository = new UserRepository();
     	
-        ineIconClient = escalarImagenLocal("..\\img\\LicenseDefault.png",200,200);
-        ineIconClient.setDescription("..\\img\\LicenseDefault.png");
+        ineIconClient = escalarImagenLocal("/img/LicenseDefault.png",200,200);
+        ineIconClient.setDescription("/img/LicenseDefault.png");
         
-        comprobanteIconClient = escalarImagenLocal("..\\img\\DocumentDefaultIcon.png",200,200);
-        comprobanteIconClient.setDescription("..\\img\\DocumentDefaultIcon.png");
+        comprobanteIconClient = escalarImagenLocal("/img/DocumentDefaultIcon.png",200,200);
+        comprobanteIconClient.setDescription("/img/DocumentDefaultIcon.png");
         setSize(850,550);
         setLayout(null);
         setResizable(false);
@@ -260,11 +260,11 @@ public class FormularioGeneralCliente extends JFrame{
     	edit=true;
     	userRepository = new UserRepository();
     	
-        ineIconClient = escalarImagenLocal("..\\img\\LicenseDefault.png",200,200);
-        ineIconClient.setDescription("..\\img\\LicenseDefault.png");
+        ineIconClient = escalarImagenLocal("/img/LicenseDefault.png",200,200);
+        ineIconClient.setDescription("/img/LicenseDefault.png");
         
-        comprobanteIconClient = escalarImagenLocal("..\\img\\DocumentDefaultIcon.png",200,200);
-        comprobanteIconClient.setDescription("..\\img\\DocumentDefaultIcon.png");
+        comprobanteIconClient = escalarImagenLocal("/img/DocumentDefaultIcon.png",200,200);
+        comprobanteIconClient.setDescription("/img/DocumentDefaultIcon.png");
         setSize(850,550);
         setLayout(null);
         setResizable(false);
@@ -560,17 +560,6 @@ public class FormularioGeneralCliente extends JFrame{
         button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         button.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
         
-        /*
-        try 
-        {
-            Image icono = ImageIO.read(getClass().getResource(ruta));
-            icono = icono.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-            button.setIcon(new ImageIcon(icono));
-        }
-        catch (Exception ex)
-        {
-            System.out.println("No se pudo poner el icono");
-        }*/
     }
     
     private JLabel crearErrorLabel() 

@@ -3,9 +3,11 @@ package utils;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import modelos.Client;
 import modelos.EstadoPrestamo;
 import modelos.Prestamo;
 import repository.ClientRepository;
@@ -49,5 +51,55 @@ public class Updater {
 				}while(fecha.isBefore(hoy));
 			}
 		}
+	}
+	public void updateClientsEvaluation() {
+		List<Client> clients = clientRepository.getClients();
+		if(clients.size()>0) {
+			for(Client client : clients) {
+				List<Prestamo> prestamos=prestamoRepository.getClientPrestamos(client);
+				
+				List<Integer> scores= new ArrayList<Integer>();
+				double promedio=0;
+				if(prestamos.size()>0) {
+					for(Prestamo prestamo : prestamos) {
+						double monto = prestamo.getMonto_quincenal()*prestamo.getNumero_quincenas();
+						double montoTotal=prestamo.getMonto_total();
+						double diferencia= montoTotal-monto;
+						double diferenciaMaxima=(monto*(prestamo.getInteres_retraso()/100));
+						
+						if(diferencia==0) {
+							scores.add(3);
+						}else if(diferencia<diferenciaMaxima/3){
+							scores.add(2);
+						}else if(diferencia<diferenciaMaxima/2){
+							scores.add(1);
+						}else{
+							scores.add(0);
+						}
+					}
+					for(double score: scores) {
+						promedio+=score;
+					}
+					promedio=promedio/scores.size();
+					if(promedio<0.3) {
+						client.setReputacion("mala");
+					}else if(promedio<1.2) {
+						client.setReputacion("regular");
+					}else if(promedio<2.1) {
+						client.setReputacion("buena");
+					}else if(promedio<3) {
+						client.setReputacion("excelente");
+					}
+					clientRepository.update(client);
+				}else {
+					
+					client.setReputacion("no medido");
+					clientRepository.update(client);
+				}
+			}
+				
+		}
+		
+		
 	}
 }

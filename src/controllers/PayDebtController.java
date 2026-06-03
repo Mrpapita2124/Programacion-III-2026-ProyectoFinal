@@ -18,14 +18,17 @@ import repository.PrestamoRepository;
 import repository.UserRepository;
 import utils.Colores;
 import utils.Session;
+import utils.Updater;
 import views.PayDebtView;
 
 public class PayDebtController {
-	PayDebtView payDebtView;
-	EstadoPrestamoRepository estadoRepository;
-	PrestamoRepository prestamoRepository;
-	UserRepository userRepository;
+	private PayDebtView payDebtView;
+	private EstadoPrestamoRepository estadoRepository;
+	private PrestamoRepository prestamoRepository;
+	private UserRepository userRepository;
+	private Updater updater;
 	public PayDebtController(PayDebtView payDebtView) {
+		updater=new Updater();
 		userRepository= new UserRepository();
 		estadoRepository= new EstadoPrestamoRepository();
 		prestamoRepository= new PrestamoRepository();
@@ -104,7 +107,9 @@ public class PayDebtController {
 		}
 		if(estado.getQuincenasRestantes()==0) {
 			estadoRepository.deleteFromPrestamo(prestamo);
+			
 			prestamo.setEstado("concluso");
+			updater.updateClientsEvaluation();
 		}else {
 			estadoRepository.update(estado);
 		}

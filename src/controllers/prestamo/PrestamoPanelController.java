@@ -19,6 +19,7 @@ import repository.EstadoPrestamoRepository;
 import repository.PrestamoRepository;
 import repository.UserRepository;
 import utils.Session;
+import utils.Updater;
 import views.PayDebtView;
 import views.PrestamoInfoPanel;
 import views.VentanaPrincipal;
@@ -35,8 +36,10 @@ public class PrestamoPanelController {
 	private UserRepository userRepository;
 	private EstadoPrestamo estadoPrestamo;
 	private VentanaPrincipal ventana;
+	private Updater updater;
 
 	public PrestamoPanelController(PrestamoInfoPanel prestamoPanel, VentanaPrincipal ventana) {
+		updater= new Updater();
 		this.ventana=ventana;
 		userRepository=new UserRepository();
 		prestamoRepository=new PrestamoRepository();
@@ -46,6 +49,7 @@ public class PrestamoPanelController {
 		
 		this.prestamoPanel.getBtnComplete().addActionListener(e -> {
 			completarPrestamo(this.prestamoPanel.getPrestamo());
+			
 		});
 		
 		this.prestamoPanel.getBtnDelete().addActionListener(e -> {
@@ -70,6 +74,8 @@ public class PrestamoPanelController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		updater.updateClientsEvaluation();
+		this.ventana.reload();
 		this.ventana.reloadPrestamos(true);
 	}
 	
@@ -109,6 +115,8 @@ public class PrestamoPanelController {
 				prestamoRepository.update(prestamo);
 			}
 		}
+		updater.updateClientsEvaluation();
+		ventana.reload();
 		ventana.reloadPrestamos(true);
 	}
 	
