@@ -12,6 +12,8 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -251,7 +253,7 @@ public class FormularioGeneralCliente extends JFrame{
 		add(scrollPanel);
         add(fondo);
         add(fondo2);
-
+        asignarKeyListeners();
         setVisible(true);
     }
     public FormularioGeneralCliente(Client client)
@@ -392,7 +394,7 @@ public class FormularioGeneralCliente extends JFrame{
 		add(scrollPanel);
         add(fondo);
         add(fondo2);
-
+        asignarKeyListeners();
         setVisible(true);
     }
     public void addValues(Client client) {
@@ -426,6 +428,56 @@ public class FormularioGeneralCliente extends JFrame{
     	cuentaBancaria.setText(client.getCuentaBancaria());
     	curp.setText(client.getCurp());
 
+    }
+    private void asignarKeyListeners() {
+    	asignarKeyListenerParaNumero(edad,3);
+    	asignarKeyListenerParaNumero(numeroCelular,15);
+    	asignarKeyListenerParaNumero(telefonoEmpleo,15);
+    	asignarKeyListenerParaNumero(ingresoMensual,10);
+    	asignarKeyListenerParaNumero(cuentaBancaria,32);
+    	asignarKeyListenerParaTexto(nombres, 45);
+    	asignarKeyListenerParaTexto(domicilio, 45);
+    	asignarKeyListenerParaTexto(correo, 45);
+    	asignarKeyListenerParaTexto(empleo, 45);
+    	asignarKeyListenerParaTexto(domicilioEmpleo, 45);
+    	asignarKeyListenerParaTexto(banco, 45);
+    	asignarKeyListenerParaTexto(curp, 45);
+    }
+    private void asignarKeyListenerParaNumero(JTextField JtextField, int extensión)
+    {
+    	JtextField.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		
+         			if(!Character.isSpaceChar(e.getKeyChar()))
+         			{
+         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
+         			}
+         		
+         		
+         		if(JtextField.getText().length() >= extensión)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
+    private void asignarKeyListenerParaTexto(JTextField JtextField, int extensión)
+    {
+    	JtextField.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{	
+         		if(JtextField.getText().length() >= extensión)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
     }
     public void chooseImage() {
     	JFileChooser chooser=new  JFileChooser();

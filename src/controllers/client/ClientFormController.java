@@ -53,9 +53,7 @@ public class ClientFormController {
 		formularioCliente.getSeleccionar().addActionListener(e -> formularioCliente.chooseImage());
 		formularioCliente.getSeleccionarComprobante().addActionListener(e -> formularioCliente.choosePDF());
 		addWindowListener();
-		
-        asignarKeyListener(formularioCliente.getNombres());
-        asignarKeyListener(formularioCliente.getApellidos()); 
+
         
         asignarValidacion(formularioCliente.getNombres());
         asignarValidacion(formularioCliente.getApellidos());
@@ -341,16 +339,12 @@ public class ClientFormController {
     	{
     		formularioCliente.getLblErrorEdad().setText("La edad es obligatoria");
 			return false;
-		} else {
-			try {
-				numberExceptions(edad);
-				formularioCliente.getLblErrorEdad().setText("");
-			} catch (Exception e) {
-				// TODO: handle exception
-				formularioCliente.getLblErrorEdad().setText(e.getMessage());
-				return false;
-			}
+		} else if(Double.parseDouble(edad)<18) {
 			
+			formularioCliente.getLblErrorEdad().setText("Debe ser mayor de edad");
+			return false;
+		}else {
+			formularioCliente.getLblErrorEdad().setText(" ");
 		}
 
 		return true;
@@ -697,29 +691,6 @@ public class ClientFormController {
     	}
     }
     
-    private void asignarKeyListener(JTextField JtextField)
-    {
-    	JtextField.addKeyListener(new KeyAdapter() 
-         {
-         	public void keyTyped(KeyEvent e)
-         	{
-         		// Solo para nombres y apellidos, no para correo y contraseña
-         		if (JtextField.getName().equals("nombres") || JtextField.getName().equals("apellidos")) {
-         			if(!Character.isSpaceChar(e.getKeyChar()))
-         			{
-         				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
-         				{
-         					e.consume();
-         				}
-         			}
-         		}
-         		
-         		if(JtextField.getText().length() >= 20)
-         		{
-         			e.consume();
-         		}
-         	}
- 		});
-    }
+    
     
 }

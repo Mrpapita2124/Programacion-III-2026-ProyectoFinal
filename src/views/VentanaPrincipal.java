@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
+import controllers.FilterViewController;
 import controllers.user.UserClientsPanelController;
 import controllers.user.UserPrestamosPnlController;
 import utils.GradientBackground;
@@ -137,7 +138,8 @@ public class VentanaPrincipal extends JFrame
 	    
 		usersPanel = new UsersView();
 		
-		FilterView filtros= new FilterView();
+		FilterView filtros= new FilterView(this);
+		new FilterViewController(filtros);
 		filterPanel=filtros;
 		
 		container.add(homePanel, HOME);

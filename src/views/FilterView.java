@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -36,7 +38,11 @@ public class FilterView extends JPanel {
 	
 	private JButton buscar = new JButton("Buscar");
 	private JButton cancelar = new JButton("Cancelar");
-	public FilterView() {
+	private String tipo=" ";
+	private String estado=" ";
+	private VentanaPrincipal ventana;
+	public FilterView(VentanaPrincipal ventana) {
+		this.ventana=ventana;
 		crearBoton(buscar, "Buscar", Colores.BUTTON_COLOR1, 100, 50, Fonts.fontBoton);
 		crearBoton(cancelar, "Cancelar", Colores.BUTTON_COLOR1, 150, 50, Fonts.fontBoton);
 		
@@ -44,6 +50,8 @@ public class FilterView extends JPanel {
 		opcionEstadoPrestamos= new ButtonGroup();
 		minimo=crearTextField("MIN", "minimo");
 		maximo=crearTextField("MAX", "maximo");
+		asignarKeyListener(maximo);
+		asignarKeyListener(minimo);
 		asignarFocusListenerConPlaceholder(maximo, "MAX");
 		asignarFocusListenerConPlaceholder(minimo, "MIN");
 		setLayout(new GridLayout(3, 2));
@@ -90,26 +98,39 @@ public class FilterView extends JPanel {
 		
 	}
 	 public void crearGrupoOpcionesTipoPrestamos(JPanel panel) {
-	        // Crear los radio buttons
+	       
 	        JRadioButton opcion1 = new JRadioButton("Activos");
 	        JRadioButton opcion2 = new JRadioButton("Conclusos");
-	        JRadioButton opcion3 = new JRadioButton("Cualquiera");
-	        JRadioButton opcion4 = new JRadioButton("Sin prestamo");
 	        
+	        opcion1.setActionCommand("activos");
+	        opcion2.setActionCommand("conclusos");
 
-	        // Crear el grupo exclusivo
-	        
 	        opcionTipoPrestamos.add(opcion1);
 	        opcionTipoPrestamos.add(opcion2);
-	        opcionTipoPrestamos.add(opcion3);
-	        opcionTipoPrestamos.add(opcion4);
+	        
+
+	        opcion1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					tipo="activos";
+				}
+	        });
+	        opcion2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					tipo="conclusos";
+					opcionEstadoPrestamos.clearSelection();
+					estado=" ";
+				}
+	        });
 	        
 	        
 	      
 	        panel.add(opcion1);
 	        panel.add(opcion2);
-	        panel.add(opcion3);
-	        panel.add(opcion4);
+	        
 
 	        
 	    }
@@ -118,14 +139,36 @@ public class FilterView extends JPanel {
 	        JRadioButton opcion1 = new JRadioButton("Correcto");
 	        JRadioButton opcion2 = new JRadioButton("Atrasado");
 	        
-	        
+	        opcion1.setActionCommand("correcto");
+	        opcion2.setActionCommand("atrasado");
 
 	        // Crear el grupo exclusivo
 	        
 	        opcionEstadoPrestamos.add(opcion1);
 	        opcionEstadoPrestamos.add(opcion2);
 	        
-	        
+	        opcion1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					estado="correcto";
+					if(tipo.equals("conclusos")) {
+						opcionTipoPrestamos.clearSelection();
+						tipo=" ";
+					}
+				}
+	        });
+	        opcion2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					estado="atrasado";
+					if(tipo.equals("conclusos")) {
+						opcionTipoPrestamos.clearSelection();
+						tipo=" ";
+					}
+				}
+	        });
 	      
 	        panel.add(opcion1);
 	        panel.add(opcion2);
@@ -133,6 +176,7 @@ public class FilterView extends JPanel {
 
 	        
 	    }
+	 
 	 private void asignarFocusListenerConPlaceholder(JTextField textField, String placeholder) {
 	    	
 	    	textField.setBackground(Colores.TABBED_TEXT_COLOR);
@@ -179,8 +223,52 @@ public class FilterView extends JPanel {
 	        
 	        return textField;
 	    }
+	 private void asignarKeyListener(JTextField JtextField)
+	    {
+	    	JtextField.addKeyListener(new KeyAdapter() 
+	         {
+	         	public void keyTyped(KeyEvent e)
+	         	{
+	         		
+	         			if(!Character.isSpaceChar(e.getKeyChar()))
+	         			{
+	         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+	         				{
+	         					e.consume();
+	         				}
+	         			}
+	         		
+	         		
+	         		if(JtextField.getText().length() >= 10)
+	         		{
+	         			e.consume();
+	         		}
+	         	}
+	 		});
+	    }
 	 public JCheckBox getExceelente() {
 		 return exceelente;
+	 }
+	 
+	 public String getTipo() {
+		return tipo;
+	}
+	 
+	 public VentanaPrincipal getVentana() {
+		return ventana;
+	}
+	 public void setVentana(VentanaPrincipal ventana) {
+		 this.ventana = ventana;
+	 }
+	 public void setTipo(String tipo) {
+		 this.tipo = tipo;
+	 }
+	 
+	 public String getEstado() {
+		return estado;
+	}
+	 public void setEstado(String estado) {
+		 this.estado = estado;
 	 }
 	 public void setExceelente(JCheckBox exceelente) {
 		 this.exceelente = exceelente;

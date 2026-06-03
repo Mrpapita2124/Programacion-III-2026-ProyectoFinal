@@ -152,6 +152,110 @@ public class ClientRepository {
 			}
 		return clients;
 	}
+	
+	public boolean clientHasPrestamoActivo(Client client) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM prestamo p WHERE p.id_cliente = ? AND p.estado = 'activo') AS tiene_prestamo_activo";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_prestamo_activo");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+	
+
+	public boolean clientHasPrestamoInRange(Client client, double minimo, double maximo) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM prestamo p WHERE p.id_cliente = ? AND p.monto BETWEEN ? AND ?) AS tiene_prestamo_en_rango";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+	        stmt.setDouble(2, minimo);
+	        stmt.setDouble(3, maximo);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_prestamo_en_rango");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+	public boolean clientHasPrestamoMinimo(Client client, double minimo) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM prestamo p WHERE p.id_cliente = ? AND p.monto>?) AS tiene_prestamo_minimo";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+	        stmt.setDouble(2, minimo);
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_prestamo_minimo");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+	public boolean clientHasPrestamoMaximo(Client client, double maximo) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM prestamo p WHERE p.id_cliente = ? AND p.monto<?) AS tiene_prestamo_maximo";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+	        stmt.setDouble(2, maximo);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_prestamo_maximo");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	public boolean clientHasPrestamoCorrecto(Client client) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM estado_prestamo ep JOIN prestamo p ON ep.id_prestamo = p.id_prestamo WHERE p.id_cliente = ? AND ep.estado = 'correcto') AS tiene_estado_correcto";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_estado_correcto");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false; // si algo falla, devolvemos false
+	}
+
+	
+	
 	public Client getClientFromPrestamo(Prestamo prestamo){
 		
 		Client client;
