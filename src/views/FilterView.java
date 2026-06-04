@@ -43,6 +43,11 @@ public class FilterView extends GradientBackground {
 	private JTextField minimo;
 	private JTextField maximo;
 	
+	private JTextField edadMin;
+	private JTextField edadMax;
+	private JTextField ingresosMinimos;
+	private JTextField ingresosMaximos;
+	
 	private JButton buscar = new JButton("Buscar");
 	private JButton cancelar = new JButton("Cancelar");
 	private String tipo=" ";
@@ -75,11 +80,23 @@ public class FilterView extends GradientBackground {
 		opcionEstadoPrestamos= new ButtonGroup();
 		minimo=crearTextField("MIN", "minimo");
 		maximo=crearTextField("MAX", "maximo");
-		asignarKeyListener(maximo);
-		asignarKeyListener(minimo);
+		edadMin=crearTextField("E.MIN", "e.min");
+		edadMax=crearTextField("E.MAX", "e.max");
+		ingresosMinimos=crearTextField("I.MIN", "i.min");
+		ingresosMaximos=crearTextField("I.MAX", "i.max");
+		asignarKeyListener(maximo,10);
+		asignarKeyListener(minimo,10);
+		asignarKeyListener(ingresosMinimos,10);
+		asignarKeyListener(ingresosMaximos,10);
+		asignarKeyListener(edadMin, 3);
+		asignarKeyListener(edadMax, 3);
 		asignarFocusListenerConPlaceholder(maximo, "MAX");
 		asignarFocusListenerConPlaceholder(minimo, "MIN");
-		setLayout(new GridLayout(3, 2));
+		asignarFocusListenerConPlaceholder(edadMax, "E.MAX");
+		asignarFocusListenerConPlaceholder(edadMin, "E.MIN");
+		asignarFocusListenerConPlaceholder(ingresosMaximos, "I.MAX");
+		asignarFocusListenerConPlaceholder(ingresosMinimos, "I.MIN");
+		setLayout(new GridLayout(4, 2));
 		
 		JPanel reputacion = new JPanel();
 		reputacion.setOpaque(false);
@@ -155,6 +172,26 @@ public class FilterView extends GradientBackground {
 		rangoPrestamo.add(rangos);
 		add(rangoPrestamo);
 		
+		JPanel edad = new JPanel();
+		edad.setOpaque(false);
+		edad.setLayout(new BoxLayout(edad, BoxLayout.X_AXIS));
+		edad.add(Box.createHorizontalGlue());
+		edad.add(edadMin);
+		edad.add(Box.createHorizontalStrut(20));
+		edad.add(edadMax);
+		edad.add(Box.createHorizontalGlue());
+		add(edad);
+		
+		JPanel ingresos = new JPanel();
+		ingresos.setOpaque(false);
+		ingresos.setLayout(new BoxLayout(ingresos, BoxLayout.X_AXIS));
+		ingresos.add(Box.createHorizontalGlue());
+		ingresos.add(ingresosMinimos);
+		ingresos.add(Box.createHorizontalStrut(20));
+		ingresos.add(ingresosMaximos);
+		ingresos.add(Box.createHorizontalGlue());
+		add(ingresos);
+		
 		JPanel botones = new JPanel();
 		botones.setOpaque(false);
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
@@ -164,6 +201,8 @@ public class FilterView extends GradientBackground {
 		botones.add(cancelar);
 		botones.add(Box.createHorizontalGlue());
 		add(botones);
+		
+		
 	}
 
 	
@@ -332,7 +371,7 @@ public class FilterView extends GradientBackground {
         return textField;
     }
 	
-	private void asignarKeyListener(JTextField JtextField)
+	private void asignarKeyListener(JTextField JtextField,int largo)
     {
     	JtextField.addKeyListener(new KeyAdapter() 
          {
@@ -348,7 +387,7 @@ public class FilterView extends GradientBackground {
          			}
          		
          		
-         		if(JtextField.getText().length() >= 10)
+         		if(JtextField.getText().length() >= largo)
          		{
          			e.consume();
          		}
@@ -377,6 +416,47 @@ public class FilterView extends GradientBackground {
 	 public String getEstado() {
 		return estado;
 	}
+	 
+	 public JTextField getEdadMin() {
+		return edadMin;
+	}
+
+
+	 public void setEdadMin(JTextField edadMin) {
+		 this.edadMin = edadMin;
+	 }
+
+
+	 public JTextField getEdadMax() {
+		 return edadMax;
+	 }
+
+
+	 public void setEdadMax(JTextField edadMax) {
+		 this.edadMax = edadMax;
+	 }
+
+
+	 public JTextField getIngresosMinimos() {
+		 return ingresosMinimos;
+	 }
+
+
+	 public void setIngresosMinimos(JTextField ingresosMinimos) {
+		 this.ingresosMinimos = ingresosMinimos;
+	 }
+
+
+	 public JTextField getIngresosMaximos() {
+		 return ingresosMaximos;
+	 }
+
+
+	 public void setIngresosMaximos(JTextField ingresosMaximos) {
+		 this.ingresosMaximos = ingresosMaximos;
+	 }
+
+
 	 public void setEstado(String estado) {
 		 this.estado = estado;
 	 }

@@ -302,16 +302,55 @@ public class PrestamoRepository {
 		
 		return prestamos;
 	}
-	
+	public List<Prestamo> getAllPrestamosFromUser(){
+		
+		List<Prestamo> prestamos=new ArrayList<Prestamo>();
+		String sql = "Select p.*, c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente = c.id_cliente Where p.id_usuario=?";
+		try (
+				Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+			){
+				stmt.setInt(1, Session.getCurrentUser().getId());
+				ResultSet rs=stmt.executeQuery();
+				while(rs.next()) {
+					Prestamo prestamo = new Prestamo(
+					        rs.getInt("id_prestamo"),
+					        rs.getInt("id_usuario"),
+					        rs.getInt("id_cliente"),
+					        rs.getString("estado"),
+					        rs.getDouble("monto"),
+					        rs.getInt("numero_quincenas"),
+					        rs.getDouble("monto_quincenal"),
+					        rs.getDouble("monto_total"),
+					        rs.getDouble("interes"),
+					        rs.getDouble("interes_retraso"),
+					        rs.getDate("fecha"),   
+					        rs.getString("nombre"),
+					        rs.getString("apellido"),
+					        rs.getString("ine")
+					);
+
+					prestamos.add(prestamo);
+				}
+				
+				
+				
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+		
+		return prestamos;
+	}
 	public List<Prestamo> getAllConcludePrestamos(){
 		
 		List<Prestamo> prestamos=new ArrayList<Prestamo>();
-		String sql = "Select p.*,c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente=c.id_cliente Where estado = ?";
+		String sql = "Select p.*,c.nombre, c.apellido, c.ine From prestamo p Inner join cliente c on p.id_cliente=c.id_cliente Where estado = ? AND c.id_usuario=?";
 		try (
 				Connection conn = DatabaseConnection.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 			){
 				stmt.setString(1, "concluso");
+				stmt.setInt(2, Session.getCurrentUser().getId());
 				ResultSet rs=stmt.executeQuery();
 				while(rs.next()) {
 					Prestamo prestamo = new Prestamo(
@@ -340,6 +379,29 @@ public class PrestamoRepository {
 				ex.printStackTrace();
 			}
 		return prestamos;
+	}
+	public boolean getPrestamoTieneReputacion(Prestamo prestamo, String reputacion){
+		
+		List<Prestamo> prestamos=new ArrayList<Prestamo>();
+		String sql = "SELECT EXISTS(SELECT 1 FROM prestamo p INNER JOIN cliente c ON p.id_cliente = c.id_cliente WHERE p.id_prestamo = ? AND c.reputacion = ?) AS resultado;";
+		try (
+				Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+			){
+				stmt.setInt(1, prestamo.getId_prestamo());
+				stmt.setString(2, reputacion);
+				ResultSet rs=stmt.executeQuery();
+				
+				if(rs.next()){
+				    return rs.getBoolean("resultado");
+				}
+				
+				
+				
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+		return false;
 	}
 	
 	public boolean deleteFromCliente(Client client) {

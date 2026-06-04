@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import controllers.VentanaPrincipalController;
+import repository.ClientRepository;
+import repository.PrestamoRepository;
 import utils.Session;
 import utils.Updater;
 import views.VentanaPrincipal;
@@ -12,10 +14,13 @@ import views.user.UserPanel;
 
 public class UserPanelController {
 	UserPanel userPanel;
+	ClientRepository clientRepository;
 	public UserPanelController(UserPanel userPanel) {
+		clientRepository= new ClientRepository();
 		this.userPanel=userPanel;
 		this.userPanel.getSessionButton().addActionListener(e -> {
 			Session.login(this.userPanel.getUser());
+			Session.setClientesFiltrados(clientRepository.getClients());
 			Updater update= new Updater();
 			update.updateEverything();
 			update.updateClientsEvaluation();

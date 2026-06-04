@@ -43,7 +43,6 @@ public class ClientCards extends PanelPersonalizable
 		
 		
 		List<Client> clients = Session.getClientesFiltrados(); 
-
 		
 		if(clients != null)
 		{

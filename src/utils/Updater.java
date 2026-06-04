@@ -54,13 +54,14 @@ public class Updater {
 	}
 	public void updateClientsEvaluation() {
 		List<Client> clients = clientRepository.getClients();
-		
+		System.out.println("ayuda me quiero matar");
+		System.out.println("clientes size "+ clients.size());
 		if(clients.size() > 0) 
 		{
 			for(Client client : clients) 
 			{
 				List<Prestamo> prestamos=prestamoRepository.getClientPrestamos(client);
-				
+				System.out.println("preestamos "+ prestamos.size());
 				List<Integer> scores= new ArrayList<Integer>();
 				double promedio=0;
 				
@@ -87,19 +88,23 @@ public class Updater {
 						promedio+=score;
 					}
 					promedio=promedio/scores.size();
+					System.out.println("promedio "+ promedio);
 					if(promedio<0.3) {
 						client.setReputacion("mala");
+						System.out.println("1asdddadd");
 					}else if(promedio<1.2) {
 						client.setReputacion("regular");
+						System.out.println("2asdasd");
 					}else if(promedio<2.1) {
 						client.setReputacion("buena");
-					}else if(promedio<3) {
+						System.out.println("3asdasd");
+					}else if(promedio<=3) {
 						client.setReputacion("excelente");
+						System.out.println("4asdasd");
 					}
 					clientRepository.update(client);
 				}else {
-					
-					//client.setReputacion("no medido");
+					client.setReputacion("no medido");
 					clientRepository.update(client);
 				}
 			}

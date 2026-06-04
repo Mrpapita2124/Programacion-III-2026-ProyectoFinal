@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
+import controllers.FilterPrestamoViewController;
 import controllers.FilterViewController;
 import controllers.user.UserClientsPanelController;
 import controllers.user.UserPrestamosPnlController;
@@ -27,6 +28,7 @@ public class VentanaPrincipal extends JFrame
 	public static final String USERS = "USERS";
 	public static final String PRESTAMOS = "PRESTAMOS";
 	public static final String FILTROS = "FILTROS";
+	public static final String FILTROS_PRESTAMOS = "FILTROS_PRESTAMOS";
 	
 	private JMenuItem mItemExit;
 	private JButton btnUsers;
@@ -39,6 +41,7 @@ public class VentanaPrincipal extends JFrame
 	JPanel homePanel;
 	JPanel prestamosPanel;
 	JPanel filterPanel;
+	JPanel filterPrestamoPanel;
 	
 	private FilterViewController filterViewController;
 	
@@ -138,15 +141,18 @@ public class VentanaPrincipal extends JFrame
 		usersPanel = new UsersView();
 		
 		FilterView filtros= new FilterView(this);
-		filterViewController = new FilterViewController(filtros);
+		filterViewController =new FilterViewController(filtros);
 		filterPanel=filtros;
 		
+		FilterView filtrosPrestamo= new FilterView(this);
+		new FilterPrestamoViewController(filtrosPrestamo);
+		filterPrestamoPanel=filtrosPrestamo;
 		
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
 		container.add(prestamosPanel,PRESTAMOS);
 		container.add(filterPanel, FILTROS);
-		
+		container.add(filterPrestamoPanel, FILTROS_PRESTAMOS);
 		
 		add(container, BorderLayout.CENTER);
 		

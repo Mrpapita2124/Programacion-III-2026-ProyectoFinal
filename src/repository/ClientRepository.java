@@ -256,7 +256,25 @@ public class ClientRepository {
 	    }
 	    return false; // si algo falla, devolvemos false
 	}
+	public boolean clientHasPrestamoAtrasado(Client client) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM estado_prestamo ep JOIN prestamo p ON ep.id_prestamo = p.id_prestamo WHERE p.id_cliente = ? AND ep.estado = 'atrasado') AS tiene_estado_correcto";
 
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_estado_correcto");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
 	
 	
 	public Client getClientFromPrestamo(Prestamo prestamo){
@@ -270,28 +288,31 @@ public class ClientRepository {
 				stmt.setInt(1, prestamo.getId_cliente());
 				
 				ResultSet rs=stmt.executeQuery();
+				 if (rs.next()) {
+					 client = new Client(
+								rs.getInt("id_cliente"),
+								rs.getInt("id_usuario"),
+								rs.getString("nombre"),
+								rs.getString("apellido"),
+								rs.getInt("edad"),
+								rs.getString("ine"),
+								rs.getString("domicilio"),
+								rs.getString("comprobante_domicilio"),
+								rs.getString("numero_celular"),
+								rs.getString("correo_electronico"),
+								rs.getString("empleo"),
+								rs.getString("domicilio_empleo"),
+								rs.getString("telf_empleo"),
+								rs.getDouble("ingresos_mensuales"),
+								rs.getString("nombre_banco"),
+								rs.getString("numero_cuenta_bancaria"),
+								rs.getString("curp"),
+								rs.getString("reputacion")
+							);
+					 return client;
+			        }
 				
-				client = new Client(
-						rs.getInt("id_cliente"),
-						rs.getInt("id_usuario"),
-						rs.getString("nombre"),
-						rs.getString("apellido"),
-						rs.getInt("edad"),
-						rs.getString("ine"),
-						rs.getString("domicilio"),
-						rs.getString("comprobante_domicilio"),
-						rs.getString("numero_celular"),
-						rs.getString("correo_electronico"),
-						rs.getString("empleo"),
-						rs.getString("domicilio_empleo"),
-						rs.getString("telf_empleo"),
-						rs.getDouble("ingresos_mensuales"),
-						rs.getString("nombre_banco"),
-						rs.getString("numero_cuenta_bancaria"),
-						rs.getString("curp"),
-						rs.getString("reputacion")
-					);
-				return client;
+				
 			}catch(SQLException ex) {
 				ex.printStackTrace();
 			}
