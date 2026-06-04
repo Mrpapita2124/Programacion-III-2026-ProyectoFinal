@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import repository.ClientRepository;
 import utils.Colores;
 import utils.Fonts;
 import views.VentanaPrincipal;
@@ -111,7 +112,10 @@ public class UserClientsPanel extends JPanel {
 			System.out.println("No se cargo lo iconos de agregar cliente y filtar cliente!");
 		}
         
-        panelDeBotones.add(btnFilter);
+		if(ClientRepository.getTotalNumeroDeCliente() != 0)
+		{
+			panelDeBotones.add(btnFilter);
+		}
         panelDeBotones.add(btnRegister);
         
         titlePanel.add(panelDeBotones, BorderLayout.EAST);

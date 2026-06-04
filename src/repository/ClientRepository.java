@@ -16,6 +16,9 @@ import utils.Session;
 
 public class ClientRepository {
 	
+	
+	
+	
 	public boolean save(Client client) {
 		User user= Session.getCurrentUser();
 		String sql = "insert into cliente (id_usuario, nombre, apellido, edad, ine, domicilio, comprobante_domicilio, numero_celular, correo_electronico, empleo, telf_empleo, domicilio_empleo, ingresos_mensuales, numero_cuenta_bancaria, nombre_banco, curp, reputacion) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -295,7 +298,7 @@ public class ClientRepository {
 		return null;
 	}
 	
-	public int getTotalNumeroDeCliente()
+	public static int getTotalNumeroDeCliente()
 	{
 	    User user = Session.getCurrentUser();
 	    String sql = "SELECT COUNT(*) as total FROM cliente WHERE id_usuario = ?";
@@ -315,4 +318,6 @@ public class ClientRepository {
 	    }
 	    return 0;
 	}
+	
+	
 }

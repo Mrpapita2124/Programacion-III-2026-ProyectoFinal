@@ -14,6 +14,7 @@ import utils.Colores;
 import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
+import utils.Session;
 import views.VentanaPrincipal;
 import views.user.UserClientsPanel;
 
@@ -36,17 +37,31 @@ public class ClientCards extends PanelPersonalizable
 	public ClientCards(UserClientsPanel userPanel,VentanaPrincipal ventana) 
 	{
 		ArrayList<JPanel> clientCards = new ArrayList<JPanel>();
-		ClientRepository clientRepository = new ClientRepository();
 		
 		setOpaque(false);
 		setBackground(new Color(0, 0, 0, 0));
 		
-		List<Client> clients = clientRepository.getClients(); 
+		
+		List<Client> clients = Session.getClientesFiltrados(); 
 
 		
-		if (clients.isEmpty()) 
+		if(clients != null)
 		{
-			JLabel voidMessage = new JLabel("No tienes clientes"); 
+			int counter = 1;
+			System.out.println("---------------------");
+			for (Client client : clients) 
+			{
+				System.out.println(counter + ": " + client.getNombre());
+				counter++;
+			}
+		}
+		
+		
+		if (clients == null || clients.isEmpty()) 
+		{
+			String message = clients == null ? "No se encontraron clientes con Filtro " : "No tienes clientes";
+			JLabel voidMessage = new JLabel(message); 
+			
 			voidMessage.setOpaque(false);
 			voidMessage.setFont(fontTitulo);
 			voidMessage.setForeground(Color.WHITE);
@@ -99,6 +114,7 @@ public class ClientCards extends PanelPersonalizable
 		}
 			
 			setVisible(true);
+			
 	}
 	
 	public int getAlto() {

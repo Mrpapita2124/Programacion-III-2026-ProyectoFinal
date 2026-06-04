@@ -27,6 +27,7 @@ import utils.Colores;
 import utils.Session;
 import views.Login;
 import views.Ventana;
+import views.VentanaPrincipal;
 import views.formulario.FormularioGeneralCliente;
 import views.formulario.FormularioRegistro;
 
@@ -265,7 +266,6 @@ public class ClientFormController {
 				clientRepository.update(new Client(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp,this.formularioCliente.getClient().getReputacion()));
 			}else {
 				clientRepository.save(new Client(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "no medido"));
-
 			}
 			
 

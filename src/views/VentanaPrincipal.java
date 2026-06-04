@@ -40,6 +40,8 @@ public class VentanaPrincipal extends JFrame
 	JPanel prestamosPanel;
 	JPanel filterPanel;
 	
+	private FilterViewController filterViewController;
+	
 	public VentanaPrincipal() 
 	{
 		setSize(800, 600);
@@ -83,14 +85,14 @@ public class VentanaPrincipal extends JFrame
 	
 	public void reload() 
 	{
-		// Esto solo deberia ir en el Main pero el modo oscuro hace que el login se vea raro entonces solo se aplicara ya al entrar al perfil.
-    	ThemeManager.applySavedTheme();
+		System.out.println("RELOAD");
+		
+		ThemeManager.applySavedTheme();
     	container.remove(homePanel);
     	createClientsView();
     	revalidate();
     	repaint();
     	showView(HOME);
-    	
 	}
 	
 	public void reloadPrestamos(boolean cambiarVista) 
@@ -102,9 +104,6 @@ public class VentanaPrincipal extends JFrame
     	revalidate();
     	repaint();
     	if(cambiarVista)showView(PRESTAMOS);
-    	
-    	
-    	
 	}
 	
 	public void createNavbar() 
@@ -139,8 +138,9 @@ public class VentanaPrincipal extends JFrame
 		usersPanel = new UsersView();
 		
 		FilterView filtros= new FilterView(this);
-		new FilterViewController(filtros);
+		filterViewController = new FilterViewController(filtros);
 		filterPanel=filtros;
+		
 		
 		container.add(homePanel, HOME);
 		container.add(usersPanel, USERS);
@@ -236,6 +236,8 @@ public class VentanaPrincipal extends JFrame
 	    );
 	}
 	
+	
+	
 	public void setWindowSize(int width, int height) {
 		setSize(width, height);
 	}
@@ -268,6 +270,14 @@ public class VentanaPrincipal extends JFrame
 	}
 	public JButton getBtnHome() {
 		return btnHome;
+	}
+
+	public FilterViewController getFilterViewController() {
+		return filterViewController;
+	}
+
+	public void setFilterViewController(FilterViewController filterViewController) {
+		this.filterViewController = filterViewController;
 	}
 
 	public void setBtnHome(JButton btnHome) {

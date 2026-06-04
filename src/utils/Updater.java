@@ -54,14 +54,20 @@ public class Updater {
 	}
 	public void updateClientsEvaluation() {
 		List<Client> clients = clientRepository.getClients();
-		if(clients.size()>0) {
-			for(Client client : clients) {
+		
+		if(clients.size() > 0) 
+		{
+			for(Client client : clients) 
+			{
 				List<Prestamo> prestamos=prestamoRepository.getClientPrestamos(client);
 				
 				List<Integer> scores= new ArrayList<Integer>();
 				double promedio=0;
-				if(prestamos.size()>0) {
-					for(Prestamo prestamo : prestamos) {
+				
+				if(prestamos.size()>0) 
+				{
+					for(Prestamo prestamo : prestamos) 
+					{
 						double monto = prestamo.getMonto_quincenal()*prestamo.getNumero_quincenas();
 						double montoTotal=prestamo.getMonto_total();
 						double diferencia= montoTotal-monto;
@@ -93,7 +99,7 @@ public class Updater {
 					clientRepository.update(client);
 				}else {
 					
-					client.setReputacion("no medido");
+					//client.setReputacion("no medido");
 					clientRepository.update(client);
 				}
 			}

@@ -36,7 +36,7 @@ public class ClientPanelController {
 			form.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
-	                ventana.reload();
+					ventana.getFilterViewController().refreshFilteredClientes();
 	            }
 			});
 			
@@ -45,8 +45,7 @@ public class ClientPanelController {
 		this.clientPanel.getBtnDelete().addActionListener(e -> {
 			deleteEverythingFromClient(this.clientPanel.getClient());
 			clientRepository.Delete(this.clientPanel.getClient());
-			ventana.reloadPrestamos(false);
-			ventana.reload();
+			ventana.getFilterViewController().refreshFilteredClientes();
 			
 		});
 		this.clientPanel.getBtnInfo().addActionListener(e -> {
@@ -59,7 +58,7 @@ public class ClientPanelController {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
 	                ventana.reloadPrestamos(true);
-	                ventana.reload();
+	                ventana.getFilterViewController().refreshFilteredClientes();
 	            }
 			});
 		});

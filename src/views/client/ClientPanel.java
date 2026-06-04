@@ -12,6 +12,7 @@ import javax.swing.*;
 
 
 import modelos.Client;
+import repository.ClientRepository;
 import utils.Colores;
 import utils.Fonts;
 
@@ -58,15 +59,20 @@ public class ClientPanel extends JPanel
 		
 		
 		String clientNombreFormato = this.client.getNombre() + " " + this.client.getApellido();
-		clientNombreFormato = clientNombreFormato.length() > 15 ? clientNombreFormato.substring(0, 15) + "..." : clientNombreFormato;
+		clientNombreFormato = clientNombreFormato.length() > 13 ? clientNombreFormato.substring(0, 13) + "..." : clientNombreFormato;
 		
 		JLabel clienteNombre = new JLabel(clientNombreFormato);
 		clienteNombre.setForeground(Colores.PRIMARY_HEADINGS);
 		clienteNombre.setFont(Fonts.setFontSegoe(1, 25));
 		
-		JLabel cartaStatus = new JLabel("Activo");
+		
+		ClientRepository clientRepo = new ClientRepository();
+		String status = clientRepo.clientHasPrestamoActivo(this.client) ? "Activo" : "Inactivo";
+		Color statusColor = clientRepo.clientHasPrestamoActivo(this.client) ? new Color(76, 175, 80) : new Color(225, 20, 16);
+		
+		JLabel cartaStatus = new JLabel(status);
 		cartaStatus.setForeground(Colores.LOGIN_PANEL);
-		cartaStatus.setBackground(new Color(76, 175, 80));
+		cartaStatus.setBackground(statusColor);
 		cartaStatus.setOpaque(true);
 		cartaStatus.setBorder(BorderFactory.createEmptyBorder(6, 10, 6, 10));
 		cartaStatus.setFont(Fonts.setFontSegoe(1, 11));
@@ -82,10 +88,10 @@ public class ClientPanel extends JPanel
 		clienteCorreo.setFont(Fonts.setFontSegoe(0, 15));
 		
 		// Prestamo status
-		JLabel prestamosStatus = new JLabel("Estatus Prestamo: Al dia");
-		prestamosStatus.setAlignmentX(Component.LEFT_ALIGNMENT);
-		prestamosStatus.setForeground(Colores.BG_TEXT_COLOR);
-		prestamosStatus.setFont(Fonts.setFontSegoe(0, 12));
+		JLabel reputacioLbl = new JLabel("Reputacion: " + this.client.getReputacion());
+		reputacioLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+		reputacioLbl.setForeground(Colores.BG_TEXT_COLOR);
+		reputacioLbl.setFont(Fonts.setFontSegoe(0, 12));
 		
 		
 		btnEdit = new JButton();
@@ -143,7 +149,7 @@ public class ClientPanel extends JPanel
 		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 8)));
 		clienteInfoPanel.add(clienteCorreo);
 		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 2)));
-		clienteInfoPanel.add(prestamosStatus);
+		clienteInfoPanel.add(reputacioLbl);
 		clienteInfoPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		clienteInfoPanel.add(buttonPanel);
 		

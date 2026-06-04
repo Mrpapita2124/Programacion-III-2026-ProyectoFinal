@@ -144,13 +144,17 @@ public class LoginController {
 		if(Session.getRol().toLowerCase().equals("admin")) 
 		{
 			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
-			new VentanaPrincipalController(new VentanaPrincipal());			
+			
+			VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+			new VentanaPrincipalController(ventanaPrincipal);			
 			login.getWindow().dispose();
 		}
 		else if(Session.getRol().toLowerCase().equals("comun")) 
 		{
 			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'COMUN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
-			new VentanaPrincipalController(new VentanaPrincipal());			
+
+			VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+			new VentanaPrincipalController(ventanaPrincipal);			
 			login.getWindow().dispose();
 		}
 	}

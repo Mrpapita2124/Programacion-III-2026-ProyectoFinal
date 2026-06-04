@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -12,18 +13,24 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import utils.Colores;
 import utils.Fonts;
+import utils.GradientBackground;
 
-public class FilterView extends JPanel {
+public class FilterView extends GradientBackground {
+	
 	private JCheckBox exceelente= new JCheckBox(" excelente");
 	private JCheckBox buena= new JCheckBox(" buena");
 	private JCheckBox regular= new JCheckBox(" regular");
@@ -41,10 +48,28 @@ public class FilterView extends JPanel {
 	private String tipo=" ";
 	private String estado=" ";
 	private VentanaPrincipal ventana;
-	public FilterView(VentanaPrincipal ventana) {
+	
+	
+	private Font textoFont = Fonts.setFontSegoe(1, 35);
+	private Color borderLineaColor = Colores.PRIMARY_HEADINGS;
+	private int borderSize = 1;
+	
+	public FilterView(VentanaPrincipal ventana) 
+	{
 		this.ventana=ventana;
-		crearBoton(buscar, "Buscar", Colores.BUTTON_COLOR1, 100, 50, Fonts.fontBoton);
-		crearBoton(cancelar, "Cancelar", Colores.BUTTON_COLOR1, 150, 50, Fonts.fontBoton);
+		
+		setOpaque(true);
+		setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		
+		try 
+		{
+			crearBoton(buscar, "Buscar", Colores.BUTTON_COLOR1, 150, 50, Fonts.fontBoton, "src\\img\\buscar_Filter.png");
+			crearBoton(cancelar, "Cancelar", Colores.BUTTON_COLOR1, 150, 50, Fonts.fontBoton, "src\\img\\cancelar_Filter.png");
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Iconos en Filter View no se pusieron!");
+		}
 		
 		opcionTipoPrestamos = new ButtonGroup();
 		opcionEstadoPrestamos= new ButtonGroup();
@@ -56,197 +81,282 @@ public class FilterView extends JPanel {
 		asignarFocusListenerConPlaceholder(minimo, "MIN");
 		setLayout(new GridLayout(3, 2));
 		
-		
 		JPanel reputacion = new JPanel();
+		reputacion.setOpaque(false);
 		reputacion.setLayout(new BoxLayout(reputacion, BoxLayout.Y_AXIS));
+		reputacion.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(borderLineaColor, borderSize),
+			"Reputación",
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			textoFont,
+			borderLineaColor
+		));
+		reputacion.add(Box.createVerticalStrut(15));
 		reputacion.add(exceelente);
+		reputacion.add(Box.createVerticalStrut(2));
 		reputacion.add(buena);
+		reputacion.add(Box.createVerticalStrut(2));
 		reputacion.add(regular);
+		reputacion.add(Box.createVerticalStrut(2));
 		reputacion.add(mala);
+		reputacion.add(Box.createVerticalStrut(2));
 		reputacion.add(noMedida);
 		add(reputacion);
 		
-		
 		JPanel tipoPrestamos = new JPanel();
+		tipoPrestamos.setOpaque(false);
 		tipoPrestamos.setLayout(new BoxLayout(tipoPrestamos, BoxLayout.Y_AXIS));
+		tipoPrestamos.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(borderLineaColor, borderSize),
+			"Tipo de Préstamo",
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			textoFont,
+			borderLineaColor
+		));
+		tipoPrestamos.add(Box.createVerticalStrut(20));
 		crearGrupoOpcionesTipoPrestamos(tipoPrestamos);
 		add(tipoPrestamos);
 		
-		
-		
-		
 		JPanel estadoPrestamos= new JPanel();
+		estadoPrestamos.setOpaque(false);
 		estadoPrestamos.setLayout(new BoxLayout(estadoPrestamos, BoxLayout.Y_AXIS));
+		estadoPrestamos.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(borderLineaColor, borderSize),
+			"Estado del Préstamo",
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			textoFont,
+			borderLineaColor
+		));
+		estadoPrestamos.add(Box.createVerticalStrut(20));
 		crearGrupoOpcionesEstadoPrestamos(estadoPrestamos);
 		add(estadoPrestamos);
 		
 		JPanel rangoPrestamo= new JPanel();
+		rangoPrestamo.setOpaque(false);
 		rangoPrestamo.setLayout(new BoxLayout(rangoPrestamo, BoxLayout.Y_AXIS));
+		rangoPrestamo.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(borderLineaColor, borderSize),
+			"Monto del Préstamo",
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			textoFont,
+			borderLineaColor
+		));
 		JPanel rangos= new JPanel();
+		rangos.setOpaque(false);
 		rangos.setLayout(new BoxLayout(rangos, BoxLayout.X_AXIS));
 		rangos.add(minimo);
+		rangos.add(Box.createHorizontalStrut(20));
 		rangos.add(maximo);
+		rangoPrestamo.add(Box.createVerticalStrut(10));
 		rangoPrestamo.add(rangos);
 		add(rangoPrestamo);
 		
 		JPanel botones = new JPanel();
+		botones.setOpaque(false);
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
+		botones.add(Box.createHorizontalGlue());
 		botones.add(buscar);
+		botones.add(Box.createHorizontalStrut(20));
 		botones.add(cancelar);
+		botones.add(Box.createHorizontalGlue());
 		add(botones);
-		
-		
 	}
-	 public void crearGrupoOpcionesTipoPrestamos(JPanel panel) {
+
+	
+	public void crearGrupoOpcionesTipoPrestamos(JPanel panel) {
 	       
-	        JRadioButton opcion1 = new JRadioButton("Activos");
-	        JRadioButton opcion2 = new JRadioButton("Conclusos");
-	        
-	        opcion1.setActionCommand("activos");
-	        opcion2.setActionCommand("conclusos");
+        JRadioButton opcion1 = new JRadioButton("Activos");
+        JRadioButton opcion2 = new JRadioButton("Conclusos");
+        
+        opcion1.setActionCommand("activos");
+        opcion2.setActionCommand("conclusos");
 
-	        opcionTipoPrestamos.add(opcion1);
-	        opcionTipoPrestamos.add(opcion2);
-	        
+        opcionTipoPrestamos.add(opcion1);
+        opcionTipoPrestamos.add(opcion2);
+        
+        opcion1.setOpaque(false);
+        opcion2.setOpaque(false);
 
-	        opcion1.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+        opcion1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(tipo.equals("activos"))
+				{
+					opcionTipoPrestamos.clearSelection();
+					tipo=" ";
+				}
+				else
+				{
 					tipo="activos";
 				}
-	        });
-	        opcion2.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+			}
+        });
+        
+        opcion2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(tipo.equals("conclusos"))
+				{
+					opcionTipoPrestamos.clearSelection();
+					tipo=" ";
+				}
+				else
+				{
 					tipo="conclusos";
 					opcionEstadoPrestamos.clearSelection();
 					estado=" ";
 				}
-	        });
-	        
-	        
-	      
-	        panel.add(opcion1);
-	        panel.add(opcion2);
-	        
+				
+			}
+        });
+        
+        panel.add(opcion1);
+        panel.add(Box.createVerticalStrut(2));
+        panel.add(opcion2);
+        
+    }
+	
+	public void crearGrupoOpcionesEstadoPrestamos(JPanel panel) {
+        JRadioButton opcion1 = new JRadioButton("Correcto");
+        JRadioButton opcion2 = new JRadioButton("Atrasado");
+        
+        opcion1.setActionCommand("correcto");
+        opcion2.setActionCommand("atrasado");
+        
+        opcion1.setOpaque(false);
+        opcion2.setOpaque(false);
+        
+        opcionEstadoPrestamos.add(opcion1);
+        opcionEstadoPrestamos.add(opcion2);
+        
+        opcion1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-	        
-	    }
-	 public void crearGrupoOpcionesEstadoPrestamos(JPanel panel) {
-	        // Crear los radio buttons
-	        JRadioButton opcion1 = new JRadioButton("Correcto");
-	        JRadioButton opcion2 = new JRadioButton("Atrasado");
-	        
-	        opcion1.setActionCommand("correcto");
-	        opcion2.setActionCommand("atrasado");
-
-	        // Crear el grupo exclusivo
-	        
-	        opcionEstadoPrestamos.add(opcion1);
-	        opcionEstadoPrestamos.add(opcion2);
-	        
-	        opcion1.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+				if(estado.equals("correcto"))
+				{
+					opcionEstadoPrestamos.clearSelection();
+					estado = " ";
+				}
+				else
+				{
 					estado="correcto";
-					if(tipo.equals("conclusos")) {
-						opcionTipoPrestamos.clearSelection();
-						tipo=" ";
-					}
 				}
-	        });
-	        opcion2.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+				
+				if(tipo.equals("conclusos")) 
+				{
+					opcionTipoPrestamos.clearSelection();
+					tipo=" ";
+				}
+			}
+        });
+        
+        opcion2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if(estado.equals("atrasado"))
+				{
+					opcionEstadoPrestamos.clearSelection();
+					estado = " ";
+				}
+				else
+				{
 					estado="atrasado";
-					if(tipo.equals("conclusos")) {
-						opcionTipoPrestamos.clearSelection();
-						tipo=" ";
-					}
 				}
-	        });
-	      
-	        panel.add(opcion1);
-	        panel.add(opcion2);
-
-
-	        
-	    }
+				
+				if(tipo.equals("conclusos")) 
+				{
+					opcionTipoPrestamos.clearSelection();
+					tipo=" ";
+				}
+			}
+        });
+      
+        panel.add(opcion1);
+        panel.add(Box.createVerticalStrut(2));
+        panel.add(opcion2);
+    }
 	 
-	 private void asignarFocusListenerConPlaceholder(JTextField textField, String placeholder) {
+	private void asignarFocusListenerConPlaceholder(JTextField textField, String placeholder) {
 	    	
-	    	textField.setBackground(Colores.TABBED_TEXT_COLOR);
-	    	
-	        textField.addFocusListener(new FocusListener() {
-	            @Override
-	            public void focusGained(FocusEvent e) {
-	                if (textField.getText().equals(placeholder)) {
-	                    textField.setText("");
-	                }
-	                textField.setForeground(Color.BLACK);
-	                textField.setBackground(Color.WHITE);
-	            }
-	            
-	            @Override
-	            public void focusLost(FocusEvent e) {
-	                if (textField.getText().isEmpty()) {
-	                    textField.setText(placeholder);
-	                    textField.setForeground(Color.BLACK);
-	                    textField.setBackground(Colores.BG_TEXT_COLOR);
-	                } else {
-	                	textField.setForeground(Color.BLACK);
-	                    textField.setBackground(Colores.TABBED_TEXT_COLOR);
-	                }
-	            }
-	        });
-	    }
-	 private JTextField crearTextField(String placeholder, String JTextFieldName) 
-	    {
-	        JTextField textField = new JTextField(placeholder);
-	        
-	        int fieldWidth = 70;
-	        int fieldHeight = 45;
-	        
-	        textField.setMaximumSize(new Dimension(fieldWidth, fieldHeight));
-	        textField.setPreferredSize(new Dimension(fieldWidth, fieldHeight));
-	        textField.setMinimumSize(new Dimension(fieldWidth, fieldHeight));
-	        
-	        textField.setBackground(Colores.BACKGROUND);
-	        textField.setForeground(Color.BLACK);
-	        textField.setFont(Fonts.fontTextoCampo);
-	        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        textField.setName(JTextFieldName);
-	        
-	        return textField;
-	    }
-	 private void asignarKeyListener(JTextField JtextField)
-	    {
-	    	JtextField.addKeyListener(new KeyAdapter() 
-	         {
-	         	public void keyTyped(KeyEvent e)
-	         	{
-	         		
-	         			if(!Character.isSpaceChar(e.getKeyChar()))
-	         			{
-	         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
-	         				{
-	         					e.consume();
-	         				}
-	         			}
-	         		
-	         		
-	         		if(JtextField.getText().length() >= 10)
-	         		{
-	         			e.consume();
-	         		}
-	         	}
-	 		});
-	    }
-	 public JCheckBox getExceelente() {
+    	textField.setBackground(Colores.TABBED_TEXT_COLOR);
+    	
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                }
+                textField.setForeground(Color.BLACK);
+                textField.setBackground(Color.WHITE);
+            }
+            
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(placeholder);
+                    textField.setForeground(Color.BLACK);
+                    textField.setBackground(Colores.BG_TEXT_COLOR);
+                } else {
+                	textField.setForeground(Color.BLACK);
+                    textField.setBackground(Colores.TABBED_TEXT_COLOR);
+                }
+            }
+        });
+    }
+	
+	private JTextField crearTextField(String placeholder, String JTextFieldName) 
+    {
+        JTextField textField = new JTextField(placeholder);
+        
+        int fieldWidth = 70;
+        int fieldHeight = 45;
+        
+        textField.setMaximumSize(new Dimension(fieldWidth, fieldHeight));
+        textField.setPreferredSize(new Dimension(fieldWidth, fieldHeight));
+        textField.setMinimumSize(new Dimension(fieldWidth, fieldHeight));
+        
+        textField.setBackground(Colores.BACKGROUND);
+        textField.setForeground(Color.BLACK);
+        textField.setFont(Fonts.fontTextoCampo);
+        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField.setName(JTextFieldName);
+        
+        return textField;
+    }
+	
+	private void asignarKeyListener(JTextField JtextField)
+    {
+    	JtextField.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		
+         			if(!Character.isSpaceChar(e.getKeyChar()))
+         			{
+         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
+         			}
+         		
+         		
+         		if(JtextField.getText().length() >= 10)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
+	
+	public JCheckBox getExceelente() {
 		 return exceelente;
 	 }
 	 
@@ -321,7 +431,8 @@ public class FilterView extends JPanel {
 	 public void setMaximo(JTextField maximo) {
 		 this.maximo = maximo;
 	 }
-	 private void crearBoton(JButton button, String titulo, Color colorBoton, int ancho, int largo, Font font)
+	 
+	private void crearBoton(JButton button, String titulo, Color colorBoton, int ancho, int largo, Font font, String iconoURL) throws Exception
 	    {
 	        int buttonWidth = ancho;   
 	        int buttonHeight = largo;   
@@ -335,8 +446,10 @@ public class FilterView extends JPanel {
 	        button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 	        button.setMinimumSize(new Dimension(buttonWidth, buttonHeight));
 	        
+	        button.setIcon(escalarImagen(iconoURL, 32, 32));
 	    }
-	 public JButton getBuscar() {
+	
+	public JButton getBuscar() {
 		 return buscar;
 	 }
 	 public void setBuscar(JButton buscar) {
@@ -348,5 +461,23 @@ public class FilterView extends JPanel {
 	 public void setCancelar(JButton cancelar) {
 		 this.cancelar = cancelar;
 	 }
+	 
+	 private ImageIcon escalarImagen(String direccion,int x,int y) throws Exception {
+	    	//System.out.println(direccion);
+	        ImageIcon iconoOriginal = new ImageIcon(direccion);
+
+	       
+	        Image imagenEscalada = iconoOriginal.getImage()
+	                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+
+	        
+	        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+	        iconoFinal.setDescription(direccion);
+	        
+	        if(iconoFinal.getDescription().equals("null"));
+	        
+	        return iconoFinal;
+		}
+	 
 	 
 }

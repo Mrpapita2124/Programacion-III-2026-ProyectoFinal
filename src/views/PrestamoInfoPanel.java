@@ -23,7 +23,7 @@ import utils.Fonts;
 import utils.PanelPersonalizable;
 
 public class PrestamoInfoPanel extends JPanel {
-	private Font fontTexto = new Font("Times New Roman", Font.BOLD, 35);
+	private Font fontTexto =  Fonts.setFontSegoe(1,35);
 	private JButton btnComplete;
 	private JButton btnDelete;
 	private JButton btnInfo;
@@ -64,7 +64,7 @@ public class PrestamoInfoPanel extends JPanel {
 		
 		JLabel prestamoCantidad = new JLabel("$" + String.valueOf(this.prestamo.getMonto()));
 		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
-		prestamoCantidad.setForeground(Color.BLACK);
+		prestamoCantidad.setForeground(Color.GREEN);
 		prestamoCantidad.setFont(Fonts.setFontSegoe(1, 20));
 		
 		btnComplete = new JButton("Registrar pago");

@@ -23,7 +23,7 @@ public class UserClientsPanelController {
 			form.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
-					ventana.reload();
+					ventana.getFilterViewController().refreshFilteredClientes();
 				}
 			});
 		});
