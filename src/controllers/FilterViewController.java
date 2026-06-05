@@ -54,20 +54,22 @@ public class FilterViewController {
 	public List<Client> filtrar() 
 	{
 		List<Client> clientesFromRepo = clientRepository.getClients();
-		System.out.println("-------------------------");
-		System.out.println(clientesFromRepo.size());
+		
+		
+		//System.out.println("-------------------------");
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroReputacion(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroTipoPrestamos(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroEstadoPrestamos(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroRangoPrestamos(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroEdad(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		clientesFromRepo = filtroIngresos(clientesFromRepo);
-		System.out.println(clientesFromRepo.size());
+		//System.out.println(clientesFromRepo.size());
 		
 		return clientesFromRepo;
 	}
@@ -142,7 +144,7 @@ public class FilterViewController {
 		
 			
 			if(this.filterView.getEstado().equals("correcto")) {
-				System.out.println("correcto");
+				//System.out.println("correcto");
 				for(Client client: clients) {
 					if(clientRepository.clientHasPrestamoCorrecto(client)) {
 						clientesFiltrados.add(client);
@@ -195,21 +197,21 @@ public class FilterViewController {
 	public List<Client> filtroEdad(List<Client> clients){
 		List<Client> clientesFiltrados=new ArrayList<Client>();
 		if((!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")) && (this.filterView.getEdadMax().getText().isEmpty() || this.filterView.getEdadMax().getText().equals("E.MAX")) ){
-			System.out.println("minimo");
+			//System.out.println("minimo");
 			for(Client client: clients) {
 				if(client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if((!this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX")) && (this.filterView.getEdadMin().getText().isEmpty() || this.filterView.getEdadMin().getText().equals("E.MIN"))){
-			System.out.println("maximo");
+			//System.out.println("maximo");
 			for(Client client: clients) {
 				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if(!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX") ) {
-			System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
+			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Client client: clients) {
 				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					clientesFiltrados.add(client);
@@ -227,21 +229,21 @@ public class FilterViewController {
 	public List<Client> filtroIngresos(List<Client> clients){
 		List<Client> clientesFiltrados=new ArrayList<Client>();
 		if((!this.filterView.getIngresosMinimos().getText().isEmpty() && !this.filterView.getIngresosMinimos().getText().equals("I.MIN")) && (this.filterView.getIngresosMaximos().getText().isEmpty() || this.filterView.getIngresosMaximos().getText().equals("I.MAX")) ){
-			System.out.println("minimo");
+			//System.out.println("minimo");
 			for(Client client: clients) {
-				if(client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
+				if(client.getIngresosMensuales() >= Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if((!this.filterView.getIngresosMaximos().getText().isEmpty() && !this.filterView.getIngresosMaximos().getText().equals("I.MAX")) && (this.filterView.getIngresosMinimos().getText().isEmpty() || this.filterView.getIngresosMinimos().getText().equals("I.MIN"))){
-			System.out.println("maximo");
+			//System.out.println("maximo");
 			for(Client client: clients) {
 				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if(!this.filterView.getIngresosMinimos().getText().isEmpty() && !this.filterView.getIngresosMinimos().getText().equals("I.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("I.MAX") ) {
-			System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
+			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Client client: clients) {
 				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
 					clientesFiltrados.add(client);
@@ -259,7 +261,6 @@ public class FilterViewController {
 	
 	public void refreshFilteredClientes()
 	{
-		// Esto se hace antes de entrar a ventana principal para asegurar que salgan todos los clientes pq no hay filters
 		Session.setClientesFiltrados(clientRepository.getClients()); 
 		this.filterView.getVentana().reload();
 		this.filterView.getVentana().showView(VentanaPrincipal.HOME);

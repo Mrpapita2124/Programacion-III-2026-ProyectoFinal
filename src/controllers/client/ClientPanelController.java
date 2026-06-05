@@ -57,8 +57,9 @@ public class ClientPanelController {
 			form.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
+					ventana.reload();
 	                ventana.reloadPrestamos(true);
-	                ventana.getFilterViewController().refreshFilteredClientes();
+	                ventana.getFilterPrestamoViewController().refreshFilteredPrestamos(true);
 	            }
 			});
 		});

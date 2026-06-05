@@ -47,10 +47,10 @@ public class ClientCards extends PanelPersonalizable
 		if(clients != null)
 		{
 			int counter = 1;
-			System.out.println("---------------------");
+			//System.out.println("\n------CLIENTES------------");
 			for (Client client : clients) 
 			{
-				System.out.println(counter + ": " + client.getNombre());
+				//System.out.println(counter + ": " + client.getNombre());
 				counter++;
 			}
 		}

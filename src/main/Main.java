@@ -1,14 +1,6 @@
 package main;
-import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-
-import com.formdev.flatlaf.FlatLightLaf;
 
 import utils.ThemeManager;
-import utils.Updater;
 import views.Ventana;
 
 

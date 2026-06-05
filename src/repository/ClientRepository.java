@@ -18,7 +18,6 @@ public class ClientRepository {
 	
 	
 	
-	
 	public boolean save(Client client) {
 		User user= Session.getCurrentUser();
 		String sql = "insert into cliente (id_usuario, nombre, apellido, edad, ine, domicilio, comprobante_domicilio, numero_celular, correo_electronico, empleo, telf_empleo, domicilio_empleo, ingresos_mensuales, numero_cuenta_bancaria, nombre_banco, curp, reputacion) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -340,5 +339,79 @@ public class ClientRepository {
 	    return 0;
 	}
 	
+	public static boolean clientPrestamoAtrasadoStatic(Client client) {
+	    String sql = "SELECT EXISTS (SELECT 1 FROM estado_prestamo ep JOIN prestamo p ON ep.id_prestamo = p.id_prestamo WHERE p.id_cliente = ? AND ep.estado = 'atrasado') AS tiene_estado_correcto";
+
+	    try (
+	        Connection conn = DatabaseConnection.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, client.getIdCliente());
+
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getBoolean("tiene_estado_correcto");
+	        }
+
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
+	}
 	
+	public static int getTotalNumeroDeAtrasadoPrestamos()
+	{
+		User user= Session.getCurrentUser();
+		List<Client> clients=new ArrayList<Client>();
+		String sql = "Select * From cliente Where id_usuario = ?";
+		try (
+				Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+			){
+				stmt.setInt(1, user.getId());
+				
+				ResultSet rs=stmt.executeQuery();
+				while(rs.next()) {
+					Client client = new Client(
+							rs.getInt("id_cliente"),
+							rs.getInt("id_usuario"),
+							rs.getString("nombre"),
+							rs.getString("apellido"),
+							rs.getInt("edad"),
+							rs.getString("ine"),
+							rs.getString("domicilio"),
+							rs.getString("comprobante_domicilio"),
+							rs.getString("numero_celular"),
+							rs.getString("correo_electronico"),
+							rs.getString("empleo"),
+							rs.getString("domicilio_empleo"),
+							rs.getString("telf_empleo"),
+							rs.getDouble("ingresos_mensuales"),
+							rs.getString("nombre_banco"),
+							rs.getString("numero_cuenta_bancaria"),
+							rs.getString("curp"),
+							rs.getString("reputacion")
+							);
+					clients.add(client);
+				}
+				
+				
+				
+			}catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+		
+		List<Client> clientAtrasado = new ArrayList<Client>();
+		
+		for (Client client : clients) 
+		{
+			if(clientPrestamoAtrasadoStatic(client))
+			{
+				clientAtrasado.add(client);
+			}
+				
+		}
+		
+		return clientAtrasado.size();
+	}
 }

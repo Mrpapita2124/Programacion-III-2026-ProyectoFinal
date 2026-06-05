@@ -16,7 +16,7 @@ public class UserPrestamosPnlController {
 		{
 			this.userPrestamosPanel.getAncestro().showView(VentanaPrincipal.FILTROS_PRESTAMOS);
 			// Prestamos filtatrrrr
-			System.out.println("\nFILTAR PERO EN PRESTAMOS!");
+			//System.out.println("\nFILTAR PERO EN PRESTAMOS!");
 		});
 	}
 

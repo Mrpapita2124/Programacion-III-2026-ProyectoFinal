@@ -45,8 +45,9 @@ public class Session {
 		return prestamosFiltrados;
 	}
 
-	public static void setPrestamosFiltrados(List<Prestamo> prestamosFiltrados) {
-		Session.prestamosFiltrados = prestamosFiltrados;
+	public static void setPrestamosFiltrados(List<Prestamo> prestamosFiltro) {
+		prestamosFiltrados = prestamosFiltro;
 	}
+	
 	
 }

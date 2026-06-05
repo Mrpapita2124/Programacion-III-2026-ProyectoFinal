@@ -37,15 +37,19 @@ public class ConcludedPrestamoPanel extends JPanel {
 		prestamoInfo.setForeground(Color.BLACK);
 		prestamoInfo.setOpaque(false);
 		prestamoInfo.setLayout(new BoxLayout(prestamoInfo,BoxLayout.Y_AXIS));
+		
 		JLabel icono;
 		icono=new JLabel(escalarImagenLocal("..\\img\\check.png", 280, 280));
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		JLabel clientName= new JLabel(this.prestamo.getNombre());
 		clientName.setAlignmentX(Component.CENTER_ALIGNMENT);
 		clientName.setForeground(Color.BLACK);
+		
 		JLabel clientApellido= new JLabel(this.prestamo.getApellido());
 		clientApellido.setAlignmentX(Component.CENTER_ALIGNMENT);
 		clientApellido.setForeground(Color.BLACK);
+		
 		JLabel prestamoCantidad= new JLabel(String.valueOf(this.prestamo.getMonto()));
 		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
 		prestamoCantidad.setForeground(Color.BLACK);

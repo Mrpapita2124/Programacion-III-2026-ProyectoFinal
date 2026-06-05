@@ -104,9 +104,11 @@ public class UserPrestamosPanel extends JPanel {
 		prestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(prestamos);
 		
+		/*
 		concludedPrestamos = new ConcludedPrestamoCards(ancestro);
 		concludedPrestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(concludedPrestamos);
+		*/
 		
 		
 		// Scroll

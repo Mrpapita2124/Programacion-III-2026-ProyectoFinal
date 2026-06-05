@@ -140,7 +140,7 @@ public class EstadoPrestamoRepository {
 	            );
 	            //System.out.println("Estado encontrado para préstamo: " + prestamo.getId_prestamo());
 	        } else {
-	            System.out.println("No se encontró estado para préstamo ID: " + prestamo.getId_prestamo());
+	           // System.out.println("No se encontró estado para préstamo ID: " + prestamo.getId_prestamo());
 	        }
 	        
 	        return estadoPrestamo;

@@ -29,55 +29,59 @@ public class FilterPrestamoViewController {
 		clientRepository= new ClientRepository();
 		this.filterView=filterView;
 		
-		refreshFilteredPrestamos();
+		refreshFilteredPrestamos(false);
 		
 		this.filterView.getBuscar().addActionListener(e -> {
 			
 			List<Prestamo> prestamos = filtrar();
 			
-			/*if(prestamos.size() == 0)
+			//System.out.println("HI");
+			
+			if(prestamos.size() == 0)
 			{
-				System.out.println("* No hay prestamos que cumpla con esos filtros!");
+				System.out.println("* No hay prestamos o prestamos concluidos que cumpla con esos filtros!");
 				Session.setPrestamosFiltrados(null);
-				this.filterView.getVentana().reload();
-				this.filterView.getVentana().showView(VentanaPrincipal.HOME);
+				
+				this.filterView.getVentana().reloadPrestamos(true);
+				this.filterView.getVentana().showView(VentanaPrincipal.PRESTAMOS);
+				
 				return;
 			}
 			
 			Session.setPrestamosFiltrados(prestamos);
-			/*
-			this.filterView.getVentana().reload();
-			this.filterView.getVentana().showView(VentanaPrincipal.HOME);*/
+			
+			this.filterView.getVentana().reloadPrestamos(true);
+			this.filterView.getVentana().showView(VentanaPrincipal.PRESTAMOS);
 		});
 		
 		
 		this.filterView.getCancelar().addActionListener(e -> {
 			
-			/*this.filterView.getVentana().reload();
-			this.filterView.getVentana().showView(VentanaPrincipal.HOME);*/
+			this.filterView.getVentana().reloadPrestamos(true);
+			this.filterView.getVentana().showView(VentanaPrincipal.PRESTAMOS);
 		});
 	}
 	
 	public List<Prestamo> filtrar() 
 	{
 		List<Prestamo> prestamos= prestamoRepository.getAllPrestamosFromUser();
-		System.out.println("-------------------------");
+		//System.out.println("----------------------");
 		
 		prestamos = filtroReputacion(prestamos);
-		System.out.println(prestamos.size());
 		prestamos = filtroTipoPrestamos(prestamos);
-		System.out.println(prestamos.size());
+		
 		prestamos = filtroEstadoPrestamos(prestamos);
-		System.out.println(prestamos.size());
+		
 		prestamos = filtroRangoPrestamos(prestamos);
-		System.out.println(prestamos.size());
 		prestamos = filtroEdad(prestamos);
-		System.out.println(prestamos.size());
 		prestamos = filtroIngresos(prestamos);
-		System.out.println(prestamos.size());
 		
 		return prestamos;
 	}
+	
+	
+	
+	
 	public List<Prestamo> filtroReputacion(List<Prestamo> prestamos){
 		List<String> reputacion= new ArrayList<String>();
 		
@@ -140,9 +144,10 @@ public class FilterPrestamoViewController {
 	public List<Prestamo> filtroEstadoPrestamos(List<Prestamo> prestamos){
 		List<Prestamo> prestamosFiltrados=new ArrayList<Prestamo>();
 		
-			
+		//System.out.println("\n\nESTADO: " + this.filterView.getEstado());	
+		
 			if(this.filterView.getEstado().equals("correcto")) {
-				System.out.println("correcto");
+				//System.out.println("correcto");
 				for(Prestamo prestamo: prestamos) {
 					EstadoPrestamo estadoPrestamo= estadoPrestamoRepository.getEstadoPrestamoFromPrestamo(prestamo);
 					try {
@@ -155,7 +160,7 @@ public class FilterPrestamoViewController {
 					
 				}
 			}else if(this.filterView.getEstado().equals("atrasado")){
-				System.out.println("atrasado");
+				//System.out.println("atrasado");
 				for(Prestamo prestamo: prestamos) {
 					EstadoPrestamo estadoPrestamo= estadoPrestamoRepository.getEstadoPrestamoFromPrestamo(prestamo);
 					try {
@@ -207,7 +212,7 @@ public class FilterPrestamoViewController {
 	public List<Prestamo> filtroEdad(List<Prestamo> prestamos){
 		List<Prestamo> prestamosFiltrados=new ArrayList<Prestamo>();
 		if((!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")) && (this.filterView.getEdadMax().getText().isEmpty() || this.filterView.getEdadMax().getText().equals("E.MAX")) ){
-			System.out.println("minimo");
+			//System.out.println("minimo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
@@ -215,7 +220,7 @@ public class FilterPrestamoViewController {
 				}
 			}
 		}else if((!this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX")) && (this.filterView.getEdadMin().getText().isEmpty() || this.filterView.getEdadMin().getText().equals("E.MIN"))){
-			System.out.println("maximo");
+			//System.out.println("maximo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())) {
@@ -223,7 +228,7 @@ public class FilterPrestamoViewController {
 				}
 			}
 		}else if(!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX") ) {
-			System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
+			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
@@ -242,7 +247,7 @@ public class FilterPrestamoViewController {
 	public List<Prestamo> filtroIngresos(List<Prestamo> prestamos){
 		List<Prestamo> prestamosFiltrados=new ArrayList<Prestamo>();
 		if((!this.filterView.getIngresosMinimos().getText().isEmpty() && !this.filterView.getIngresosMinimos().getText().equals("I.MIN")) && (this.filterView.getIngresosMaximos().getText().isEmpty() || this.filterView.getIngresosMaximos().getText().equals("I.MAX")) ){
-			System.out.println("minimo");
+			//System.out.println("minimo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
@@ -250,7 +255,7 @@ public class FilterPrestamoViewController {
 				}
 			}
 		}else if((!this.filterView.getIngresosMaximos().getText().isEmpty() && !this.filterView.getIngresosMaximos().getText().equals("I.MAX")) && (this.filterView.getIngresosMinimos().getText().isEmpty() || this.filterView.getIngresosMinimos().getText().equals("I.MIN"))){
-			System.out.println("maximo");
+			//System.out.println("maximo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
@@ -258,7 +263,7 @@ public class FilterPrestamoViewController {
 				}
 			}
 		}else if(!this.filterView.getIngresosMinimos().getText().isEmpty() && !this.filterView.getIngresosMinimos().getText().equals("I.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("I.MAX") ) {
-			System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
+			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
 				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
@@ -273,12 +278,20 @@ public class FilterPrestamoViewController {
 		return prestamosFiltrados;
 	}
 	
-	public void refreshFilteredPrestamos()
+	public void refreshFilteredPrestamos(boolean visitarHome)
 	{
-		// Esto se hace antes de entrar a ventana principal para asegurar que salgan todos los clientes pq no hay filters
 		Session.setPrestamosFiltrados(filtrar()); 
-		/*this.filterView.getVentana().reload();
-		this.filterView.getVentana().showView(VentanaPrincipal.HOME);*/
+		
+		this.filterView.getVentana().reloadPrestamos(true);
+		
+		if(visitarHome)
+		{
+			this.filterView.getVentana().showView(VentanaPrincipal.HOME);
+		}
+		else
+		{			
+			this.filterView.getVentana().showView(VentanaPrincipal.PRESTAMOS);
+		}
 	}
 	
 

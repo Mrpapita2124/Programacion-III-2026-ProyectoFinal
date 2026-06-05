@@ -212,7 +212,7 @@ public class PrestamoRepository {
 	                rs.getString("ine")
 	            );
 	        } else {
-	            System.out.println("No se encontró préstamo con id " + idPrestamo);
+	            //System.out.println("No se encontró préstamo con id " + idPrestamo);
 	        }
 	        
 	        return prestamo;

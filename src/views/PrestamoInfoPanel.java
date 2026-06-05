@@ -17,6 +17,7 @@ import modelos.Client;
 import modelos.EstadoPrestamo;
 import modelos.Prestamo;
 import modelos.User;
+import repository.ClientRepository;
 import repository.EstadoPrestamoRepository;
 import utils.Colores;
 import utils.Fonts;
@@ -64,7 +65,28 @@ public class PrestamoInfoPanel extends JPanel {
 		
 		JLabel prestamoCantidad = new JLabel("$" + String.valueOf(this.prestamo.getMonto()));
 		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
-		prestamoCantidad.setForeground(Color.GREEN);
+
+		
+		Color prestamoCantidadColor = Color.GRAY;
+		
+		EstadoPrestamoRepository estadoPrestamoRepo = new EstadoPrestamoRepository();
+		String estado = estadoPrestamoRepo.getClientPrestamosEstado(prestamo);
+	    
+	    if (estado != null && estado.equals("atrasado")) 
+	    {
+	        prestamoCantidadColor = Color.RED;
+	    } 
+	    else 
+	    {
+	        prestamoCantidadColor = Color.LIGHT_GRAY;
+	    }
+	    
+	    if(prestamo.getEstado().equals("concluso"))
+	    {
+	    	prestamoCantidadColor = Color.GREEN;
+	    }
+		
+		prestamoCantidad.setForeground(prestamoCantidadColor);
 		prestamoCantidad.setFont(Fonts.setFontSegoe(1, 20));
 		
 		btnComplete = new JButton("Registrar pago");

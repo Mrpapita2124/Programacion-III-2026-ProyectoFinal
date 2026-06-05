@@ -4,12 +4,15 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controllers.prestamo.PrestamoPanelController;
+import modelos.Client;
 import modelos.Prestamo;
+import repository.EstadoPrestamoRepository;
 import repository.PrestamoRepository;
 import utils.Colores;
 import utils.Fonts;
 import utils.PanelPersonalizable;
 import utils.RoundedBorder;
+import utils.Session;
 import views.PrestamoInfoPanel;
 import views.VentanaPrincipal;
 
@@ -35,20 +38,35 @@ public class PrestamoCards extends PanelPersonalizable
 		setOpaque(false);
 		setBackground(new Color(0, 0, 0, 0));
 		
-		List<Prestamo> prestamos = prestamoRepo.getAllActivePrestamosFromUser();
 		
+		List<Prestamo> prestamos = ordenarListaPrestamos(); // Nuevo metodo abajo 
 		
-
-		if (prestamos.isEmpty()) 
+		/*
+		if(prestamos != null)
 		{
-			JLabel voidMessage = new JLabel("No tienes préstamos activos"); 
+			int counter = 1;
+			System.out.println("\n\n-------PRESTAMOS-------------");
+			for (Prestamo prestamo : prestamos) 
+			{
+				System.out.println(counter + ": " + prestamo.getNombre());
+				counter++;
+			}
+			
+			System.out.println("\n\n");
+		}*/
+
+		if (prestamos == null || prestamos.isEmpty()) 
+		{
+			String message = prestamos == null ? "No se encontraron préstamos con Filtro " : "No tienes préstamos activos";
+			JLabel voidMessage = new JLabel(message); 
+			
 			voidMessage.setOpaque(false);
 			voidMessage.setFont(fontTitulo);
 			voidMessage.setForeground(Color.WHITE);
 			voidMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 			alto = 300;
 			
-			add(Box.createRigidArea(new Dimension(0, 45)));
+			add(Box.createRigidArea(new Dimension(0, 85)));
 			add(voidMessage);
 			
 		} else {
@@ -90,6 +108,62 @@ public class PrestamoCards extends PanelPersonalizable
 		
 		setVisible(true);
 	}
+	
+	
+	// Metodo para poder ordenar los prestamos en orden: ACTIVOS -> ATRASADOS -> CONCLUIDOS -> CANCELADOS
+	public List<Prestamo> ordenarListaPrestamos()
+	{
+		List<Prestamo> prestamosFiltrados = Session.getPrestamosFiltrados();
+		
+		if (prestamosFiltrados == null) 
+		{
+	        return new ArrayList<>(); 
+	    }
+		
+		
+		List<Prestamo> prestamosOrdenandos = new ArrayList<Prestamo>();
+		
+		EstadoPrestamoRepository estadoPrestamoRepo = new EstadoPrestamoRepository();
+		
+		for (Prestamo prestamo : prestamosFiltrados) 
+		{
+			String estado = estadoPrestamoRepo.getClientPrestamosEstado(prestamo);
+			
+			if(estado != null && prestamo.getEstado().equals("activo") && !estado.equals("atrasado"))
+			{
+				prestamosOrdenandos.add(prestamo);
+			}
+		}
+		
+		for (Prestamo prestamo : prestamosFiltrados) {
+			
+			String estado = estadoPrestamoRepo.getClientPrestamosEstado(prestamo);
+			
+			if (estado != null && estado.equals("atrasado")) 
+			{
+				prestamosOrdenandos.add(prestamo);
+			} 
+		}
+		
+		
+		for (Prestamo prestamo : prestamosFiltrados) {
+			if(prestamo.getEstado().equals("concluso"))
+			{
+				prestamosOrdenandos.add(prestamo);
+			}
+		}
+		
+		for (Prestamo prestamo : prestamosFiltrados) {
+			if(prestamo.getEstado().equals("cancelado"))
+			{
+				prestamosOrdenandos.add(prestamo);
+			}
+		}
+		
+		
+		return prestamosOrdenandos;
+	}
+	
 	
 	public int getAlto() {
 		return alto;

@@ -44,6 +44,7 @@ public class VentanaPrincipal extends JFrame
 	JPanel filterPrestamoPanel;
 	
 	private FilterViewController filterViewController;
+	private FilterPrestamoViewController filterPrestamoViewController;
 	
 	public VentanaPrincipal() 
 	{
@@ -88,7 +89,7 @@ public class VentanaPrincipal extends JFrame
 	
 	public void reload() 
 	{
-		System.out.println("RELOAD");
+		//System.out.println("RELOAD");
 		
 		ThemeManager.applySavedTheme();
     	container.remove(homePanel);
@@ -145,7 +146,7 @@ public class VentanaPrincipal extends JFrame
 		filterPanel=filtros;
 		
 		FilterView filtrosPrestamo= new FilterView(this);
-		new FilterPrestamoViewController(filtrosPrestamo);
+		filterPrestamoViewController = new FilterPrestamoViewController(filtrosPrestamo);
 		filterPrestamoPanel=filtrosPrestamo;
 		
 		container.add(homePanel, HOME);
@@ -284,6 +285,14 @@ public class VentanaPrincipal extends JFrame
 
 	public void setFilterViewController(FilterViewController filterViewController) {
 		this.filterViewController = filterViewController;
+	}
+
+	public FilterPrestamoViewController getFilterPrestamoViewController() {
+		return filterPrestamoViewController;
+	}
+
+	public void setFilterPrestamoViewController(FilterPrestamoViewController filterPrestamoViewController) {
+		this.filterPrestamoViewController = filterPrestamoViewController;
 	}
 
 	public void setBtnHome(JButton btnHome) {

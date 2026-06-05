@@ -96,6 +96,7 @@ public class FilterView extends GradientBackground {
 		asignarFocusListenerConPlaceholder(edadMin, "E.MIN");
 		asignarFocusListenerConPlaceholder(ingresosMaximos, "I.MAX");
 		asignarFocusListenerConPlaceholder(ingresosMinimos, "I.MIN");
+		
 		setLayout(new GridLayout(4, 2));
 		
 		JPanel reputacion = new JPanel();
@@ -109,7 +110,7 @@ public class FilterView extends GradientBackground {
 			textoFont,
 			borderLineaColor
 		));
-		reputacion.add(Box.createVerticalStrut(15));
+		reputacion.add(Box.createVerticalStrut(5));
 		reputacion.add(exceelente);
 		reputacion.add(Box.createVerticalStrut(2));
 		reputacion.add(buena);
@@ -172,9 +173,18 @@ public class FilterView extends GradientBackground {
 		rangoPrestamo.add(rangos);
 		add(rangoPrestamo);
 		
+		
 		JPanel edad = new JPanel();
 		edad.setOpaque(false);
 		edad.setLayout(new BoxLayout(edad, BoxLayout.X_AXIS));
+		edad.setBorder(BorderFactory.createTitledBorder(
+			BorderFactory.createLineBorder(borderLineaColor, borderSize),
+			"Búsqueda de Edad",
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			textoFont,
+			borderLineaColor
+		));
 		edad.add(Box.createHorizontalGlue());
 		edad.add(edadMin);
 		edad.add(Box.createHorizontalStrut(20));
@@ -182,15 +192,26 @@ public class FilterView extends GradientBackground {
 		edad.add(Box.createHorizontalGlue());
 		add(edad);
 		
+		
 		JPanel ingresos = new JPanel();
 		ingresos.setOpaque(false);
 		ingresos.setLayout(new BoxLayout(ingresos, BoxLayout.X_AXIS));
+		ingresos.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createLineBorder(borderLineaColor, borderSize),
+				"Búsqueda de Ingresos",
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION,
+				textoFont,
+				borderLineaColor
+			));
 		ingresos.add(Box.createHorizontalGlue());
 		ingresos.add(ingresosMinimos);
 		ingresos.add(Box.createHorizontalStrut(20));
 		ingresos.add(ingresosMaximos);
 		ingresos.add(Box.createHorizontalGlue());
 		add(ingresos);
+		
+		
 		
 		JPanel botones = new JPanel();
 		botones.setOpaque(false);

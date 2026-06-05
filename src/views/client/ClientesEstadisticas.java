@@ -32,9 +32,9 @@ public class ClientesEstadisticas extends PanelPersonalizable {
         ClientRepository clientRepository = new ClientRepository();
         PrestamoRepository prestamoRepository = new PrestamoRepository();
         
-        add(crearCardEstadisticas("TOTAL CLIENTES", String.valueOf(clientRepository.getTotalNumeroDeCliente()), "+12% este mes", Colores.PRIMARY_HEADINGS, false));
-        add(crearCardEstadisticas("PRESTAMOS ACTIVOS", String.valueOf(prestamoRepository.getTotalNumeroDePrestamos()), "74% de la cartera", Colores.PRIMARY_HEADINGS, true));
-        add(crearCardEstadisticas("PRESTAMOS ATRASADOS", "42", "Atención requerida", Colores.PRIMARY_HEADINGS, false));
+        add(crearCardEstadisticas("TOTAL CLIENTES", String.valueOf(ClientRepository.getTotalNumeroDeCliente()), "Clientes registrados", Colores.PRIMARY_HEADINGS, false));
+        add(crearCardEstadisticas("PRESTAMOS ACTIVOS", String.valueOf(prestamoRepository.getTotalNumeroDePrestamos()), "En seguimiento", Colores.PRIMARY_HEADINGS, true));
+        add(crearCardEstadisticas("PRESTAMOS ATRASADOS", String.valueOf(ClientRepository.getTotalNumeroDeAtrasadoPrestamos()), "Atención requerida", Colores.PRIMARY_HEADINGS, false));
     }
     
 	private JPanel crearCardEstadisticas(String titulo, String valor, String subtexto, Color color, boolean clickable) 
