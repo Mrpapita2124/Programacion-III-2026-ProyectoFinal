@@ -47,7 +47,7 @@ public class UserDialogController {
 				e1.printStackTrace();
 			}
 		});
-		this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("..\\img\\icono.png", 200, 200));
+		this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("/img/icono.png", 200, 200));
 		addWindowListener();
 		
         asignarKeyListener(userFromDialog.getTxtNombre());
@@ -94,7 +94,7 @@ public class UserDialogController {
         	
 		} catch (Exception e) {
 			// TODO: handle exception
-			this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("..\\img\\icono.png", 200, 200));
+			this.userFromDialog.getIconoUsuario().setIcon(escalarImagenLocal("/img/icono.png", 200, 200));
 		}
         
         this.userFromDialog.getGuardar().setSelected(user.isGuardar());
@@ -115,16 +115,14 @@ public class UserDialogController {
 	}
 	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
 	    	
-	        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
-	
-	       
-	        Image imagenEscalada = iconoOriginal.getImage()
-	                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
-	
-	        
-	        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
-	        iconoFinal.setDescription(direccion);
-	        return iconoFinal;
+		java.net.URL imgURL = getClass().getResource(direccion);
+        
+        ImageIcon iconoOriginal = new ImageIcon(imgURL);
+        Image imagenEscalada = iconoOriginal.getImage()
+                .getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
+        iconoFinal.setDescription(direccion);
+        return iconoFinal;
 	 }
 	private void addWindowListener()
 	{

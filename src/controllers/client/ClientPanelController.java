@@ -46,7 +46,8 @@ public class ClientPanelController {
 			deleteEverythingFromClient(this.clientPanel.getClient());
 			clientRepository.Delete(this.clientPanel.getClient());
 			ventana.getFilterViewController().refreshFilteredClientes();
-			
+			ventana.reloadPrestamos(true);
+            ventana.getFilterPrestamoViewController().refreshFilteredPrestamos(true);
 		});
 		this.clientPanel.getBtnInfo().addActionListener(e -> {
 			ClientInfoView info = new ClientInfoView(this.clientPanel.getClient());

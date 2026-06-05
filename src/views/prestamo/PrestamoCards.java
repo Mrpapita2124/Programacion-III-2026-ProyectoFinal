@@ -41,20 +41,8 @@ public class PrestamoCards extends PanelPersonalizable
 		
 		List<Prestamo> prestamos = ordenarListaPrestamos(); // Nuevo metodo abajo 
 		
-		/*
-		if(prestamos != null)
-		{
-			int counter = 1;
-			System.out.println("\n\n-------PRESTAMOS-------------");
-			for (Prestamo prestamo : prestamos) 
-			{
-				System.out.println(counter + ": " + prestamo.getNombre());
-				counter++;
-			}
-			
-			System.out.println("\n\n");
-		}*/
-
+		
+		
 		if (prestamos == null || prestamos.isEmpty()) 
 		{
 			String message = prestamos == null ? "No se encontraron préstamos con Filtro " : "No tienes préstamos activos";
@@ -117,7 +105,8 @@ public class PrestamoCards extends PanelPersonalizable
 		
 		if (prestamosFiltrados == null) 
 		{
-	        return new ArrayList<>(); 
+			//System.out.println("No tienes Prestamos activos");
+	        return Session.getPrestamosFiltrados(); 
 	    }
 		
 		

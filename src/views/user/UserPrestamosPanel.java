@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import repository.ClientRepository;
+import repository.PrestamoRepository;
 import utils.Colores;
 import utils.Fonts;
 import views.VentanaPrincipal;
@@ -83,7 +85,12 @@ public class UserPrestamosPanel extends JPanel {
 			System.out.println("No se cargo lo iconos de filtar cliente!");
 		}
 		
-		btnPanel.add(btnFilter);
+		
+		PrestamoRepository prestamoRepo = new PrestamoRepository();
+		if(prestamoRepo.getTotalNumeroDePrestamos() != 0)
+		{
+			btnPanel.add(btnFilter);
+		}
 		
 		panelTitulo.add(izqPanel, BorderLayout.WEST);
 		panelTitulo.add(tituloLbl, BorderLayout.CENTER);

@@ -72,8 +72,8 @@ public class UserFormDialog extends JDialog{
     	
     	super(parent, true);
     	iconoUsuario=new JLabel();
-    	iconoUsuarioFinal = escalarImagenLocal("..\\img\\icono.png",200,200);
-        iconoUsuarioFinal.setDescription("..\\img\\icono.png");
+    	iconoUsuarioFinal = escalarImagenLocal("/img/icono.png",200,200);
+        iconoUsuarioFinal.setDescription("/img/icono.png");
     	setTitle(user == null ? "Agregar usuario" : "Editar usuario");
     	
     	txtErrNombre.setForeground(Color.RED);
