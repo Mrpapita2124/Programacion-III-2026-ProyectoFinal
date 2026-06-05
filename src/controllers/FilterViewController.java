@@ -199,21 +199,21 @@ public class FilterViewController {
 		if((!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")) && (this.filterView.getEdadMax().getText().isEmpty() || this.filterView.getEdadMax().getText().equals("E.MAX")) ){
 			//System.out.println("minimo");
 			for(Client client: clients) {
-				if(client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
+				if(client.getEdad()>= Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if((!this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX")) && (this.filterView.getEdadMin().getText().isEmpty() || this.filterView.getEdadMin().getText().equals("E.MIN"))){
 			//System.out.println("maximo");
 			for(Client client: clients) {
-				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())) {
+				if(client.getEdad()<= Double.parseDouble(this.filterView.getEdadMax().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if(!this.filterView.getEdadMin().getText().isEmpty() && !this.filterView.getEdadMin().getText().equals("E.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("E.MAX") ) {
 			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Client client: clients) {
-				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
+				if(client.getEdad()<= Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()>= Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
@@ -238,14 +238,14 @@ public class FilterViewController {
 		}else if((!this.filterView.getIngresosMaximos().getText().isEmpty() && !this.filterView.getIngresosMaximos().getText().equals("I.MAX")) && (this.filterView.getIngresosMinimos().getText().isEmpty() || this.filterView.getIngresosMinimos().getText().equals("I.MIN"))){
 			//System.out.println("maximo");
 			for(Client client: clients) {
-				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
+				if(client.getIngresosMensuales()<= Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}
 		}else if(!this.filterView.getIngresosMinimos().getText().isEmpty() && !this.filterView.getIngresosMinimos().getText().equals("I.MIN")&& !this.filterView.getEdadMax().getText().isEmpty() && !this.filterView.getEdadMax().getText().equals("I.MAX") ) {
 			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Client client: clients) {
-				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
+				if(client.getIngresosMensuales()<= Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()>= Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
 					clientesFiltrados.add(client);
 				}
 			}

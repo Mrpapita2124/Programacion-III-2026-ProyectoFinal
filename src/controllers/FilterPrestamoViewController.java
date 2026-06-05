@@ -184,21 +184,21 @@ public class FilterPrestamoViewController {
 		if((!this.filterView.getMinimo().getText().isEmpty() && !this.filterView.getMinimo().getText().equals("MIN"))&& (this.filterView.getMaximo().getText().isEmpty() || this.filterView.getMaximo().getText().equals("MAX")) ) {
 			//System.out.println("minimo");
 			for(Prestamo prestamo: prestamos) {
-				if(prestamo.getMonto()>Double.parseDouble(this.filterView.getMinimo().getText())) {
+				if(prestamo.getMonto()>=Double.parseDouble(this.filterView.getMinimo().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
 		}else if((this.filterView.getMinimo().getText().isEmpty() || this.filterView.getMinimo().getText().equals("MIN"))&& (!this.filterView.getMaximo().getText().isEmpty() && !this.filterView.getMaximo().getText().equals("MAX")) ){
 			//System.out.println("maximo");
 			for(Prestamo prestamo: prestamos) {
-				if(prestamo.getMonto()<Double.parseDouble(this.filterView.getMaximo().getText())) {
+				if(prestamo.getMonto()<=Double.parseDouble(this.filterView.getMaximo().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
 		}else if((!this.filterView.getMinimo().getText().isEmpty() && !this.filterView.getMinimo().getText().equals("MIN"))&& (!this.filterView.getMaximo().getText().isEmpty() && !this.filterView.getMaximo().getText().equals("MAX")) ){
 			//System.out.println("rango");
 			for(Prestamo prestamo: prestamos) {
-				if(prestamo.getMonto()<Double.parseDouble(this.filterView.getMaximo().getText())&&prestamo.getMonto()>Double.parseDouble(this.filterView.getMinimo().getText())) {
+				if(prestamo.getMonto()<=Double.parseDouble(this.filterView.getMaximo().getText())&&prestamo.getMonto()>=Double.parseDouble(this.filterView.getMinimo().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -215,7 +215,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("minimo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
+				if(client.getEdad()>= Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -223,7 +223,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("maximo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())) {
+				if(client.getEdad()<= Double.parseDouble(this.filterView.getEdadMax().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -231,7 +231,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getEdad()< Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()> Double.parseDouble(this.filterView.getEdadMin().getText())) {
+				if(client.getEdad()<= Double.parseDouble(this.filterView.getEdadMax().getText())&& client.getEdad()>= Double.parseDouble(this.filterView.getEdadMin().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -250,7 +250,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("minimo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
+				if(client.getIngresosMensuales()>= Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -258,7 +258,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("maximo");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
+				if(client.getIngresosMensuales()<= Double.parseDouble(this.filterView.getIngresosMaximos().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
@@ -266,7 +266,7 @@ public class FilterPrestamoViewController {
 			//System.out.println("aeswiuljhkdfjvvvhbyfijkd eerodujiffwhcbnujiouhkbnerfrdw2huebjigodfw");
 			for(Prestamo prestamo: prestamos) {
 				Client client = clientRepository.getClientFromPrestamo(prestamo);
-				if(client.getIngresosMensuales()< Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
+				if(client.getIngresosMensuales()<= Double.parseDouble(this.filterView.getIngresosMaximos().getText())&& client.getIngresosMensuales()> Double.parseDouble(this.filterView.getIngresosMinimos().getText())) {
 					prestamosFiltrados.add(prestamo);
 				}
 			}
