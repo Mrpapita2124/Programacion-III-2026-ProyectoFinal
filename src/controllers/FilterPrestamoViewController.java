@@ -56,7 +56,7 @@ public class FilterPrestamoViewController {
 		
 		
 		this.filterView.getCancelar().addActionListener(e -> {
-			
+			Session.setPrestamosFiltrados(prestamoRepository.getAllPrestamosFromUser());
 			this.filterView.getVentana().reloadPrestamos(true);
 			this.filterView.getVentana().showView(VentanaPrincipal.PRESTAMOS);
 		});
