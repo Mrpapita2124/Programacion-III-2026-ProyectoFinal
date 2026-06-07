@@ -55,8 +55,6 @@ public class PrestamoPanelController {
 		this.prestamoPanel.getBtnEliminar().addActionListener(e -> {
 			eliminarPrestamo(this.prestamoPanel.getPrestamo());
 		});
-		this.prestamoPanel.getBtnInformacion().addActionListener(e -> {
-		});
 		this.prestamoPanel.getBtnDeuda().addActionListener(e -> new PagoDeudaController(new PagoDeuda(estadoPrestamo,ventana,this.prestamoPanel.getPrestamo())));
 	}
 	

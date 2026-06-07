@@ -138,9 +138,9 @@ public class EstadoPrestamoRepository {
 	                rs.getString("estado"),
 	                rs.getDouble("dinero_atrasado")
 	            );
-	            //System.out.println("Estado encontrado para préstamo: " + prestamo.getId_prestamo());
+	           // System.out.println("Estado encontrado para préstamo: " + prestamo.getIdPrestamo());
 	        } else {
-	           // System.out.println("No se encontró estado para préstamo ID: " + prestamo.getId_prestamo());
+	           // System.out.println("No se encontró estado para préstamo ID: " + prestamo.getIdPrestamo());
 	        }
 	        
 	        return estadoPrestamo;

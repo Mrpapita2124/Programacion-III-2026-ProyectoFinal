@@ -102,11 +102,11 @@ public class VentanaPrincipalController {
 	{
 		int ancho = Integer.parseInt(
 				Config.get("registration.window.width"
-						, "500"));
+						, "1382"));
 		
 		int alto = Integer.parseInt(
 				Config.get("registration.window.height"
-						, "500"));
+						, "784"));
 		
 		String valorX = Config.get("registration.window.x"
 						, "");

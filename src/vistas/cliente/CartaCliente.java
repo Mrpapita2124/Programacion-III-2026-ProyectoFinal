@@ -70,8 +70,8 @@ public class CartaCliente extends JPanel
 		String estatus = clienteRepo.clienteTienePrestamoActivo(this.cliente) ? "Activo" : "Inactivo";
 		Color estatusColor = clienteRepo.clienteTienePrestamoActivo(this.cliente) ? new Color(76, 175, 80) : new Color(225, 20, 16);
 		
-		JLabel cartaStatus = new JLabel(estatus);
-		cartaStatus.setForeground(Colores.LOGIN_PANEL);
+		JLabel cartaStatus = new JLabel(estatus.toUpperCase());
+		cartaStatus.setForeground(estatusColor.darker().darker());
 		cartaStatus.setBackground(estatusColor);
 		cartaStatus.setOpaque(true);
 		cartaStatus.setBorder(BorderFactory.createEmptyBorder(6, 10, 6, 10));

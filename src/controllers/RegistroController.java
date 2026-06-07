@@ -231,25 +231,25 @@ public class RegistroController {
     	
     	if (correo.isEmpty() || correo.equals("correo@ejemplo.com")) 
     	{
-    		formularioRegsitro.getLblErrorCorreo().setText("El email es obligatorio");
+    		formularioRegsitro.getLblErrorCorreo().setText("El correo es obligatorio");
 			return false;
 		}
     	
     	if (correo.length() < 5) 
     	{
-    		formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Es muy corto.");
+    		formularioRegsitro.getLblErrorCorreo().setText("Correo inválido! Es muy corto.");
     	    return false;
     	}
 
 		if (!correo.contains("@")) 
 		{
-			formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Le falta @");
+			formularioRegsitro.getLblErrorCorreo().setText("Correo inválido! Le falta @");
 			return false;
 		}
 		
 		if (!correo.contains(".com")) 
 		{
-			formularioRegsitro.getLblErrorCorreo().setText("Email inválido! Le falta un '.com'");
+			formularioRegsitro.getLblErrorCorreo().setText("Correo inválido! Le falta un '.com'");
 			return false;
 		}
 		

@@ -37,7 +37,7 @@ public class Login extends JPanel{
 	public int y;
 	public boolean logrado;
 	
-	private Font fuenteTexto = Fuentes.setFontSegoe(2, 17); 
+	private Font fuenteTexto = Fuentes.setFontSegoe(2, 15); 
 	private Font fuenteBoton = Fuentes.setFontSegoe(1, 17);
 	private Font fuenteTitulo = Fuentes.setFontSegoe(1, 30);
 	
@@ -85,7 +85,7 @@ public class Login extends JPanel{
 		botonesPanel.setBackground(Colores.LOGIN_PANEL1);
 		botonesPanel.setBorder(new EmptyBorder(0,15,0,0));
 		
-		crearBoton(botonIniciar, "..\\img\\login.png", "Clic para Iniciar Sesión!");
+		crearBoton(botonIniciar, "/img/login.png", "Clic para Iniciar Sesión!");
 		
 		
 		botonesPanel.add(botonIniciar);
@@ -104,7 +104,7 @@ public class Login extends JPanel{
 		
 		
 
-		crearBoton(Registrarse, "..\\img\\enter.png", "Clic para Registrarse!");
+		crearBoton(Registrarse, "/img/enter.png", "Clic para Registrarse!");
 		
 		
 		Registrarse.addMouseListener(new MouseAdapter() {
@@ -131,7 +131,7 @@ public class Login extends JPanel{
 		mensajeCorreo.setVisible(true);
 		
 		mensajeContraseña.setForeground(Color.RED);
-		mensajeContraseña.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		mensajeContraseña.setFont(fuenteTexto);
 		mensajeContraseña.setVisible(true);
 	}
 	

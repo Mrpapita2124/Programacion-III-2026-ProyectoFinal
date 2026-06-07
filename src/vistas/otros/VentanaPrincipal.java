@@ -73,9 +73,6 @@ public class VentanaPrincipal extends JFrame
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		
-		
-		
-		
 		setVisible(true);
 	}
 	
