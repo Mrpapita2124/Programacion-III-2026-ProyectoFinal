@@ -10,67 +10,67 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import config.Config;
-import controllers.user.UserController;
-import modelos.User;
-import repository.UserRepository;
-import tablemodels.UserTableModel;
-import views.Ventana;
-import views.VentanaPrincipal;
+import controllers.usuario.UserController;
+import modelos.Usuario;
+import modelosTabla.ModeloTablaUsuario;
+import repositorios.UsuarioRepository;
+import vistas.otros.Ventana;
+import vistas.otros.VentanaPrincipal;
 
 public class VentanaPrincipalController {
-	UserRepository repository;
-	UserController controller;
+	UsuarioRepository usuarioRepository;
+	UserController usuarioController;
 	private VentanaPrincipal ventanaPrincipal;
 	
 	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) throws IOException {
 		
-		repository = new UserRepository();
-		controller = new UserController(ventanaPrincipal.getUsersPanel(), this,repository.getUsers());
+		usuarioRepository = new UsuarioRepository();
+		usuarioController = new UserController(ventanaPrincipal.getUsuariosPanel(), this,usuarioRepository.getUsuarios());
 		this.ventanaPrincipal = ventanaPrincipal;
 		
-		cargarWindowPreferences();
-		registerListeners();
+		cargarPreferenciasVentana();
+		registrarListeners();
 		
 	}
 	
-	public void registerListeners( ) {
+	public void registrarListeners( ) {
 		
-		ventanaPrincipal.getmItemExit().addActionListener(e -> handleClose());
+		ventanaPrincipal.getmItemSalida().addActionListener(e -> handleClose());
 		
 		ventanaPrincipal.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				new Ventana();
-				guardarWindowPreferences();
+				guardarPreferenciasVentana();
 				ventanaPrincipal.dispose();
 			}
 		});
 
 		
-		ventanaPrincipal.getBtnUsers().addActionListener(e -> {
+		ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
 			try {
-				showUsers();
+				mostrarUsuarios();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
 		
-		ventanaPrincipal.getBtnHome().addActionListener(e -> ventanaPrincipal.showView(ventanaPrincipal.HOME));
+		ventanaPrincipal.getBtnInicio().addActionListener(e -> ventanaPrincipal.mostrarVista(ventanaPrincipal.HOME));
 		
 	}
 	
-	public void showUsers() throws IOException {
+	public void mostrarUsuarios() throws IOException {
 		
 		try {
-			List<User> users = repository.getUsers();
+			List<Usuario> usuarios = usuarioRepository.getUsuarios();
 			
-			UserTableModel model = new UserTableModel(users);
+			ModeloTablaUsuario modeloTabla = new ModeloTablaUsuario(usuarios);
 			
-			ventanaPrincipal.getUsersPanel().setTableModel(model);
+			ventanaPrincipal.getUsuariosPanel().setTableModel(modeloTabla);
 			
 			//System.out.println("Refresh Table");
-			ventanaPrincipal.showView(ventanaPrincipal.USERS);
+			ventanaPrincipal.mostrarVista(ventanaPrincipal.USERS);
 			
 		}catch (IOException ex) {
 			JOptionPane.showMessageDialog(ventanaPrincipal, ex.getMessage());
@@ -80,15 +80,15 @@ public class VentanaPrincipalController {
 	
 	
 	
-	private void guardarWindowPreferences() {
-		Dimension size = ventanaPrincipal.getSize();
+	private void guardarPreferenciasVentana() {
+		Dimension tamanio = ventanaPrincipal.getSize();
 		Point point = ventanaPrincipal.getLocation();
 		
 		Config.set("registration.window.width", 
-				String.valueOf(size.width));
+				String.valueOf(tamanio.width));
 		
 		Config.set("registration.window.height", 
-				String.valueOf(size.height));
+				String.valueOf(tamanio.height));
 		
 		Config.set("registration.window.x", 
 				String.valueOf(point.x));
@@ -98,34 +98,34 @@ public class VentanaPrincipalController {
 		
 	}
 	
-	private void cargarWindowPreferences()
+	private void cargarPreferenciasVentana()
 	{
-		int width = Integer.parseInt(
+		int ancho = Integer.parseInt(
 				Config.get("registration.window.width"
 						, "500"));
 		
-		int height = Integer.parseInt(
+		int alto = Integer.parseInt(
 				Config.get("registration.window.height"
 						, "500"));
 		
-		String xValue = Config.get("registration.window.x"
+		String valorX = Config.get("registration.window.x"
 						, "");
 		
-		String yValue = Config.get("registration.window.y"
+		String valorY = Config.get("registration.window.y"
 				, "");
 		
-		if(!xValue.isBlank() && !yValue.isBlank()) {
-			ventanaPrincipal.setWindowLocation(Integer.parseInt(xValue), Integer.parseInt(yValue));
+		if(!valorX.isBlank() && !valorY.isBlank()) {
+			ventanaPrincipal.setUbicacionVentana(Integer.parseInt(valorX), Integer.parseInt(valorY));
 		}else {
 			ventanaPrincipal.setLocationRelativeTo(null);
 		}
 		
-		ventanaPrincipal.setWindowSize(width, height);
+		ventanaPrincipal.setTamanioVentana(ancho, alto);
 	}
 	
 	
 	private void handleClose() {
-		int option = ventanaPrincipal.confirmExit();
+		int option = ventanaPrincipal.confirmarSalir();
 		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {

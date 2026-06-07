@@ -1,14 +1,14 @@
 package main;
 
-import utils.ThemeManager;
-import views.Ventana;
+import utilidades.ManejadorTemas;
+import vistas.otros.Ventana;
 
 
 public class Main {
 	
 	public static void main(String[] args)
 	{
-		ThemeManager.applySavedTheme();
+		ManejadorTemas.aplicarTemaGuardado();
 		
 		Ventana ventanita = new Ventana();
 	}

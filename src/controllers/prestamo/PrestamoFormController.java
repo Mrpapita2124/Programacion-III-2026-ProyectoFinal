@@ -18,23 +18,23 @@ import javax.swing.event.DocumentListener;
 
 import com.mysql.cj.protocol.a.LocalDateTimeValueEncoder;
 
-import exceptions.InvalidMailException;
-import exceptions.InvalidNumberException;
-import modelos.Client;
+import excepciones.CorreoInvalidoException;
+import excepciones.NumeroInvalidoException;
+import modelos.Cliente;
 import modelos.Prestamo;
-import modelos.User;
-import repository.ClientRepository;
-import repository.EstadoPrestamoRepository;
-import repository.PrestamoRepository;
-import repository.RegisterRepository;
-import repository.UserRepository;
-import utils.Colores;
-import utils.Session;
-import views.Login;
-import views.Ventana;
-import views.formulario.FormularioGeneralCliente;
-import views.formulario.FormularioGeneralPrestamo;
-import views.formulario.FormularioRegistro;
+import modelos.Usuario;
+import repositorios.ClienteRepository;
+import repositorios.EstadoPrestamoRepository;
+import repositorios.PrestamoRepository;
+import repositorios.RegistroRepository;
+import repositorios.UsuarioRepository;
+import utilidades.Colores;
+import utilidades.Sesion;
+import vistas.formulario.FormularioGeneralCliente;
+import vistas.formulario.FormularioGeneralPrestamo;
+import vistas.formulario.FormularioRegistro;
+import vistas.otros.Login;
+import vistas.otros.Ventana;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,30 +45,29 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.UUID;
-import repository.RegisterRepository;
 
 public class PrestamoFormController {
 	private FormularioGeneralPrestamo formularioPrestamo;
 	private PrestamoRepository prestamoRepository;
-	private UserRepository userRepository;
+	private UsuarioRepository usuarioRepository;
 	
-	public PrestamoFormController(FormularioGeneralPrestamo form)
+	public PrestamoFormController(FormularioGeneralPrestamo formulario)
 	{
 		prestamoRepository=new PrestamoRepository();
-		userRepository=new UserRepository();
-		this.formularioPrestamo=form;
+		usuarioRepository=new UsuarioRepository();
+		this.formularioPrestamo=formulario;
 		
 		formularioPrestamo.getRegistrar().addActionListener(e -> validacion());
 		
 		
-		addWindowListener();
+		asignarWindowListener();
 		
         asignarValidacion(this.formularioPrestamo.getMonto());
         asignarValidacion(this.formularioPrestamo.getInteresAtrasado());
 
 	}
 	
-	private void addWindowListener()
+	private void asignarWindowListener()
 	{
 		formularioPrestamo.getWindow().addWindowListener(new WindowListener() {
 				
@@ -100,13 +99,13 @@ public class PrestamoFormController {
 				@Override
 				public void windowActivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					((JFrame) formularioPrestamo.getWindow()).getContentPane().setBackground(Colores.BACKGROUND);
+					((JFrame) formularioPrestamo.getWindow()).getContentPane().setBackground(Colores.FONDO);
 				}
 				
 				@Override
 				public void windowClosing(WindowEvent e) {
 					
-					handleClose();
+					manejarCierre();
 				}
 				
 				@Override
@@ -121,12 +120,12 @@ public class PrestamoFormController {
 	 
 
 	 
-	private void handleClose() {
+	private void manejarCierre() {
 		
-		int option = formularioPrestamo.confirmExit();
-		System.out.println(option);
+		int opcion = formularioPrestamo.confirmarCierre();
+		System.out.println(opcion);
 
-		if (option == JOptionPane.YES_OPTION) {
+		if (opcion == JOptionPane.YES_OPTION) {
 			
 			formularioPrestamo.getWindow().dispose();
 		}
@@ -140,21 +139,21 @@ public class PrestamoFormController {
     {
 		formularioPrestamo.resetearErrorLabels();
 
-		boolean valid = true;
+		boolean valido = true;
 
 		
-		if (!validarMonto()) { valid = false; }
-		if (!validarInteresAtrasado()) { valid = false; }
-		if (!validarDinero()) { valid = false; }
+		if (!validarMonto()) { valido = false; }
+		if (!validarInteresAtrasado()) { valido = false; }
+		if (!validarDinero()) { valido = false; }
 
 		
 		//if (!validarFoto()) { valid = false; }
 		
-		if (valid) 
+		if (valido) 
 		{
 			restarDineroUsuario();
-			int idUsuario=Session.getCurrentUser().getId();
-			int idCliente=formularioPrestamo.getClient().getIdCliente();
+			int idUsuario=Sesion.getusuarioActual().getId();
+			int idCliente=formularioPrestamo.getCliente().getIdCliente();
 			int monto = Integer.parseInt(formularioPrestamo.getMonto().getText());
 			double interesAtrasado=Double.parseDouble(formularioPrestamo.getInteresAtrasado().getText());
 			int quincenas=formularioPrestamo.getNumQuincenas();
@@ -162,7 +161,7 @@ public class PrestamoFormController {
 			Date fecha= Date.valueOf(LocalDate.now());
 			double montoTotal=monto+monto*(interes/100);
 			
-				prestamoRepository.save(new Prestamo(idUsuario, idCliente, "activo", monto, quincenas, montoTotal/quincenas, montoTotal, interes, interesAtrasado, fecha));
+				prestamoRepository.guardar(new Prestamo(idUsuario, idCliente, "activo", monto, quincenas, montoTotal/quincenas, montoTotal, interes, interesAtrasado, fecha));
 				
 				formularioPrestamo.getWindow().dispose();
 			
@@ -170,15 +169,15 @@ public class PrestamoFormController {
 		
     }
 	public boolean validarDinero() {
-		if(Integer.parseInt(formularioPrestamo.getMonto().getText())>Session.getCurrentUser().getCapacidadPrestamo()) {
+		if(Integer.parseInt(formularioPrestamo.getMonto().getText())>Sesion.getusuarioActual().getCapacidadPrestamo()) {
 			return false;
 		}
 		return true;
 	}
 	public void restarDineroUsuario() {
-		Session.getCurrentUser().setCapacidadPrestamo(Session.getCurrentUser().getCapacidadPrestamo()-Double.parseDouble(formularioPrestamo.getMonto().getText()));
+		Sesion.getusuarioActual().setCapacidadPrestamo(Sesion.getusuarioActual().getCapacidadPrestamo()-Double.parseDouble(formularioPrestamo.getMonto().getText()));
 		try {
-			userRepository.update(Session.getCurrentUser());
+			usuarioRepository.actualizar(Sesion.getusuarioActual());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,7 +217,7 @@ public class PrestamoFormController {
 			return false;
 		} else {
 			try {
-				numberExceptions(interes);
+				numeroExceptions(interes);
 				formularioPrestamo.getLblErrorInteresAtrasado().setText("");
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -231,36 +230,36 @@ public class PrestamoFormController {
 		return true;
     }
     
-    public void numberExceptions(String numero) throws InvalidNumberException {
+    public void numeroExceptions(String numero) throws NumeroInvalidoException {
     	if(!numero.matches("\\d*")) {
-    		throw new InvalidNumberException("Solo se permites numeros");
+    		throw new NumeroInvalidoException("Solo se permites numeros");
     	}
     }
-    public void doubleMultipleExceptions(String numero) throws InvalidNumberException {
+    public void doubleMultipleExceptions(String numero) throws NumeroInvalidoException {
     	if(!numero.matches("[0-9.]*")) {
-    		throw new InvalidNumberException("Solo se permites numeros y punto decimal");
+    		throw new NumeroInvalidoException("Solo se permites numeros y punto decimal");
     	}
     	if((Integer.parseInt(numero) % 500)!= 0 ) {
-    		throw new InvalidNumberException("Solo se permites numeros que sean multiplos de 500");
+    		throw new NumeroInvalidoException("Solo se permites numeros que sean multiplos de 500");
     	}
     }
    
     
-    private void asignarValidacion(JTextField jTextField)
+    private void asignarValidacion(JTextField campoDeTexto)
     {
     	
-    	switch(jTextField.getName().toString())
+    	switch(campoDeTexto.getName().toString())
     	{
     	
         case "monto":
-        	jTextField.getDocument().addDocumentListener(new DocumentListener() {
+        	campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
                 @Override public void insertUpdate(DocumentEvent e) { validarMonto(); }
                 @Override public void removeUpdate(DocumentEvent e) { validarMonto(); }
                 @Override public void changedUpdate(DocumentEvent e) { validarMonto(); }
             });
             break;
         case "interes-atrasado":
-	    	jTextField.getDocument().addDocumentListener(new DocumentListener() {
+	    	campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
 	            @Override public void insertUpdate(DocumentEvent e) { validarInteresAtrasado(); }
 	            @Override public void removeUpdate(DocumentEvent e) { validarInteresAtrasado(); }
 	            @Override public void changedUpdate(DocumentEvent e) { validarInteresAtrasado(); }

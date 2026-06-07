@@ -1,14 +1,14 @@
 package modelos;
 
 public class Prestamo {
-    private int id_prestamo;
-    private int id_usuario;
-    private int id_cliente;
+    private int idPrestamo;
+    private int idUsuario;
+    private int idCliente;
     private String estado; // "activo", "concluso", "cancelado"
     private double monto;
-    private int numero_quincenas;
-    private double monto_quincenal;
-    private double monto_total;
+    private int numeroQuincenas;
+    private double montoQuincenal;
+    private double montoTotal;
     private double interes;
     private double interes_retraso;
     private java.sql.Date fecha;
@@ -17,20 +17,20 @@ public class Prestamo {
     private String ine;
 
     // Constructor con id_prestamo
-    public Prestamo(int id_prestamo, int id_usuario, int id_cliente, String estado,
-                    double monto, int numero_quincenas, double monto_quincenal,
-                    double monto_total, double interes, double interes_retraso,
+    public Prestamo(int idPrestamo, int idUsuario, int idCliente, String estado,
+                    double monto, int numeroQuincenas, double monto_quincenal,
+                    double monto_total, double interes, double interesRetraso,
                     java.sql.Date fecha, String nombre, String apellido, String ine) {
-        this.id_prestamo = id_prestamo;
-        this.id_usuario = id_usuario;
-        this.id_cliente = id_cliente;
+        this.idPrestamo = idPrestamo;
+        this.idUsuario = idUsuario;
+        this.idCliente = idCliente;
         this.estado = estado;
         this.monto = monto;
-        this.numero_quincenas = numero_quincenas;
-        this.monto_quincenal = monto_quincenal;
-        this.monto_total = monto_total;
+        this.numeroQuincenas = numeroQuincenas;
+        this.montoQuincenal = monto_quincenal;
+        this.montoTotal = monto_total;
         this.interes = interes;
-        this.interes_retraso = interes_retraso;
+        this.interes_retraso = interesRetraso;
         this.fecha = fecha;
         this.nombre=nombre;
         this.apellido=apellido;
@@ -38,20 +38,20 @@ public class Prestamo {
     }
 
     // Constructor sin id_prestamo (para inserts donde el ID lo genera la BD)
-    public Prestamo(int id_usuario, int id_cliente, String estado,
-                    double monto, int numero_quincenas, double monto_quincenal,
-                    double monto_total, double interes, double interes_retraso,
-                    java.sql.Date fecha) {
-        this.id_usuario = id_usuario;
-        this.id_cliente = id_cliente;
-        this.estado = estado;
-        this.monto = monto;
-        this.numero_quincenas = numero_quincenas;
-        this.monto_quincenal = monto_quincenal;
-        this.monto_total = monto_total;
-        this.interes = interes;
-        this.interes_retraso = interes_retraso;
-        this.fecha = fecha;
+    public Prestamo(int idUsuario, int idCliente, String estado,
+            	double monto, int numeroQuincenas, double monto_quincenal,
+            	double monto_total, double interes, double interesRetraso,
+            	java.sql.Date fecha) {
+    	 this.idUsuario = idUsuario;
+         this.idCliente = idCliente;
+         this.estado = estado;
+         this.monto = monto;
+         this.numeroQuincenas = numeroQuincenas;
+         this.montoQuincenal = monto_quincenal;
+         this.montoTotal = monto_total;
+         this.interes = interes;
+         this.interes_retraso = interesRetraso;
+         this.fecha = fecha;
         
     }
 
@@ -79,28 +79,28 @@ public class Prestamo {
 		this.ine = ine;
 	}
 
-	public int getId_prestamo() {
-		return id_prestamo;
+	public int getIdPrestamo() {
+		return idPrestamo;
 	}
 
-	public void setId_prestamo(int id_prestamo) {
-		this.id_prestamo = id_prestamo;
+	public void setIdPrestamo(int idPrestamo) {
+		this.idPrestamo = idPrestamo;
 	}
 
-	public int getId_usuario() {
-		return id_usuario;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
-	public int getId_cliente() {
-		return id_cliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 
-	public void setId_cliente(int id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	public String getEstado() {
@@ -119,28 +119,28 @@ public class Prestamo {
 		this.monto = monto;
 	}
 
-	public int getNumero_quincenas() {
-		return numero_quincenas;
+	public int getNumeroQuincenas() {
+		return numeroQuincenas;
 	}
 
-	public void setNumero_quincenas(int numero_quincenas) {
-		this.numero_quincenas = numero_quincenas;
+	public void setNumeroQuincenas(int numeroQuincenas) {
+		this.numeroQuincenas = numeroQuincenas;
 	}
 
-	public double getMonto_quincenal() {
-		return monto_quincenal;
+	public double getMontoQuincenal() {
+		return montoQuincenal;
 	}
 
-	public void setMonto_quincenal(double monto_quincenal) {
-		this.monto_quincenal = monto_quincenal;
+	public void setMontoQuincenal(double montoQuincenal) {
+		this.montoQuincenal = montoQuincenal;
 	}
 
-	public double getMonto_total() {
-		return monto_total;
+	public double getMontoTotal() {
+		return montoTotal;
 	}
 
-	public void setMonto_total(double monto_total) {
-		this.monto_total = monto_total;
+	public void setMontoTotal(double montoTotal) {
+		this.montoTotal = montoTotal;
 	}
 
 	public double getInteres() {
@@ -151,12 +151,12 @@ public class Prestamo {
 		this.interes = interes;
 	}
 
-	public double getInteres_retraso() {
+	public double getInteresRetraso() {
 		return interes_retraso;
 	}
 
-	public void setInteres_retraso(double interes_retraso) {
-		this.interes_retraso = interes_retraso;
+	public void setInteresRetraso(double interesRetraso) {
+		this.interes_retraso = interesRetraso;
 	}
 
 	public java.sql.Date getFecha() {

@@ -24,11 +24,11 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 
-import modelos.User;
+import modelos.Usuario;
 
 public class PDFExporter {
 	
-	public void exportUsers(List<User> users, File file) throws IOException, java.io.IOException {
+	public void exportUsers(List<Usuario> users, File file) throws IOException, java.io.IOException {
 
 		try (PdfDocument pdfDoc = new PdfDocument(new PdfWriter(file));
 				Document doc = new Document(pdfDoc, PageSize.LETTER.rotate());) {
@@ -92,7 +92,7 @@ public class PDFExporter {
 			
 			int indice = 1;
 			
-			for(User u : users) {
+			for(Usuario u : users) {
 				table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(String.valueOf(indice))));
 

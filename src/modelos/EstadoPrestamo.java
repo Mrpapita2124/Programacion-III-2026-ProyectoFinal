@@ -3,58 +3,58 @@ package modelos;
 import java.sql.Date;
 
 public class EstadoPrestamo {
-    private int id_estado_prestamo;
-    private int id_prestamo;
+    private int idEstadoPrestamo;
+    private int idPrestamo;
     private int quincenasRestantes;
-    private double monto_restante;
-    private Date fecha_proximo_pago;
-    private double monto_proximo_pago;
+    private double montoRestante;
+    private Date fechaProximoPago;
+    private double montoProximoPago;
     private String estado;
-    private double dinero_atrasado;
+    private double dineroAtrasado;
 
-    public EstadoPrestamo(int id_estado_prestamo, int id_prestamo,int quincenasRestantes, double monto_restante,
-                          Date fecha_proximo_pago, double monto_proximo_pago,
-                          String estado, double dinero_atrasado) {
-        this.id_estado_prestamo = id_estado_prestamo;
-        this.id_prestamo = id_prestamo;
+    public EstadoPrestamo(int idEstadoPrestamo, int idPrestamo,int quincenasRestantes, double montoRestante,
+                          Date fechaProximoPago, double montoProximoPago,
+                          String estado, double dineroAtrasado) {
+        this.idEstadoPrestamo = idEstadoPrestamo;
+        this.idPrestamo = idPrestamo;
         this.quincenasRestantes=quincenasRestantes;
-        this.monto_restante = monto_restante;
-        this.fecha_proximo_pago = fecha_proximo_pago;
-        this.monto_proximo_pago = monto_proximo_pago;
+        this.montoRestante = montoRestante;
+        this.fechaProximoPago = fechaProximoPago;
+        this.montoProximoPago = montoProximoPago;
         this.estado = estado;
-        this.dinero_atrasado = dinero_atrasado;
+        this.dineroAtrasado = dineroAtrasado;
     }
 
-    public EstadoPrestamo(int id_prestamo,int quincenasRestantes, double monto_restante,
-                          Date fecha_proximo_pago, double monto_proximo_pago,
-                          String estado, double dinero_atrasado) {
-        this.id_prestamo = id_prestamo;
+    public EstadoPrestamo(int idPrestamo,int quincenasRestantes, double montoRestante,
+            Date fechaProximoPago, double montoProximoPago,
+            String estado, double dineroAtrasado) {
+    	this.idPrestamo = idPrestamo;
         this.quincenasRestantes=quincenasRestantes;
-        this.monto_restante = monto_restante;
-        this.fecha_proximo_pago = fecha_proximo_pago;
-        this.monto_proximo_pago = monto_proximo_pago;
+        this.montoRestante = montoRestante;
+        this.fechaProximoPago = fechaProximoPago;
+        this.montoProximoPago = montoProximoPago;
         this.estado = estado;
-        this.dinero_atrasado = dinero_atrasado;
+        this.dineroAtrasado = dineroAtrasado;
     }
 
-	public int getId_estado_prestamo() {
-		return id_estado_prestamo;
+	public int getIdEstadoPrestamo() {
+		return idEstadoPrestamo;
 	}
 
-	public void setId_estado_prestamo(int id_estado_prestamo) {
-		this.id_estado_prestamo = id_estado_prestamo;
+	public void setIdEstadoPrestamo(int idEstadoPrestamo) {
+		this.idEstadoPrestamo = idEstadoPrestamo;
 	}
 
-	public int getId_prestamo() {
-		return id_prestamo;
+	public int getIdPrestamo() {
+		return idPrestamo;
 	}
 
-	public void setId_prestamo(int id_prestamo) {
-		this.id_prestamo = id_prestamo;
+	public void setIdPrestamo(int idPrestamo) {
+		this.idPrestamo = idPrestamo;
 	}
 
-	public double getMonto_restante() {
-		return monto_restante;
+	public double getMontoRestante() {
+		return montoRestante;
 	}
 
 	public int getQuincenasRestantes() {
@@ -65,24 +65,24 @@ public class EstadoPrestamo {
 		this.quincenasRestantes = quincenasRestantes;
 	}
 
-	public void setMonto_restante(double monto_restante) {
-		this.monto_restante = monto_restante;
+	public void setMontoRestante(double montoRestante) {
+		this.montoRestante = montoRestante;
 	}
 
-	public Date getFecha_proximo_pago() {
-		return fecha_proximo_pago;
+	public Date getFechaProximoPago() {
+		return fechaProximoPago;
 	}
 
-	public void setFecha_proximo_pago(Date fecha_proximo_pago) {
-		this.fecha_proximo_pago = fecha_proximo_pago;
+	public void setFechaProximoPago(Date fechaProximoPago) {
+		this.fechaProximoPago = fechaProximoPago;
 	}
 
-	public double getMonto_proximo_pago() {
-		return monto_proximo_pago;
+	public double getMontoProximoPago() {
+		return montoProximoPago;
 	}
 
-	public void setMonto_proximo_pago(double monto_proximo_pago) {
-		this.monto_proximo_pago = monto_proximo_pago;
+	public void setMontoProximoPago(double montoProximoPago) {
+		this.montoProximoPago = montoProximoPago;
 	}
 
 	public String getEstado() {
@@ -93,12 +93,12 @@ public class EstadoPrestamo {
 		this.estado = estado;
 	}
 
-	public double getDinero_atrasado() {
-		return dinero_atrasado;
+	public double getDineroAtrasado() {
+		return dineroAtrasado;
 	}
 
-	public void setDinero_atrasado(double dinero_atrasado) {
-		this.dinero_atrasado = dinero_atrasado;
+	public void setDineroAtrasado(double dineroAtrasado) {
+		this.dineroAtrasado = dineroAtrasado;
 	}
     
 }

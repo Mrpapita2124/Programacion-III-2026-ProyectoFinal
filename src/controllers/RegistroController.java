@@ -16,13 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import modelos.User;
-import repository.RegisterRepository;
-import repository.UserRepository;
-import utils.Colores;
-import views.Login;
-import views.Ventana;
-import views.formulario.FormularioRegistro;
+import modelos.Usuario;
+import repositorios.RegistroRepository;
+import repositorios.UsuarioRepository;
+import utilidades.Colores;
+import vistas.formulario.FormularioRegistro;
+import vistas.otros.Login;
+import vistas.otros.Ventana;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -30,21 +30,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
-import repository.RegisterRepository;
 
 public class RegistroController {
-	private RegisterRepository registerRepository;
+	private RegistroRepository registroRepository;
 	private FormularioRegistro formularioRegsitro;
-	private Window loginWindow;
+	private Window loginVentana;
 	
-	public RegistroController(Window loginWindow)
+	public RegistroController(Window loginVentana)
 	{
-		registerRepository=new RegisterRepository();
-		this.loginWindow = loginWindow;
+		registroRepository=new RegistroRepository();
+		this.loginVentana = loginVentana;
 		formularioRegsitro = new FormularioRegistro();
 		formularioRegsitro.getRegistrar().addActionListener(e -> validacionDeRegistro());
-		formularioRegsitro.getSeleccionar().addActionListener(e -> formularioRegsitro.chooseImage());
-		addWindowListener();
+		formularioRegsitro.getSeleccionar().addActionListener(e -> formularioRegsitro.seleccionarImagen());
+		agregarWindowListener();
 		
         asignarKeyListener(formularioRegsitro.getNombres());
         asignarKeyListener(formularioRegsitro.getApellidos()); 
@@ -55,7 +54,7 @@ public class RegistroController {
         asignarValidacion(formularioRegsitro.getContraseField());
 	}
 	
-	private void addWindowListener()
+	private void agregarWindowListener()
 	{
 			formularioRegsitro.getWindow().addWindowListener(new WindowListener() {
 				
@@ -87,13 +86,13 @@ public class RegistroController {
 				@Override
 				public void windowActivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					((JFrame) formularioRegsitro.getWindow()).getContentPane().setBackground(Colores.BACKGROUND);
+					((JFrame) formularioRegsitro.getWindow()).getContentPane().setBackground(Colores.FONDO);
 				}
 				
 				@Override
 				public void windowClosing(WindowEvent e) {
 					
-					handleClose();
+					manejarCierre();
 				}
 				
 				@Override
@@ -106,7 +105,7 @@ public class RegistroController {
 			
 	}
 	 
-	private String saveImage() {
+	private String guardarImagen() {
 	    	try {
 	    		
 				String ruta = formularioRegsitro.getIconDescription();
@@ -116,23 +115,23 @@ public class RegistroController {
 	    			
 		    			
 		    		
-		    		File source = new File(original);
+		    		File fuente = new File(original);
 		    		
 		    		String extension = original.substring(original.lastIndexOf("."));
 		    		
-		    		String newName = UUID.randomUUID() + extension;
+		    		String nuevoNombre = UUID.randomUUID() + extension;
 		    		
-		    		String folder = "." + File.separator + "images";
+		    		String carpeta = "." + File.separator + "images";
 		    		
-		    		File directory = new File(folder);
+		    		File directorio = new File(carpeta);
 		    		
-		    		if(!directory.exists()) {
-		    			directory.mkdir();
+		    		if(!directorio.exists()) {
+		    			directorio.mkdir();
 		    		}
 		    		
-		    		Path destination = Paths.get(folder, newName);
+		    		Path destination = Paths.get(carpeta, nuevoNombre);
 		    		
-		    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+		    		Files.copy(fuente.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 		    		
 		    		return destination.toString();
 	    		}
@@ -145,13 +144,13 @@ public class RegistroController {
 	    	}
 	    }
 	 
-	private void handleClose() {
+	private void manejarCierre() {
 		
 		int option = formularioRegsitro.confirmExit();
 		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
-			loginWindow.dispose();
+			loginVentana.dispose();
 			new Ventana();
 			formularioRegsitro.getWindow().dispose();
 		}
@@ -165,25 +164,25 @@ public class RegistroController {
     {
     	formularioRegsitro.resetearErrorLabels();
 
-		boolean valid = true;
+		boolean valido = true;
 
-		if (!validarNombre()) { valid = false; }
-		if (!validarApellido()) { valid = false; }
-		if (!validarCorreo()) { valid = false; }
-		if (!validarConstasena()) { valid = false; }
+		if (!validarNombre()) { valido = false; }
+		if (!validarApellido()) { valido = false; }
+		if (!validarCorreo()) { valido = false; }
+		if (!validarConstasena()) { valido = false; }
 		//if (!validarFoto()) { valid = false; }
 		
-		if (valid) 
+		if (valido) 
 		{
 			String nombre = formularioRegsitro.getNombre();
 			String apellido = formularioRegsitro.getApellido();
 			String correo = formularioRegsitro.getCorreo();
 			String contrasena = formularioRegsitro.getContraseña();
 			
-			String foto=saveImage();
+			String foto=guardarImagen();
 			boolean guardar=formularioRegsitro.getGuardar().isSelected();
 			
-			registerRepository.register(correo, contrasena, nombre, apellido, foto, guardar);
+			registroRepository.registro(correo, contrasena, nombre, apellido, foto, guardar);
 			
 			
 			//formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
@@ -191,7 +190,7 @@ public class RegistroController {
 			
 			new Ventana();
 			formularioRegsitro.getWindow().dispose();
-			loginWindow.dispose();
+			loginVentana.dispose();
 		}
 		
     }
@@ -296,29 +295,15 @@ public class RegistroController {
     	formularioRegsitro.getLblErrorContrasena().setText("");
 		return true;
     }
-   /*public boolean validarFoto()
-    {
-    	ImageIcon icon =(ImageIcon) formularioRegsitro.getIconoUsuario().getIcon();
-		String ruta = icon.getDescription();
-		
-    	
-    	if (ruta=="..\\img\\icono.png") 
-    	{
-    		formularioRegsitro.lblErrorFoto.setText("La foto es obligatoria");
-			return false;
-		}
-    	
-    	
-		return true;
-    }*/
+  
     
-    private void asignarValidacion(JTextField JtextField)
+    private void asignarValidacion(JTextField campoDeTexto)
     {
     	
-    	switch(JtextField.getName().toString())
+    	switch(campoDeTexto.getName().toString())
     	{
     		case "nombres":
-    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    			campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
     				
     				@Override
     				public void removeUpdate(DocumentEvent e) {
@@ -338,7 +323,7 @@ public class RegistroController {
     			break;
     			
     		case "apellidos":
-    			JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    			campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
     					
     					@Override
     					public void removeUpdate(DocumentEvent e) {
@@ -358,7 +343,7 @@ public class RegistroController {
     			break;
     			
     		case "correo":
-    			 JtextField.getDocument().addDocumentListener(new DocumentListener() {
+    			 campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
     					
     					@Override
     					public void removeUpdate(DocumentEvent e) {
@@ -399,14 +384,14 @@ public class RegistroController {
     	}
     }
     
-    private void asignarKeyListener(JTextField JtextField)
+    private void asignarKeyListener(JTextField campoDeTexto)
     {
-    	JtextField.addKeyListener(new KeyAdapter() 
+    	campoDeTexto.addKeyListener(new KeyAdapter() 
          {
          	public void keyTyped(KeyEvent e)
          	{
          		// Solo para nombres y apellidos, no para correo y contraseña
-         		if (JtextField.getName().equals("nombres") || JtextField.getName().equals("apellidos")) {
+         		if (campoDeTexto.getName().equals("nombres") || campoDeTexto.getName().equals("apellidos")) {
          			if(!Character.isSpaceChar(e.getKeyChar()))
          			{
          				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar()))
@@ -416,7 +401,7 @@ public class RegistroController {
          			}
          		}
          		
-         		if(JtextField.getText().length() >= 20)
+         		if(campoDeTexto.getText().length() >= 20)
          		{
          			e.consume();
          		}

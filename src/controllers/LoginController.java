@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import exceptions.InvalidMailException;
-import modelos.User;
-import repository.LoginRepository;
-import utils.Colores;
-import utils.Session;
-import views.Login;
-import views.VentanaPrincipal;
-import views.formulario.FormularioGeneralCliente;
+import excepciones.CorreoInvalidoException;
+import modelos.Usuario;
+import repositorios.LoginRepository;
+import utilidades.Colores;
+import utilidades.Sesion;
+import vistas.formulario.FormularioGeneralCliente;
+import vistas.otros.Login;
+import vistas.otros.VentanaPrincipal;
 
 
 public class LoginController {
@@ -47,7 +47,7 @@ public class LoginController {
 		resetearCredenciales();
 		
 		String email = login.getUsuario().getText().trim();
-		String password = String.valueOf(login.getContraseña().getPassword()).trim();
+		String password = String.valueOf(login.getContrasenia().getPassword()).trim();
 		
 		boolean valid = true;
 		
@@ -86,24 +86,24 @@ public class LoginController {
 	    login.getMensajeCorreo().setText(" ");
 	    return true;
 	}
-	private void correoExceptions(String correo) throws InvalidMailException {
+	private void correoExceptions(String correo) throws CorreoInvalidoException {
 		if (!correo.contains("@")) 
 	    {
 	        
-	        throw new InvalidMailException("* Debe contener ' @ ' *");
+	        throw new CorreoInvalidoException("* Debe contener ' @ ' *");
 	       
 	    }
 	    
 	    if (!correo.contains(".com")) 
 	    {
-	        throw new InvalidMailException("* Debe contener ' .com ' *");
+	        throw new CorreoInvalidoException("* Debe contener ' .com ' *");
 	        
 	    }
 	}
 	
 	private boolean validarContrasena() 
 	{
-		String password = String.valueOf(login.getContraseña().getPassword());
+		String password = String.valueOf(login.getContrasenia().getPassword());
 		
 		if (password.isEmpty() || password.equals("Contraseña")) 
 		{
@@ -127,9 +127,9 @@ public class LoginController {
 			return;
 		}
 		
-		User user = loginRepository.login(
+		Usuario user = loginRepository.login(
 			login.getUsuario().getText().trim(), 
-			String.valueOf(login.getContraseña().getPassword())
+			String.valueOf(login.getContrasenia().getPassword())
 		);
 		
 		
@@ -139,9 +139,9 @@ public class LoginController {
 		}
 		
 
-		Session.login(user);
+		Sesion.login(user);
 		
-		if(Session.getRol().toLowerCase().equals("admin")) 
+		if(Sesion.getRol().toLowerCase().equals("admin")) 
 		{
 			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 			
@@ -149,7 +149,7 @@ public class LoginController {
 			new VentanaPrincipalController(ventanaPrincipal);			
 			login.getWindow().dispose();
 		}
-		else if(Session.getRol().toLowerCase().equals("comun")) 
+		else if(Sesion.getRol().toLowerCase().equals("comun")) 
 		{
 			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'COMUN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 
@@ -179,7 +179,7 @@ public class LoginController {
 		};
 		
 		login.getUsuario().addKeyListener(enterListener);
-		login.getContraseña().addKeyListener(enterListener);
+		login.getContrasenia().addKeyListener(enterListener);
 		
 		login.getUsuario().getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -197,7 +197,7 @@ public class LoginController {
 			}
 		});
 		
-		login.getContraseña().getDocument().addDocumentListener(new DocumentListener() {
+		login.getContrasenia().getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				validarContrasena();
@@ -216,7 +216,7 @@ public class LoginController {
 		
 		
 		
-		login.getButtonIniciar().addActionListener(e -> {
+		login.getBotonIniciar().addActionListener(e -> {
 			try {
 				handleLogin();
 			} catch (IOException e1) {
