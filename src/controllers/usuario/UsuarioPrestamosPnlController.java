@@ -12,6 +12,13 @@ public class UsuarioPrestamosPnlController {
 		
 		this.usuarioPrestamosPanel = usuarioPrestamosPanel;
 		
+		this.usuarioPrestamosPanel.getBtnClientes().addActionListener(e -> 
+		{
+			this.usuarioPrestamosPanel.getAncestro().mostrarVista(VentanaPrincipal.HOME);
+			
+		});
+		
+		
 		this.usuarioPrestamosPanel.getBtnFiltro().addActionListener(e -> 
 		{
 			this.usuarioPrestamosPanel.getAncestro().mostrarVista(VentanaPrincipal.FILTROS_PRESTAMOS);

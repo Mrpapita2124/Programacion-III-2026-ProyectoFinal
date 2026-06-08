@@ -32,6 +32,7 @@ public class UserPrestamosPanel extends JPanel {
 	private Font fontTitulo = Fuentes.setFontSegoe(1, 35);
 	private Font fontBotones = Fuentes.setFontSegoe(0, 14);
 	
+	private JButton btnClientes;
 	private JButton btnFiltro;
 	PrestamoCartas prestamos;
 	PrestamosConclusosCartas prestamosConlcuidos;
@@ -64,7 +65,13 @@ public class UserPrestamosPanel extends JPanel {
 		JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
 		btnPanel.setOpaque(false);
 		
-		// BOTON FILTAR PERO EN PRESTAMOOSSS
+		btnClientes = new JButton("Clientes");
+		btnClientes.setFont(fontBotones);
+		btnClientes.setBackground(Colores.BOTON_COLOR3);
+		btnClientes.setForeground(Color.BLACK);
+		btnClientes.setFocusPainted(false);
+		btnClientes.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+		btnClientes.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		btnFiltro = new JButton("Filtrar");
 		btnFiltro.setFont(fontBotones);
@@ -79,12 +86,14 @@ public class UserPrestamosPanel extends JPanel {
 		try 
 		{
 			btnFiltro.setIcon(escalarImagen("src\\img\\cliente_filtrar.png", iconSize, iconSize));
+			btnClientes.setIcon(escalarImagen("src\\img\\prestamo_regresar_cliente.png", iconSize, iconSize));
 		} 
 		catch (Exception e) 
 		{
 			System.out.println("No se cargo lo iconos de filtar cliente!");
 		}
 		
+		btnPanel.add(btnClientes);
 		
 		PrestamoRepository prestamoRepo = new PrestamoRepository();
 		if(prestamoRepo.getTotalNumeroDePrestamos() != 0)
@@ -201,5 +210,13 @@ public class UserPrestamosPanel extends JPanel {
         if(iconoFinal.getDescription().equals("null"));
         
         return iconoFinal;
+	}
+
+	public JButton getBtnClientes() {
+		return btnClientes;
+	}
+
+	public void setBtnClientes(JButton btnClientes) {
+		this.btnClientes = btnClientes;
 	}
 }

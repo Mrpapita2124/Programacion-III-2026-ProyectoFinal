@@ -146,7 +146,8 @@ public class LoginController {
 			JOptionPane.showMessageDialog(login.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 			
 			VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
-			new VentanaPrincipalController(ventanaPrincipal);			
+			VentanaPrincipalController ventanaPrinController = new VentanaPrincipalController(ventanaPrincipal);	
+			
 			login.getWindow().dispose();
 		}
 		else if(Sesion.getRol().toLowerCase().equals("comun")) 

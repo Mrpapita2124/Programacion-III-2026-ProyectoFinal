@@ -50,7 +50,11 @@ public class VentanaPrincipalController {
 				ventanaPrincipal.dispose();
 			}
 		});
-		ventanaPrincipal.getBtnInicio().addActionListener(e -> ventanaPrincipal.mostrarVista(ventanaPrincipal.HOME));
+
+            ventanaPrincipal.getBtnInicio().addActionListener(e -> {
+                ventanaPrincipal.mostrarVista(ventanaPrincipal.HOME);
+            });
+      
 		
 		if(Sesion.getRol().equals("admin")) {
 			ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
