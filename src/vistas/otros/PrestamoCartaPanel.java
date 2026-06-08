@@ -19,7 +19,7 @@ import utilidades.Colores;
 import utilidades.Fuentes;
 
 
-public class PrestamoInfoPanel extends JPanel {
+public class PrestamoCartaPanel extends JPanel {
 	private Font fuenteTexto =  Fuentes.setFontSegoe(1,35);
 	private JButton btnCompletar;
 	private JButton btnEliminar;
@@ -27,7 +27,7 @@ public class PrestamoInfoPanel extends JPanel {
 	EstadoPrestamoRepository estadoRepository;
 	private Prestamo prestamo;
 	
-	public PrestamoInfoPanel(Prestamo prestamo) 
+	public PrestamoCartaPanel(Prestamo prestamo) 
 	{	
 		estadoRepository = new EstadoPrestamoRepository();
 		this.prestamo = prestamo;

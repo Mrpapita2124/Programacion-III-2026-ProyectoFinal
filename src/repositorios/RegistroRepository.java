@@ -12,7 +12,7 @@ import utilidades.UtilidadesContrasenia;
 public class RegistroRepository {
 	
 	
-	public boolean registro(String correo, String contrasena,String nombre,String apellido,String foto,boolean guardar) {
+	public boolean registro(String correo, String contrasena,String nombre,Double capacidadPrestamo,String apellido,String foto,boolean guardar) {
 		
 		/*String sql = "SELECT id, email, password FROM users WHERE email = '" 
 				+ email + "' AND password = '" + password + "'";*/
@@ -27,7 +27,7 @@ public class RegistroRepository {
 			stmt.setString(2, apellido);
 			stmt.setString(3, correo);
 			stmt.setString(4, UtilidadesContrasenia.hashearContraseña(contrasena));
-			stmt.setDouble(5, 100000);
+			stmt.setDouble(5, capacidadPrestamo);
 			stmt.setString(6, foto);
 			stmt.setBoolean(7, guardar);
 			stmt.setString(8, "comun");
@@ -36,7 +36,8 @@ public class RegistroRepository {
 			return true;
 			
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			
 		}
 		return false;
 		

@@ -8,10 +8,10 @@ import vistas.formulario.FormularioGeneralCliente;
 import vistas.otros.VentanaPrincipal;
 import vistas.usuario.ClientesUsuarioPanel;
 
-public class UserClientsPanelController {
+public class ClientesUsuarioController {
 	ClientesUsuarioPanel clientesPanel;
 	
-	public UserClientsPanelController(ClientesUsuarioPanel clientesPanel) {
+	public ClientesUsuarioController(ClientesUsuarioPanel clientesPanel) {
 		this.clientesPanel = clientesPanel;
 		VentanaPrincipal ventana= this.clientesPanel.getAncestro();
 		

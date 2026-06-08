@@ -3,14 +3,14 @@ package vistas.prestamo;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.prestamo.PrestamoPanelController;
+import controllers.prestamo.PrestamoCartaController;
 import modelos.Prestamo;
 import repositorios.PrestamoRepository;
 import utilidades.Colores;
 import utilidades.Fuentes;
 import utilidades.PanelPersonalizable;
 import utilidades.RoundedBorder;
-import vistas.otros.PrestamoInfoPanel;
+import vistas.otros.PrestamoCartaPanel;
 import vistas.otros.VentanaPrincipal;
 
 import java.awt.Color;
@@ -80,8 +80,8 @@ public class PrestamosConclusosCartas extends PanelPersonalizable
 				card.setBorder(new RoundedBorder(Colores.BORDE_POR_DEFECTO, 20, 2));
 				card.setOpaque(true);
 				
-				PrestamoInfoPanel prestamoPanel = new PrestamoInfoPanel(prestamos.get(i));
-				new PrestamoPanelController(prestamoPanel, ventana);
+				PrestamoCartaPanel prestamoPanel = new PrestamoCartaPanel(prestamos.get(i));
+				new PrestamoCartaController(prestamoPanel, ventana);
 				prestamoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				
 				card.add(prestamoPanel);

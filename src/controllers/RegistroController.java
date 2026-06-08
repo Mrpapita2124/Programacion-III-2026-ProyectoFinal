@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.Color; 
+
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -47,13 +48,37 @@ public class RegistroController {
 		
         asignarKeyListener(formularioRegsitro.getNombres());
         asignarKeyListener(formularioRegsitro.getApellidos()); 
+        asignarKeyListenerParaNumero(formularioRegsitro.getCapacidadPrestamo(), 7);
         
+        asignarValidacion(formularioRegsitro.getCapacidadPrestamo());
 		asignarValidacion(formularioRegsitro.getNombres()); 
         asignarValidacion(formularioRegsitro.getApellidos());
         asignarValidacion(formularioRegsitro.getCorreoFieldd());
         asignarValidacion(formularioRegsitro.getContraseField());
 	}
-	
+	private void asignarKeyListenerParaNumero(JTextField campoDeTexto, int extensión)
+    {
+    	campoDeTexto.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		
+         			if(!Character.isSpaceChar(e.getKeyChar()))
+         			{
+         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
+         			}
+         		
+         		
+         		if(campoDeTexto.getText().length() >= extensión)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
 	private void agregarWindowListener()
 	{
 			formularioRegsitro.getWindow().addWindowListener(new WindowListener() {
@@ -168,29 +193,28 @@ public class RegistroController {
 
 		if (!validarNombre()) { valido = false; }
 		if (!validarApellido()) { valido = false; }
+		if (!validarCapacidadPrestamo()) { valido = false; }
 		if (!validarCorreo()) { valido = false; }
 		if (!validarConstasena()) { valido = false; }
-		//if (!validarFoto()) { valid = false; }
-		
 		if (valido) 
 		{
 			String nombre = formularioRegsitro.getNombre();
 			String apellido = formularioRegsitro.getApellido();
+			Double capacidadPrestamo = formularioRegsitro.getCapacidadPrestamoNumero();
 			String correo = formularioRegsitro.getCorreo();
 			String contrasena = formularioRegsitro.getContraseña();
 			
 			String foto=guardarImagen();
 			boolean guardar=formularioRegsitro.getGuardar().isSelected();
+			if( registroRepository.registro(correo, contrasena, nombre, capacidadPrestamo, apellido, foto, guardar)) {
+				new Ventana();
+				formularioRegsitro.getWindow().dispose();
+				loginVentana.dispose();
+			}else {
+				JOptionPane.showMessageDialog(null, "El correo electronico ya está en uso", " Datos repetidos", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
 			
-			registroRepository.registro(correo, contrasena, nombre, apellido, foto, guardar);
-			
-			
-			//formularioRegsitro.registerUser(new User(nombre, apellido, correo, contrasena,foto, guardar));
-			
-			
-			new Ventana();
-			formularioRegsitro.getWindow().dispose();
-			loginVentana.dispose();
 		}
 		
     }
@@ -220,6 +244,21 @@ public class RegistroController {
 			return false;
 		} else {
 			formularioRegsitro.getLblErrorApellido().setText("");
+		}
+
+		return true;
+    }
+    
+    public boolean validarCapacidadPrestamo()
+    {
+    	String capacidadPrestamo = formularioRegsitro.getCapacidadPrestamo().getText();
+    	
+    	if (capacidadPrestamo.isEmpty() || capacidadPrestamo.equals("Capacidad de prestamo") || Double.parseDouble(capacidadPrestamo)==0) 
+    	{
+    		formularioRegsitro.getLblErrorCapacidadPrestamo().setText("La capacidad es obligatoria");
+			return false;
+		} else {
+			formularioRegsitro.getLblErrorCapacidadPrestamo().setText("");
 		}
 
 		return true;
@@ -338,6 +377,26 @@ public class RegistroController {
     					@Override
     					public void changedUpdate(DocumentEvent e) {
     						validarApellido();
+    					}
+    				});
+    			break;
+    			
+    		case "capacidadPrestamo":
+    			campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
+    					
+    					@Override
+    					public void removeUpdate(DocumentEvent e) {
+    						validarCapacidadPrestamo();
+    					}
+    					
+    					@Override
+    					public void insertUpdate(DocumentEvent e) {
+    						validarCapacidadPrestamo();
+    					}
+    					
+    					@Override
+    					public void changedUpdate(DocumentEvent e) {
+    						validarCapacidadPrestamo();
     					}
     				});
     			break;

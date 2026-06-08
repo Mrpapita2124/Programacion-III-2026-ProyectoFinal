@@ -12,39 +12,39 @@ import utilidades.Sesion;
 import vistas.otros.VentanaPrincipal;
 import vistas.usuario.UsuarioCarta;
 
-public class UserPanelController {
-	UsuarioCarta usuarioPanel;
+public class UsuarioCartaController {
+	UsuarioCarta usuarioCarta;
 	ClienteRepository clienteRepository;
-	public UserPanelController(UsuarioCarta usuarioPanel) {
+	public UsuarioCartaController(UsuarioCarta usuarioCarta) {
 		clienteRepository= new ClienteRepository();
-		this.usuarioPanel=usuarioPanel;
-		this.usuarioPanel.getSessionButton().addActionListener(e -> {
-			Sesion.login(this.usuarioPanel.getUser());
+		this.usuarioCarta=usuarioCarta;
+		this.usuarioCarta.getSessionButton().addActionListener(e -> {
+			Sesion.login(this.usuarioCarta.getUser());
 			Sesion.setClientesFiltrados(clienteRepository.getClients());
 			Actualizador actualizador= new Actualizador();
 			actualizador.actualizarPrestamos();
 			actualizador.actualizarReputacionClientes();
 			if(Sesion.getRol().toLowerCase().equals("admin")) 
 			{
-				JOptionPane.showMessageDialog(this.usuarioPanel.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.usuarioCarta.getWindow(), "Se inició la sesión con cuenta 'ADMIN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 				try {
 					new VentanaPrincipalController(new VentanaPrincipal());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}			
-				this.usuarioPanel.getWindow().dispose();
+				this.usuarioCarta.getWindow().dispose();
 			}
 			else if(Sesion.getRol().toLowerCase().equals("comun")) 
 			{
-				JOptionPane.showMessageDialog(this.usuarioPanel.getWindow(), "Se inició la sesión con cuenta 'COMUN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.usuarioCarta.getWindow(), "Se inició la sesión con cuenta 'COMUN'", " Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
 				try {
 					new VentanaPrincipalController(new VentanaPrincipal());
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}			
-				this.usuarioPanel.getWindow().dispose();
+				this.usuarioCarta.getWindow().dispose();
 			}
 		});
 	}

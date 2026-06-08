@@ -9,7 +9,7 @@ import modelos.Usuario;
 
 public class ModeloTablaUsuario extends AbstractTableModel{
 
-	private List<Usuario> users;
+	private List<Usuario> usuarios;
 	
 	private final String[] columns = {
 		"Nombre",
@@ -18,33 +18,34 @@ public class ModeloTablaUsuario extends AbstractTableModel{
 		
 	};
 	
-	public ModeloTablaUsuario(List<Usuario> users) 
+	public ModeloTablaUsuario(List<Usuario> usuarios) 
 	{
-		this.users = users;
+		System.out.println("cantidad" + usuarios.size());
+		this.usuarios = usuarios;
 	}
 	
 	
-	public void removeRow(int row) {
-		users.remove(row);
-		fireTableRowsDeleted(row, row);
+	public void eliminarFila(int fila) {
+		usuarios.remove(fila);
+		fireTableRowsDeleted(fila, fila);
 	}
 	
-	public void addRow(Usuario user) {
-		int row = users.size();
-		users.add(user);
-		fireTableRowsInserted(row, row);
+	public void aniadirFila(Usuario usuario) {
+		int fila = usuarios.size();
+		usuarios.add(usuario);
+		fireTableRowsInserted(fila, fila);
 	}
 	
-	public void updateRow(int row, Usuario user) {
-		users.set(row, user);
-		fireTableRowsUpdated(row, row);
+	public void actualizarFila(int fila, Usuario usuario) {
+		usuarios.set(fila, usuario);
+		fireTableRowsUpdated(fila, fila);
 	}
 	
 	
-	public void updateUser(Usuario updatedUser) {
-	    for (int i = 0; i < users.size(); i++) {
-	        if (users.get(i).getId() == updatedUser.getId()) {
-	            users.set(i, updatedUser);
+	public void actualizarUsuario(Usuario usuarioActualizado) {
+	    for (int i = 0; i < usuarios.size(); i++) {
+	        if (usuarios.get(i).getId() == usuarioActualizado.getId()) {
+	            usuarios.set(i, usuarioActualizado);
 	            fireTableRowsUpdated(i, i);
 	            return;
 	        }
@@ -54,7 +55,7 @@ public class ModeloTablaUsuario extends AbstractTableModel{
 	@Override
 	public int getRowCount() 
 	{
-		return users.size();
+		return usuarios.size();
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class ModeloTablaUsuario extends AbstractTableModel{
 	public Object getValueAt(int rowIndex, int columnIndex) 
 	{
 		
-		Usuario user = users.get(rowIndex);
+		Usuario user = usuarios.get(rowIndex);
 		
 		switch(columnIndex) {
 		case 0:
@@ -92,17 +93,17 @@ public class ModeloTablaUsuario extends AbstractTableModel{
 		return null;
 		
 	}
-	public Usuario getUserAt(int row) {
-		return users.get(row);
+	public Usuario getUsuarioEn(int row) {
+		return usuarios.get(row);
 	}
-	public void setUsers(List<Usuario> users) {
-		this.users=users;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios=usuarios;
 		fireTableDataChanged();
 	}
 	public int getNumGuardar() {
 		int guardados=0;
-		for(int i=0;i<users.size();i++) {
-			if(users.get(i).isGuardar()) {
+		for(int i=0;i<usuarios.size();i++) {
+			if(usuarios.get(i).isGuardar()) {
 				guardados++;
 			}
 		}

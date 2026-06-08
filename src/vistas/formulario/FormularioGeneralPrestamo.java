@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -210,7 +212,29 @@ public class FormularioGeneralPrestamo extends JFrame{
     	cantInteres=interes;
     }
    
-   
+    private void asignarKeyListenerParaNumero(JTextField campoDeTexto, int extensión)
+    {
+    	campoDeTexto.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		
+         			if(!Character.isSpaceChar(e.getKeyChar()))
+         			{
+         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
+         			}
+         		
+         		
+         		if(campoDeTexto.getText().length() >= extensión)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
     
     private JTextField crearTextField(String placeholder, String campoNombre) 
     {
@@ -412,7 +436,8 @@ public class FormularioGeneralPrestamo extends JFrame{
     	
     	monto = crearTextField("Monto", "monto");
     	interesAtrasado=crearTextField("Interes atrasado", "interes-atrasado");
-
+    	asignarKeyListenerParaNumero(interesAtrasado, 2);
+    	asignarKeyListenerParaNumero(monto, 9);
         
         crearBoton(seleccionarComprobante,"..\\img\\icono.png" , "Seleccionar", Colores.BOTON_COLOR2, 105, 30, Fuentes.fuenteBotonChico);
 

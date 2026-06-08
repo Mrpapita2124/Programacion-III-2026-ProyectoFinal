@@ -3,8 +3,8 @@ package vistas.cliente;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.cliente.ClientPanelController;
-import controllers.usuario.UserPanelController;
+import controllers.cliente.CartaClienteController;
+import controllers.usuario.UsuarioCartaController;
 import modelos.Cliente;
 import modelos.Usuario;
 import modelosTabla.ModeloTablaUsuario;
@@ -89,7 +89,7 @@ public class ClienteCartas extends PanelPersonalizable
 				carta.setOpaque(true);
 				
 				CartaCliente clientePaneles = new CartaCliente(clientes.get(i));
-				new ClientPanelController(clientePaneles,usuarioPanel,ventana);
+				new CartaClienteController(clientePaneles,usuarioPanel,ventana);
 				clientePaneles.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 				
 				carta.add(clientePaneles);

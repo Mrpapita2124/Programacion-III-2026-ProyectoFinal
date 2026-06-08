@@ -17,7 +17,7 @@ import vistas.otros.VentanaPrincipal;
 import vistas.usuario.FormularioUsuarioDialog;
 import vistas.usuario.UsuariosTablaVista;
 
-public class UserController {
+public class UsuarioController {
 
 	private UsuariosTablaVista usuarioTablaVista;
 	private UsuarioRepository usuarioRepository;
@@ -26,7 +26,7 @@ public class UserController {
 	private PDFExporter pdfExporter;
 
 	
-	public UserController(UsuariosTablaVista usuarioTablaVista, VentanaPrincipalController ventanaController, List<Usuario> usuarios) 
+	public UsuarioController(UsuariosTablaVista usuarioTablaVista, VentanaPrincipalController ventanaController, List<Usuario> usuarios) 
 	{
 		this.usuarioTablaModelo=new ModeloTablaUsuario(usuarios);
 		this.usuarioTablaVista = usuarioTablaVista;
@@ -61,7 +61,7 @@ public class UserController {
 				return;
 			}
 			
-			openForm(usuarioTablaModelo.getUserAt(row),ventanaController);
+			openForm(usuarioTablaModelo.getUsuarioEn(row),ventanaController);
 
 			try {
 				ventanaPrincipalController.mostrarUsuarios();
@@ -81,11 +81,11 @@ public class UserController {
 				return;
 			}
 			
-			boolean deleted = usuarioRepository.eliminar(usuarioTablaModelo.getUserAt(usuarioTablaVista.getSelectedRow()).getId());
+			boolean deleted = usuarioRepository.eliminar(usuarioTablaModelo.getUsuarioEn(usuarioTablaVista.getSelectedRow()).getId());
 			
 			if(deleted) 
 			{
-				usuarioTablaModelo.removeRow(usuarioTablaVista.getSelectedRow());
+				usuarioTablaModelo.eliminarFila(usuarioTablaVista.getSelectedRow());
 				
 				try {
 					ventanaPrincipalController.mostrarUsuarios();
@@ -116,24 +116,24 @@ public class UserController {
 		{
 			//System.out.println("user null");
 			dialog = new FormularioUsuarioDialog(null, usuario);
-			new UserDialogController(dialog);
+			new FormularioUsuarioDialogController(dialog);
 		}
 		else 
 		{
 			//System.out.println("user not null");
 			dialog = new FormularioUsuarioDialog(null, usuario);
-			new UserDialogController(dialog, usuario);
+			new FormularioUsuarioDialogController(dialog, usuario);
 		}
 		 
 		dialog.setVisible(true);
 		
 		if(dialog.isGuardado()) {
-			Usuario usuarioGuardado = dialog.getUser();
+			Usuario usuarioGuardado = dialog.getUsuario();
 			
 			try {
 				if(usuario == null) {
 					usuarioRepository.guardar(usuarioGuardado);
-					usuarioTablaModelo.addRow(usuarioGuardado);
+					usuarioTablaModelo.aniadirFila(usuarioGuardado);
 					
 					JOptionPane.showMessageDialog(usuarioTablaVista.getWindow(), "Se guardo nuevo usuario.", "Confirmado", JOptionPane.INFORMATION_MESSAGE);
 					
@@ -144,7 +144,7 @@ public class UserController {
 					
 					boolean actualizado = usuarioRepository.actualizar(fila1, usuarioGuardado);
 					if(actualizado) {
-						usuarioTablaModelo.updateRow(fila1, usuarioGuardado); //Actualiza el registro de la tabla
+						usuarioTablaModelo.actualizarFila(fila1, usuarioGuardado); //Actualiza el registro de la tabla
 					}
 					
 					JOptionPane.showMessageDialog(usuarioTablaVista.getWindow(), "Se pudo modificar informacion.", "Confirmado", JOptionPane.INFORMATION_MESSAGE);
@@ -166,13 +166,13 @@ public class UserController {
 	
 	public void cargarUsuarios() {	
 		try {
-			List<Usuario> usuarios = usuarioRepository.getUsuarios();
+			List<Usuario> usuarios = usuarioRepository.getUsuariosComunes();
 			
 			if(usuarioTablaModelo == null) {
 				usuarioTablaModelo = new ModeloTablaUsuario(usuarios);
 				usuarioTablaVista.setTableModel(usuarioTablaModelo);
 			}else {
-				usuarioTablaModelo.setUsers(usuarios);
+				usuarioTablaModelo.setUsuarios(usuarios);
 			}
 			
 		}catch (IOException ex) {
@@ -188,7 +188,7 @@ public class UserController {
 		
 		try
 		{
-			 pdfExporter.exportUsers(usuarioRepository.getUsuarios(), archivo); 
+			 pdfExporter.exportUsers(usuarioRepository.getUsuariosComunes(), archivo); 
 			
 			if(Desktop.isDesktopSupported())
 			{

@@ -25,12 +25,12 @@ import vistas.cliente.ClientInfoView;
 import vistas.formulario.FormularioGeneralCliente;
 import vistas.formulario.FormularioGeneralPrestamo;
 import vistas.otros.PagoDeuda;
-import vistas.otros.PrestamoInfoPanel;
+import vistas.otros.PrestamoCartaPanel;
 import vistas.otros.VentanaPrincipal;
 import vistas.usuario.ClientesUsuarioPanel;
 
-public class PrestamoPanelController {
-	private PrestamoInfoPanel prestamoPanel;
+public class PrestamoCartaController {
+	private PrestamoCartaPanel prestamoPanel;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
 	private UsuarioRepository usuarioRepository;
@@ -38,7 +38,7 @@ public class PrestamoPanelController {
 	private VentanaPrincipal ventana;
 	private Actualizador actualizador;
 
-	public PrestamoPanelController(PrestamoInfoPanel prestamoPanel, VentanaPrincipal ventana) {
+	public PrestamoCartaController(PrestamoCartaPanel prestamoPanel, VentanaPrincipal ventana) {
 		actualizador= new Actualizador();
 		this.ventana=ventana;
 		usuarioRepository=new UsuarioRepository();

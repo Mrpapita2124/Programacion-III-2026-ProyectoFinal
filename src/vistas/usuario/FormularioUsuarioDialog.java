@@ -39,7 +39,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controllers.VentanaPrincipalController;
-import controllers.usuario.UserDialogController;
+import controllers.usuario.FormularioUsuarioDialogController;
 import modelos.Usuario;
 import repositorios.UsuarioRepository;
 import utilidades.Colores;
@@ -49,17 +49,19 @@ public class FormularioUsuarioDialog extends JDialog{
 
 	private JTextField txtNombre;
 	private JTextField txtApellido;
+	private JTextField txtCapacidadPrestamo;
 	private JTextField txtCorreo;
 	private JPasswordField txtContraseña;
 	private JLabel txtErrNombre = new JLabel(" ");
 	private JLabel txtErrApellido = new JLabel(" ");
+	private JLabel txtErrCapacidadPrestamo = new JLabel(" ");
 	private JLabel txtErrCorreo = new JLabel(" ");
 	private JLabel txtErrContraseña = new JLabel(" ");
 
 	private JButton btnGuardar;
 	private JButton btnCancelar;
     private JButton seleccionar;
-    private Usuario user;
+    private Usuario usuario;
     private boolean guardado = false;
     
     private UsuarioRepository usuarioRepository = new UsuarioRepository();
@@ -67,17 +69,18 @@ public class FormularioUsuarioDialog extends JDialog{
 	private ImageIcon iconoUsuarioFinal;
 	private JCheckBox guardar= new JCheckBox("Guardar como usuario rapido");
     		
-    public FormularioUsuarioDialog(JFrame parent, Usuario user) 
+    public FormularioUsuarioDialog(JFrame parent, Usuario usuario) 
     {
     	
     	super(parent, true);
     	iconoUsuario=new JLabel();
     	iconoUsuarioFinal = escalarImagenLocal("/img/icono.png",200,200);
         iconoUsuarioFinal.setDescription("/img/icono.png");
-    	setTitle(user == null ? "Agregar usuario" : "Editar usuario");
+    	setTitle(usuario == null ? "Agregar usuario" : "Editar usuario");
     	
     	txtErrNombre.setForeground(Color.RED);
     	txtErrApellido.setForeground(Color.RED);
+    	txtErrCapacidadPrestamo.setForeground(Color.RED);
     	txtErrCorreo.setForeground(Color.RED);
     	txtErrContraseña.setForeground(Color.RED);
 
@@ -129,6 +132,7 @@ public class FormularioUsuarioDialog extends JDialog{
 
 		txtNombre = new JTextField();
 		txtApellido = new JTextField();
+		txtCapacidadPrestamo= new JTextField();
 		txtCorreo = new JTextField();
 		txtContraseña=new JPasswordField();
 		
@@ -151,6 +155,7 @@ public class FormularioUsuarioDialog extends JDialog{
         panel.add(seleccionar);
 		panel.add(crearbloqueTexto("Nombre:", txtNombre, txtErrNombre));
 		panel.add(crearbloqueTexto("Apellido:", txtApellido, txtErrApellido));
+		panel.add(crearbloqueTexto("Capacidad prestamo", txtCapacidadPrestamo, txtErrCapacidadPrestamo));
 		panel.add(crearbloqueTexto("Correo:", txtCorreo, txtErrCorreo));
 		panel.add(crearbloqueTexto("Contraseña:", txtContraseña, txtErrContraseña));
 		panel.add(guardar);
@@ -262,6 +267,22 @@ public class FormularioUsuarioDialog extends JDialog{
 		this.txtApellido = txtApellido;
 	}
 
+	public JTextField getTxtCapacidadPrestamo() {
+		return txtCapacidadPrestamo;
+	}
+
+	public void setTxtCapacidadPrestamo(JTextField txtCapacidadPrestamo) {
+		this.txtCapacidadPrestamo = txtCapacidadPrestamo;
+	}
+
+	public JLabel getTxtErrCapacidadPrestamo() {
+		return txtErrCapacidadPrestamo;
+	}
+
+	public void setTxtErrCapacidadPrestamo(JLabel txtErrCapacidadPrestamo) {
+		this.txtErrCapacidadPrestamo = txtErrCapacidadPrestamo;
+	}
+
 	public JTextField getTxtCorreo() {
 		return txtCorreo;
 	}
@@ -352,12 +373,12 @@ public class FormularioUsuarioDialog extends JDialog{
 		this.btnCancelar = btnCancelar;
 	}
 
-	public Usuario getUser() {
-		return user;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setUser(Usuario user) {
-		this.user = user;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public boolean isGuardado() {

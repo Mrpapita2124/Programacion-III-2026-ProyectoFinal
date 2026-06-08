@@ -31,7 +31,7 @@ public class UsuarioRepository {
 			stmt.setString(2, usuario.getApellido());
 			stmt.setString(3, usuario.getCorreo());
 			stmt.setString(4, UtilidadesContrasenia.hashearContraseña(usuario.getContrasena()));
-			stmt.setDouble(5, 10000);
+			stmt.setDouble(5, usuario.getCapacidadPrestamo());
 			stmt.setString(6, usuario.getFoto());
 			stmt.setBoolean(7, usuario.isGuardar());
 			stmt.setString(8, "comun");
@@ -40,7 +40,8 @@ public class UsuarioRepository {
 			return true;
 			
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("sexo tilin");
 		}
 		return false;
 		
@@ -52,6 +53,40 @@ public class UsuarioRepository {
 		
 		List<Usuario> usuarios = new ArrayList<>();
 	    String sql = "SELECT * FROM usuario";
+	    
+	    try (Connection connection = DatabaseConnection.getConnection();
+	         PreparedStatement pst = connection.prepareStatement(sql);
+	         java.sql.ResultSet rs = pst.executeQuery()) {
+	        
+	        while (rs.next()) {
+	        	
+	            Usuario user = new Usuario(
+	            rs.getInt("id_usuario"),
+	            rs.getString("nombre"),
+	            rs.getString("apellido"),
+	            rs.getString("correo_electronico"),
+	            rs.getString("contraseña"),
+	            rs.getDouble("capacidad_prestamo"),
+	            rs.getString("url_foto"),
+	            rs.getBoolean("guardar"),
+	            rs.getString("rol")
+	            );
+	            
+	            usuarios.add(user);
+	        }
+	        
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    
+	    return usuarios;
+				
+	}
+	public List<Usuario> getUsuariosComunes() throws IOException {
+		//System.out.println("calling get users");
+		
+		List<Usuario> usuarios = new ArrayList<>();
+	    String sql = "SELECT * FROM usuario WHERE rol='comun'";
 	    
 	    try (Connection connection = DatabaseConnection.getConnection();
 	         PreparedStatement pst = connection.prepareStatement(sql);
@@ -132,7 +167,7 @@ public class UsuarioRepository {
 			}			
 
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		
 		//System.out.println("No se hicieron cambios");
@@ -166,7 +201,7 @@ public class UsuarioRepository {
 			}			
 
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		
 		//System.out.println("No se hicieron cambios");

@@ -260,15 +260,23 @@ public class FormularioClienteController {
 			String comprobante=guardarPDF();
 			
 			if(this.formularioCliente.isEdit()){
-				System.out.println("sdfsdfsdf");
 				int idClient=this.formularioCliente.getClient().getIdCliente();
-				clientRepository.actualizar(new Cliente(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp,this.formularioCliente.getClient().getReputacion()));
+				if( clientRepository.actualizar(new Cliente(idClient, idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp,this.formularioCliente.getClient().getReputacion()))) {
+					formularioCliente.getWindow().dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Correo, numero telefónico, curp o cuenta bancaria ya usados", " Datos repetidos", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			}else {
-				clientRepository.guardar(new Cliente(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "no medido"));
+				if( clientRepository.guardar(new Cliente(idUsuario, nombre, apellido, edad, foto, domicilio, comprobante, numeroCelular, correo, empleo, domicilioEMpleo, telefonoEmpleo, ingresoMensual, banco, cuentaBancaria, curp, "no medido"))) {
+					formularioCliente.getWindow().dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Correo, numero telefónico, curp o cuenta bancaria ya usados", " Datos repetidos", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 			
 
-			formularioCliente.getWindow().dispose();
+			
 			
 		}
 		
@@ -342,7 +350,11 @@ public class FormularioClienteController {
 			
 			formularioCliente.getLblErrorEdad().setText("Debe ser mayor de edad");
 			return false;
-		}else {
+		}else if(Double.parseDouble(edad)>120) {
+			
+			formularioCliente.getLblErrorEdad().setText("Ingresa una edad valida");
+			return false;
+		}{
 			formularioCliente.getLblErrorEdad().setText(" ");
 		}
 
@@ -369,9 +381,13 @@ public class FormularioClienteController {
     	
     	if (numeroCelular.isEmpty() || numeroCelular.equals("Numero celular")) 
     	{
-    		formularioCliente.getLblErrorNumeroCelular().setText("El apellido es obligatorio");
+    		formularioCliente.getLblErrorNumeroCelular().setText("El numero es obligatorio");
 			return false;
-		} else {
+		} else if (numeroCelular.length()<10) 
+    	{
+    		formularioCliente.getLblErrorNumeroCelular().setText("Ingresa un numero valido");
+			return false;
+		}{
 			try {
 				numeroExceptions(numeroCelular);
 				formularioCliente.getLblErrorNumeroCelular().setText("");
@@ -428,7 +444,11 @@ public class FormularioClienteController {
     	{
     		formularioCliente.getLblErrorTelefonoEmpleo().setText("El telefono es obligatorio");
 			return false;
-		} else {
+		} else if (telefonoEmpleo.length()<10) 
+    	{
+    		formularioCliente.getLblErrorTelefonoEmpleo().setText("Ingresa un telefono valido");
+			return false;
+		}{
 			try {
 				numeroExceptions(telefonoEmpleo);
 				formularioCliente.getLblErrorTelefonoEmpleo().setText("");
@@ -521,7 +541,11 @@ public class FormularioClienteController {
     	{
     		formularioCliente.getLblErrorCurp().setText("El curp es obligatorio");
 			return false;
-		} else {
+		} else if (curp.length()!=18 || curp.matches(".*[a-z].*")) 
+    	{
+    		formularioCliente.getLblErrorCurp().setText("Ingresa un curp valido");
+			return false;
+		}{
 			formularioCliente.getLblErrorCurp().setText("");
 		}
 

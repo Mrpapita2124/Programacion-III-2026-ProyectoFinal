@@ -438,7 +438,7 @@ public class FormularioGeneralCliente extends JFrame{
     	asignarKeyListenerParaTexto(empleo, 45);
     	asignarKeyListenerParaTexto(domicilioEmpleo, 45);
     	asignarKeyListenerParaTexto(banco, 45);
-    	asignarKeyListenerParaTexto(curp, 45);
+    	asignarKeyListenerParaTexto(curp, 18);
     }
     private void asignarKeyListenerParaNumero(JTextField campoDeTexto, int extensión)
     {

@@ -22,6 +22,7 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import repositorios.ClienteRepository;
 import utilidades.Colores;
 import utilidades.Fuentes;
+import utilidades.Sesion;
 import vistas.cliente.ClienteCartas;
 import vistas.cliente.ClientesEstadisticas;
 import vistas.otros.VentanaPrincipal;
@@ -82,7 +83,8 @@ public class ClientesUsuarioPanel extends JPanel {
         JPanel panelDeBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         panelDeBotones.setOpaque(false);
         
-        // BOTON FILTAR PAPITAAAA ----------------
+        JLabel capacidadPrestamo= new JLabel(String.valueOf("$"+Sesion.getusuarioActual().getCapacidadPrestamo()));
+        capacidadPrestamo.setFont(Fuentes.fontTexto);
         
         btnFiltro = new JButton("Filtrar");
         btnFiltro.setFont(fontBotones);
@@ -101,7 +103,8 @@ public class ClientesUsuarioPanel extends JPanel {
         btnRegistro.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         int iconoTamanio = 20;
-		
+        
+		panelDeBotones.add(capacidadPrestamo);
 		try 
 		{
 			btnRegistro.setIcon(escalarImagen("src\\img\\cliente_agregar.png", iconoTamanio, iconoTamanio));

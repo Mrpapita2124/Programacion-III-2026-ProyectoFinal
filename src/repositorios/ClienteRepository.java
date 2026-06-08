@@ -49,7 +49,7 @@ public class ClienteRepository {
 			return true;
 			
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return false;
 		
@@ -86,7 +86,7 @@ public class ClienteRepository {
 			return true;
 			
 		}catch(SQLException ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return false;
 		

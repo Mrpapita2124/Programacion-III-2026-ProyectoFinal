@@ -55,6 +55,7 @@ public class FormularioRegistro extends JFrame{
     // Fields de Texto para Usuario
     private JTextField nombres;
     private JTextField apellidos;
+    private JTextField capacidadPrestamo;
     private JTextField correo;
     private JTextField contraseña;
     
@@ -67,6 +68,7 @@ public class FormularioRegistro extends JFrame{
     // Labels de Error
     private JLabel lblErrorNombre;
     private JLabel lblErrorApellido;
+    private JLabel lblErrorCapacidadPrestamo;
     private JLabel lblErrorCorreo;
     private JLabel lblErrorContrasena;
    // public JLabel lblErrorFoto;
@@ -138,6 +140,7 @@ public class FormularioRegistro extends JFrame{
 
         lblErrorNombre = crearErrorLabel();
         lblErrorApellido = crearErrorLabel();
+        lblErrorCapacidadPrestamo= crearErrorLabel();
         lblErrorCorreo = crearErrorLabel();
         lblErrorContrasena = crearErrorLabel();
 
@@ -365,12 +368,15 @@ public class FormularioRegistro extends JFrame{
         apellidos = crearTextField("Apellido", "apellidos");
         correo = crearTextField("correo@ejemplo.com", "correo");
         contraseña = crearTextField("Contraseña", "contraseña");
+        capacidadPrestamo= crearTextField("Capacidad de prestamo", "capacidadPrestamo");
         
         
         asignarFocusListenerConPlaceholder(nombres, "Nombre");
         asignarFocusListenerConPlaceholder(apellidos, "Apellido");
+        asignarFocusListenerConPlaceholder(capacidadPrestamo, "Capacidad de prestamo");
         asignarFocusListenerConPlaceholder(correo, "correo@ejemplo.com");
         asignarFocusListenerConPlaceholder(contraseña, "Contraseña");
+        
         
         
         JPanel panelNombreEnvoltorio = new JPanel();
@@ -404,6 +410,23 @@ public class FormularioRegistro extends JFrame{
         panelApellidoEnvoltorio.add(lblErrorApellido);
         
         panelComponentes.add(panelApellidoEnvoltorio);
+        panelComponentes.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+     // Panel para Capacidad de prestamo
+        JPanel panelCapacidadPrestamoEnvoltorio = new JPanel();
+        panelCapacidadPrestamoEnvoltorio.setLayout(new BoxLayout(panelCapacidadPrestamoEnvoltorio, BoxLayout.Y_AXIS));
+        panelCapacidadPrestamoEnvoltorio.setOpaque(false);
+        panelCapacidadPrestamoEnvoltorio.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelCapacidadPrestamoEnvoltorio.setMaximumSize(new Dimension(400, 70));
+        
+        capacidadPrestamo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelCapacidadPrestamoEnvoltorio.add(capacidadPrestamo);
+        panelCapacidadPrestamoEnvoltorio.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        lblErrorCapacidadPrestamo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelCapacidadPrestamoEnvoltorio.add(lblErrorCapacidadPrestamo);
+        
+        panelComponentes.add(panelCapacidadPrestamoEnvoltorio);
         panelComponentes.add(Box.createRigidArea(new Dimension(0, 15)));
         
         // Panel para Correo
@@ -505,6 +528,14 @@ public class FormularioRegistro extends JFrame{
         String text = apellidos.getText();
         return text.equals("Apellido") ? "" : text;
     }
+    public String getCapacidad() {
+        String text = capacidadPrestamo.getText();
+        return text.equals("Capacidad de prestamo") ? "" : text;
+    }
+    public Double getCapacidadPrestamoNumero() {
+        Double capacidad = Double.parseDouble(capacidadPrestamo.getText());
+        return capacidad;
+    }
     
     public String getCorreo() {
         String text = correo.getText();
@@ -585,6 +616,19 @@ public class FormularioRegistro extends JFrame{
 	}
 	public ImageIcon getIconoUsuarioFinal() {
 		return iconoUsuarioFinal;
+	}
+	
+	public JTextField getCapacidadPrestamo() {
+		return capacidadPrestamo;
+	}
+	public void setCapacidadPrestamo(JTextField capacidadPrestamo) {
+		this.capacidadPrestamo = capacidadPrestamo;
+	}
+	public JLabel getLblErrorCapacidadPrestamo() {
+		return lblErrorCapacidadPrestamo;
+	}
+	public void setLblErrorCapacidadPrestamo(JLabel lblErrorCapacidadPrestamo) {
+		this.lblErrorCapacidadPrestamo = lblErrorCapacidadPrestamo;
 	}
 	public void setIconoUsuarioFinal(ImageIcon iconoUsuarioFinal) {
 		this.iconoUsuarioFinal = iconoUsuarioFinal;

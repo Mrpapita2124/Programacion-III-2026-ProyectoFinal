@@ -17,20 +17,20 @@ import vistas.formulario.FormularioGeneralPrestamo;
 import vistas.otros.VentanaPrincipal;
 import vistas.usuario.ClientesUsuarioPanel;
 
-public class ClientPanelController {
-	private CartaCliente clientPanel;
+public class CartaClienteController {
+	private CartaCliente cartaCliente;
 	private ClienteRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
 
-	public ClientPanelController(CartaCliente clientPanel,ClientesUsuarioPanel userPanel, VentanaPrincipal ventana) {
+	public CartaClienteController(CartaCliente cartaCliente,ClientesUsuarioPanel clientesUsuarioPanel, VentanaPrincipal ventana) {
 		clientRepository=new ClienteRepository();
 		prestamoRepository=new PrestamoRepository();
 		estadoPrestamoRepository = new EstadoPrestamoRepository();
-		this.clientPanel = clientPanel;
+		this.cartaCliente = cartaCliente;
 		
-		this.clientPanel.getBtnEditar().addActionListener(e -> {
-			FormularioGeneralCliente form=new FormularioGeneralCliente(this.clientPanel.getCliente());
+		this.cartaCliente.getBtnEditar().addActionListener(e -> {
+			FormularioGeneralCliente form=new FormularioGeneralCliente(this.cartaCliente.getCliente());
 			
 			FormularioClienteController controller= new FormularioClienteController(form);
 			form.addWindowListener(new WindowAdapter() {
@@ -42,18 +42,18 @@ public class ClientPanelController {
 			
 		});
 		
-		this.clientPanel.getBtnEliminar().addActionListener(e -> {
-			deleteEverythingFromClient(this.clientPanel.getCliente());
-			clientRepository.eliminar(this.clientPanel.getCliente());
+		this.cartaCliente.getBtnEliminar().addActionListener(e -> {
+			deleteEverythingFromClient(this.cartaCliente.getCliente());
+			clientRepository.eliminar(this.cartaCliente.getCliente());
 			ventana.getFiltroUsuarioControlador().refrescarClientesFiltrados();
 			ventana.recargarPrestamos(true);
             ventana.getFilterPrestamoViewController().refrescarPrestamosFiltrados(true);
 		});
-		this.clientPanel.getBtnInformacion().addActionListener(e -> {
-			ClientInfoView info = new ClientInfoView(this.clientPanel.getCliente());
+		this.cartaCliente.getBtnInformacion().addActionListener(e -> {
+			ClientInfoView info = new ClientInfoView(this.cartaCliente.getCliente());
 		});
-		this.clientPanel.getBtnDinero().addActionListener(e -> {
-			FormularioGeneralPrestamo form = new FormularioGeneralPrestamo(ventana,this.clientPanel.getCliente());
+		this.cartaCliente.getBtnDinero().addActionListener(e -> {
+			FormularioGeneralPrestamo form = new FormularioGeneralPrestamo(ventana,this.cartaCliente.getCliente());
 			new PrestamoFormController(form);
 			form.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {

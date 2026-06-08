@@ -9,23 +9,28 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.cj.Session;
+
 import config.Config;
-import controllers.usuario.UserController;
+import controllers.usuario.UsuarioController;
+import controllers.usuario.FormularioUsuarioDialogController;
 import modelos.Usuario;
 import modelosTabla.ModeloTablaUsuario;
 import repositorios.UsuarioRepository;
+import utilidades.Sesion;
 import vistas.otros.Ventana;
 import vistas.otros.VentanaPrincipal;
+import vistas.usuario.FormularioUsuarioDialog;
 
 public class VentanaPrincipalController {
 	UsuarioRepository usuarioRepository;
-	UserController usuarioController;
+	UsuarioController usuarioController;
 	private VentanaPrincipal ventanaPrincipal;
 	
 	public VentanaPrincipalController(VentanaPrincipal ventanaPrincipal) throws IOException {
 		
 		usuarioRepository = new UsuarioRepository();
-		usuarioController = new UserController(ventanaPrincipal.getUsuariosPanel(), this,usuarioRepository.getUsuarios());
+		usuarioController = new UsuarioController(ventanaPrincipal.getUsuariosPanel(), this, usuarioRepository.getUsuariosComunes());
 		this.ventanaPrincipal = ventanaPrincipal;
 		
 		cargarPreferenciasVentana();
@@ -45,25 +50,33 @@ public class VentanaPrincipalController {
 				ventanaPrincipal.dispose();
 			}
 		});
-
-		
-		ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
-			try {
-				mostrarUsuarios();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
 		ventanaPrincipal.getBtnInicio().addActionListener(e -> ventanaPrincipal.mostrarVista(ventanaPrincipal.HOME));
+		
+		if(Sesion.getRol().equals("admin")) {
+			ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
+				try {
+					mostrarUsuarios();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+		}else {
+			System.out.println("jala?");
+			ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
+				FormularioUsuarioDialog dialog = new FormularioUsuarioDialog(null, Sesion.getusuarioActual());
+				new FormularioUsuarioDialogController(dialog, Sesion.getusuarioActual());
+				dialog.setVisible(true);
+			});
+		}
+		
 		
 	}
 	
 	public void mostrarUsuarios() throws IOException {
 		
 		try {
-			List<Usuario> usuarios = usuarioRepository.getUsuarios();
+			List<Usuario> usuarios = usuarioRepository.getUsuariosComunes();
 			
 			ModeloTablaUsuario modeloTabla = new ModeloTablaUsuario(usuarios);
 			

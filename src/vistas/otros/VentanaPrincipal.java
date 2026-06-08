@@ -13,7 +13,7 @@ import javax.swing.*;
 
 import controllers.FiltrarPrestamosController;
 import controllers.FiltrarUsuariosController;
-import controllers.usuario.UserClientsPanelController;
+import controllers.usuario.ClientesUsuarioController;
 import controllers.usuario.UsuarioPrestamosPnlController;
 import utilidades.GradientBackground;
 import utilidades.ManejadorTemas;
@@ -113,7 +113,12 @@ public class VentanaPrincipal extends JFrame
 		barra.setOpaque(true);
 		
 		btnInicio = new JButton("Inicio");
-		btnUsuarios = new JButton("Usuarios");
+		if(Sesion.getusuarioActual().getRol().equals("admin")) {
+			btnUsuarios = new JButton("Usuarios");
+		}else {
+			btnUsuarios = new JButton("Editar");
+		}
+		
 		//btnPrestamo= new JButton("Prestamos");
 		
 		barra.add(btnInicio);
@@ -129,7 +134,7 @@ public class VentanaPrincipal extends JFrame
 		contenedor.setOpaque(false);
 		
 		ClientesUsuarioPanel panel=new ClientesUsuarioPanel(this);
-		new UserClientsPanelController(panel);
+		new ClientesUsuarioController(panel);
 		inicioPanel = panel;
 
 		UserPrestamosPanel prestamosCartas = new UserPrestamosPanel(this);
@@ -171,7 +176,7 @@ public class VentanaPrincipal extends JFrame
 	{
 		
 		ClientesUsuarioPanel panel=new ClientesUsuarioPanel(this);
-		new UserClientsPanelController(panel);
+		new ClientesUsuarioController(panel);
 		JPanel inicioPanel = panel;
 		contenedor.add(inicioPanel, HOME);
 		

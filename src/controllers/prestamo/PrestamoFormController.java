@@ -151,10 +151,10 @@ public class PrestamoFormController {
 		
 		if (valido) 
 		{
-			restarDineroUsuario();
+			
 			int idUsuario=Sesion.getusuarioActual().getId();
 			int idCliente=formularioPrestamo.getCliente().getIdCliente();
-			int monto = Integer.parseInt(formularioPrestamo.getMonto().getText());
+			double monto = Double.parseDouble(formularioPrestamo.getMonto().getText());
 			double interesAtrasado=Double.parseDouble(formularioPrestamo.getInteresAtrasado().getText());
 			int quincenas=formularioPrestamo.getNumQuincenas();
 			double interes=formularioPrestamo.getCantInteres();
@@ -162,14 +162,14 @@ public class PrestamoFormController {
 			double montoTotal=monto+monto*(interes/100);
 			
 				prestamoRepository.guardar(new Prestamo(idUsuario, idCliente, "activo", monto, quincenas, montoTotal/quincenas, montoTotal, interes, interesAtrasado, fecha));
-				
+				restarDineroUsuario();
 				formularioPrestamo.getWindow().dispose();
 			
 		}
 		
     }
 	public boolean validarDinero() {
-		if(Integer.parseInt(formularioPrestamo.getMonto().getText())>Sesion.getusuarioActual().getCapacidadPrestamo()) {
+		if( Double.parseDouble(formularioPrestamo.getMonto().getText())>Sesion.getusuarioActual().getCapacidadPrestamo()) {
 			return false;
 		}
 		return true;
@@ -188,11 +188,15 @@ public class PrestamoFormController {
     {
     	String monto = formularioPrestamo.getMonto().getText().trim();
     	
-    	if (monto.isEmpty() || monto.equals("Monto")) 
+    	if (monto.isEmpty() || monto.equals("Monto") || Double.parseDouble(monto)==0) 
     	{
     		formularioPrestamo.getLblErrorMonto().setText("El monto es obligatorio");
 			return false;
-		} else {
+		} else if (Double.parseDouble(monto)>Sesion.getusuarioActual().getCapacidadPrestamo()) 
+    	{
+    		formularioPrestamo.getLblErrorMonto().setText("El monto excede tu capacidad");
+			return false;
+		}{
 			try {
 				doubleMultipleExceptions(monto);
 				
@@ -207,15 +211,20 @@ public class PrestamoFormController {
 
 		return true;
     }
+    
     public boolean validarInteresAtrasado()
     {
     	String interes = formularioPrestamo.getInteresAtrasado().getText().trim();
     	
-    	if (interes.isEmpty() || interes.equals("Interes atrasado")) 
+    	if (interes.isEmpty() || interes.equals("Interes atrasado") || Double.parseDouble(interes)==0) 
     	{
     		formularioPrestamo.getLblErrorInteresAtrasado().setText("El interes para pagos atrasados es obligatorio");
 			return false;
-		} else {
+		} else if (Double.parseDouble(interes)>50) 
+    	{
+    		formularioPrestamo.getLblErrorInteresAtrasado().setText("El interes atrasado no puede exceder el 50%");
+			return false;
+		}{
 			try {
 				numeroExceptions(interes);
 				formularioPrestamo.getLblErrorInteresAtrasado().setText("");

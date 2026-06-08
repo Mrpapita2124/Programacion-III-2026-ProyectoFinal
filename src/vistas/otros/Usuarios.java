@@ -3,7 +3,7 @@ package vistas.otros;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controllers.usuario.UserPanelController;
+import controllers.usuario.UsuarioCartaController;
 import modelos.Usuario;
 import modelosTabla.ModeloTablaUsuario;
 import repositorios.UsuarioRepository;
@@ -21,14 +21,14 @@ public class Usuarios extends JPanel {
 		ArrayList<UsuarioCarta> usuariosCartas = new ArrayList<UsuarioCarta>();
 		UsuarioRepository usuarioRepository = new UsuarioRepository();
 		try {
-			List<Usuario> usuarios = usuarioRepository.getUsuarios(); 
+			List<Usuario> usuarios = usuarioRepository.getUsuariosComunes(); 
 			
 			ModeloTablaUsuario tablaUsuarios = new ModeloTablaUsuario(usuarios);
 			
 			for(int i = 0; i < tablaUsuarios.getRowCount(); i++) {
 				if(tablaUsuarios.getValueAt(i, 4).toString().equals("true")) {
-					UsuarioCarta usuarioPanel = new UsuarioCarta(tablaUsuarios.getUserAt(i));
-					new UserPanelController(usuarioPanel);
+					UsuarioCarta usuarioPanel = new UsuarioCarta(tablaUsuarios.getUsuarioEn(i));
+					new UsuarioCartaController(usuarioPanel);
 					usuariosCartas.add(usuarioPanel);
 				}
 			}

@@ -31,12 +31,14 @@ import utilidades.Colores;
 import vistas.otros.Ventana;
 import vistas.usuario.FormularioUsuarioDialog;
 
-public class UserDialogController {
+public class FormularioUsuarioDialogController {
 
 	private FormularioUsuarioDialog formularioUsuario;
+	private UsuarioRepository usuarioRepository;
 	
-	public UserDialogController(FormularioUsuarioDialog formularioUsuario) // Agregar nuevo user?
+	public FormularioUsuarioDialogController(FormularioUsuarioDialog formularioUsuario) // Agregar nuevo user?
 	{
+		
 		this.formularioUsuario = formularioUsuario;
 		this.formularioUsuario.getSeleccionar().addActionListener(e -> this.formularioUsuario.seleccionarImagen());
 		this.formularioUsuario.getBtnGuardar().addActionListener(e -> {
@@ -52,17 +54,39 @@ public class UserDialogController {
 		
         asignarKeyListener(this.formularioUsuario.getTxtNombre());
         asignarKeyListener(this.formularioUsuario.getTxtApellido()); 
-        
+        asignarKeyListenerParaNumero(this.formularioUsuario.getTxtCapacidadPrestamo(), 7);
 		asignarValidacion(this.formularioUsuario.getTxtNombre()); 
         asignarValidacion(this.formularioUsuario.getTxtApellido());
         asignarValidacion(this.formularioUsuario.getTxtCorreo());
         
 	}
-	
-	public UserDialogController(FormularioUsuarioDialog formularioUsuario, Usuario usuario) // Para actulizar user?
+	private void asignarKeyListenerParaNumero(JTextField campoDeTexto, int extensión)
+    {
+    	campoDeTexto.addKeyListener(new KeyAdapter() 
+         {
+         	public void keyTyped(KeyEvent e)
+         	{
+         		
+         			if(!Character.isSpaceChar(e.getKeyChar()))
+         			{
+         				if(!Character.isDigit(e.getKeyChar()) || Character.isAlphabetic(e.getKeyChar()))
+         				{
+         					e.consume();
+         				}
+         			}
+         		
+         		
+         		if(campoDeTexto.getText().length() >= extensión)
+         		{
+         			e.consume();
+         		}
+         	}
+ 		});
+    }
+	public FormularioUsuarioDialogController(FormularioUsuarioDialog formularioUsuario, Usuario usuario) 
 	{
 		this.formularioUsuario = formularioUsuario;
-		this.formularioUsuario.setUser(usuario);
+		this.formularioUsuario.setUsuario(usuario);
 		this.formularioUsuario.getSeleccionar().addActionListener(e -> formularioUsuario.seleccionarImagen());
 		this.formularioUsuario.getBtnGuardar().addActionListener(e -> {
 			try {
@@ -77,12 +101,13 @@ public class UserDialogController {
 		
         asignarKeyListener(this.formularioUsuario.getTxtNombre());
         asignarKeyListener(this.formularioUsuario.getTxtApellido()); 
-        
+        asignarKeyListenerParaNumero(this.formularioUsuario.getTxtCapacidadPrestamo(), 9);
 		asignarValidacion(this.formularioUsuario.getTxtNombre()); 
         asignarValidacion(this.formularioUsuario.getTxtApellido());
         asignarValidacion(this.formularioUsuario.getTxtCorreo());
-        this.formularioUsuario.getTxtApellido().setText(this.formularioUsuario.getUser().getApellido());
+        this.formularioUsuario.getTxtApellido().setText(this.formularioUsuario.getUsuario().getApellido());
         this.formularioUsuario.getTxtNombre().setText(usuario.getNombre());
+        this.formularioUsuario.getTxtCapacidadPrestamo().setText(String.valueOf(usuario.getCapacidadPrestamo()));
         this.formularioUsuario.getTxtCorreo().setText(usuario.getCorreo());
         this.formularioUsuario.getBtnGuardar().setText("Editar");
         try {
@@ -191,7 +216,7 @@ public class UserDialogController {
 			String ruta = formularioUsuario.getIconDescription();
     		String original = ruta;
     		System.out.println(ruta);
-    		if(!original.equals("..\\img\\icono.png")) {
+    		if(!original.equals("/img/icono.png")) {
     			
 	    			
 	    		
@@ -239,25 +264,32 @@ public class UserDialogController {
 
 		if (!validarNombre()) { valido = false; }
 		if (!validarApellido()) { valido = false; }
+		if (!validarCapacidadPrestamo()) { valido = false; }
 		if (!validarCorreo()) { valido = false; }
 		if (!validarContrasenia()) { valido = false; }
 
 		
 		if (valido) 
 		{
+			UsuarioRepository usuarioRepository= new UsuarioRepository();
 			String foto=guardarImagen();
-			formularioUsuario.getUser().setFoto(foto);
-			formularioUsuario.getUser().setNombre(formularioUsuario.getTxtNombre().getText());
-			formularioUsuario.getUser().setApellido(formularioUsuario.getTxtApellido().getText());
-			formularioUsuario.getUser().setCorreo(formularioUsuario.getTxtCorreo().getText());
-			formularioUsuario.getUser().setGuardar(formularioUsuario.getGuardar().isSelected());
+			formularioUsuario.getUsuario().setFoto(foto);
+			formularioUsuario.getUsuario().setNombre(formularioUsuario.getTxtNombre().getText());
+			formularioUsuario.getUsuario().setApellido(formularioUsuario.getTxtApellido().getText());
+			formularioUsuario.getUsuario().setCorreo(formularioUsuario.getTxtCorreo().getText());
+			formularioUsuario.getUsuario().setGuardar(formularioUsuario.getGuardar().isSelected());
 			String nuevaContesena = new String(formularioUsuario.getTxtContraseña().getPassword());
-			formularioUsuario.getUser().setContrasena(nuevaContesena);
+			formularioUsuario.getUsuario().setContrasena(nuevaContesena);
 			
 			formularioUsuario.setGuardado(true);
+			if(usuarioRepository.actualizar(formularioUsuario.getUsuario())) {
+				formularioUsuario.getWindow().dispose();
+			}else {
+				JOptionPane.showMessageDialog(null, "El correo electronico ya está en uso", " Datos repetidos", JOptionPane.INFORMATION_MESSAGE);
+			}
 			
 			
-			formularioUsuario.getWindow().dispose();
+			
 		}
 		
     }
@@ -267,6 +299,7 @@ public class UserDialogController {
 
 		if (!validarNombre()) { valido = false; }
 		if (!validarApellido()) { valido = false; }
+		if (!validarCapacidadPrestamo()) { valido = false; }
 		if (!validarCorreo()) { valido = false; }
 		if (!validarContrasenia()) { valido = false; }
 
@@ -274,19 +307,22 @@ public class UserDialogController {
 		if (valido) 
 		{
 			String foto=guardarImagen();
-			formularioUsuario.setUser(new Usuario("a", "a", "a", "a"));
-			formularioUsuario.getUser().setNombre(formularioUsuario.getTxtNombre().getText());
-			formularioUsuario.getUser().setApellido(formularioUsuario.getTxtApellido().getText());
-			formularioUsuario.getUser().setCorreo(formularioUsuario.getTxtCorreo().getText());
-			formularioUsuario.getUser().setFoto(foto);
-			formularioUsuario.getUser().setGuardar(formularioUsuario.getGuardar().isSelected());
+			formularioUsuario.setUsuario(new Usuario("a", "a", "a", "a"));
+			formularioUsuario.getUsuario().setNombre(formularioUsuario.getTxtNombre().getText());
+			formularioUsuario.getUsuario().setApellido(formularioUsuario.getTxtApellido().getText());
+			formularioUsuario.getUsuario().setCorreo(formularioUsuario.getTxtCorreo().getText());
+			formularioUsuario.getUsuario().setCapacidadPrestamo(Double.parseDouble(formularioUsuario.getTxtCapacidadPrestamo().getText()));
+			formularioUsuario.getUsuario().setFoto(foto);
+			formularioUsuario.getUsuario().setGuardar(formularioUsuario.getGuardar().isSelected());
 			
 			String nuevaContesena = new String(formularioUsuario.getTxtContraseña().getPassword());
-			formularioUsuario.getUser().setContrasena(nuevaContesena);
+			formularioUsuario.getUsuario().setContrasena(nuevaContesena);
 			formularioUsuario.setGuardado(true);
-			
-			
-			formularioUsuario.getWindow().dispose();
+			if(usuarioRepository.guardar(formularioUsuario.getUsuario())) {
+				formularioUsuario.getWindow().dispose();
+			}else {
+				JOptionPane.showMessageDialog(null, "El correo electronico ya está en uso", " Datos repetidos", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 		
     }
@@ -331,6 +367,18 @@ public class UserDialogController {
     	if (formularioUsuario.getTxtApellido().getText().trim().isEmpty()) 
     	{
     		formularioUsuario.getTxtErrApellido().setText("El apellido es obligatorio");
+			return false;
+		}else {
+			formularioUsuario.getTxtErrApellido().setText(" ");
+		}
+
+		return true;
+    }
+    public boolean validarCapacidadPrestamo()
+    {
+    	if (formularioUsuario.getTxtCapacidadPrestamo().getText().trim().isEmpty() || Double.parseDouble(formularioUsuario.getTxtCapacidadPrestamo().getText())==0) 
+    	{
+    		formularioUsuario.getTxtErrCapacidadPrestamo().setText("La capacidad es obligatoria");
 			return false;
 		}else {
 			formularioUsuario.getTxtErrApellido().setText(" ");
@@ -426,6 +474,28 @@ public class UserDialogController {
     					public void changedUpdate(DocumentEvent e) {
     						// TODO Auto-generated method stub
     						validarApellido();
+    					}
+    				});
+    			break;
+    		case "txtCapacidadPrestamo":
+    			campoDeTexto.getDocument().addDocumentListener(new DocumentListener() {
+    					
+    					@Override
+    					public void removeUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCapacidadPrestamo();
+    					}
+    					
+    					@Override
+    					public void insertUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCapacidadPrestamo();
+    					}
+    					
+    					@Override
+    					public void changedUpdate(DocumentEvent e) {
+    						// TODO Auto-generated method stub
+    						validarCapacidadPrestamo();
     					}
     				});
     			break;
