@@ -90,7 +90,6 @@ public class UserPrestamosPanel extends JPanel {
 		} 
 		catch (Exception e) 
 		{
-			System.out.println("No se cargo lo iconos de filtar cliente!");
 		}
 		
 		btnPanel.add(btnClientes);

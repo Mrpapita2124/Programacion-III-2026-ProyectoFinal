@@ -55,7 +55,6 @@ public class ClienteRepository {
 		
 	}
 	public boolean actualizar(Cliente clienet) {
-		System.out.println("asdad"+ clienet.getIdCliente());
 		String sql = "UPDATE cliente SET nombre = ?, apellido = ?, edad = ?, ine = ?, domicilio = ?, comprobante_domicilio = ?, numero_celular = ?, correo_electronico = ?, empleo = ?, telf_empleo = ?, domicilio_empleo = ?, ingresos_mensuales = ?, numero_cuenta_bancaria = ?, nombre_banco = ?, curp = ?, reputacion = ? WHERE id_cliente = ?";
 		
 		try (

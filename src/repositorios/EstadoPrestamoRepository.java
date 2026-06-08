@@ -104,7 +104,7 @@ public class EstadoPrestamoRepository {
 	        }
 	        
 	        if (estados.isEmpty()) {
-	            System.out.println("No se encontraron estados para este préstamo.");
+	            //System.out.println("No se encontraron estados para este préstamo.");
 	        }
 	        
 	        return estados;

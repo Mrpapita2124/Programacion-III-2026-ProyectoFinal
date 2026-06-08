@@ -20,7 +20,6 @@ public class ModeloTablaUsuario extends AbstractTableModel{
 	
 	public ModeloTablaUsuario(List<Usuario> usuarios) 
 	{
-		System.out.println("cantidad" + usuarios.size());
 		this.usuarios = usuarios;
 	}
 	

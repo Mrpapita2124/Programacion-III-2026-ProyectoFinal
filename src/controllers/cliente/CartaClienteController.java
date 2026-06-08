@@ -2,20 +2,27 @@ package controllers.cliente;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import controllers.prestamo.PrestamoFormController;
 import modelos.Cliente;
+import modelos.EstadoPrestamo;
 import modelos.Prestamo;
+import modelos.Usuario;
 import repositorios.ClienteRepository;
 import repositorios.EstadoPrestamoRepository;
 import repositorios.PrestamoRepository;
+import repositorios.UsuarioRepository;
+import utilidades.Actualizador;
+import utilidades.Sesion;
 import vistas.cliente.CartaCliente;
 import vistas.cliente.ClientInfoView;
 import vistas.formulario.FormularioGeneralCliente;
 import vistas.formulario.FormularioGeneralPrestamo;
+import vistas.otros.Ventana;
 import vistas.otros.VentanaPrincipal;
 import vistas.usuario.ClientesUsuarioPanel;
 
@@ -24,8 +31,12 @@ public class CartaClienteController {
 	private ClienteRepository clientRepository;
 	private PrestamoRepository prestamoRepository;
 	private EstadoPrestamoRepository estadoPrestamoRepository;
+	private UsuarioRepository usuarioRepository;
+	private Actualizador actualizador;
 
 	public CartaClienteController(CartaCliente cartaCliente,ClientesUsuarioPanel clientesUsuarioPanel, VentanaPrincipal ventana) {
+		actualizador= new Actualizador();
+		usuarioRepository= new UsuarioRepository();
 		clientRepository=new ClienteRepository();
 		prestamoRepository=new PrestamoRepository();
 		estadoPrestamoRepository = new EstadoPrestamoRepository();
@@ -54,7 +65,7 @@ public class CartaClienteController {
 			
 			if(opcion == JOptionPane.YES_OPTION)
 			{
-				deleteEverythingFromClient(this.cartaCliente.getCliente());
+				deleteEverythingFromClient(this.cartaCliente.getCliente(), ventana);
 				clientRepository.eliminar(this.cartaCliente.getCliente());
 				ventana.getFiltroClientesControlador().refrescarClientesFiltrados();
 				ventana.recargarPrestamos(true);
@@ -77,13 +88,41 @@ public class CartaClienteController {
 			});
 		});
 	}
-	private void deleteEverythingFromClient(Cliente client) {
+	private void deleteEverythingFromClient(Cliente client, VentanaPrincipal ventana) {
 		List<Prestamo> prestamos=prestamoRepository.getPrestamosDeCliente(client);
 		for(Prestamo prestamo:prestamos) {
-			estadoPrestamoRepository.eliminarDesdePrestamo(prestamo);
+			//estadoPrestamoRepository.eliminarDesdePrestamo(prestamo);
+			eliminarPrestamo(prestamo, ventana);
 		}
-		prestamoRepository.eliminarDesdeCliente(client);
+		//prestamoRepository.eliminarDesdeCliente(client);
 		
 	}
+	private void eliminarPrestamo(Prestamo prestamo, VentanaPrincipal ventana) {
+		EstadoPrestamo estadoPrestamo= estadoPrestamoRepository.getEstadoPrestamoDesdePrestamo(prestamo);
+		if(estadoPrestamo == null)
+		{
+		
+			prestamoRepository.eliminar(prestamo);
+	        ventana.getFilterPrestamoViewController().refrescarPrestamosFiltrados(false);
+	        ventana.reload();
+	        ventana.recargarPrestamos(true);
+	        return;
+		}
 	
+		double dineroGanado=prestamo.getMontoTotal()-estadoPrestamo.getMontoRestante();
+		Usuario usuario= Sesion.getusuarioActual();
+		usuario.setCapacidadPrestamo(usuario.getCapacidadPrestamo()-dineroGanado);
+		usuario.setCapacidadPrestamo(usuario.getCapacidadPrestamo()+prestamo.getMonto());
+		estadoPrestamoRepository.eliminarDesdePrestamo(prestamo);
+		prestamoRepository.eliminar(prestamo);
+		try {
+			usuarioRepository.actualizarSinContrasenia(usuario);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		actualizador.actualizarReputacionClientes();
+		ventana.reload();
+		ventana.recargarPrestamos(true);
+	}
 }

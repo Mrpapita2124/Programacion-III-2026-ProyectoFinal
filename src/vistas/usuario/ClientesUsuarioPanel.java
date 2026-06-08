@@ -122,7 +122,6 @@ public class ClientesUsuarioPanel extends JPanel {
 		} 
 		catch (Exception e) 
 		{
-			System.out.println("No se cargo lo iconos de agregar cliente y filtar cliente!");
 		}
         
 		if(ClienteRepository.getTotalNumeroDeClientes() != 0)

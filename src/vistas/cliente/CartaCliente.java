@@ -175,7 +175,6 @@ public class CartaCliente extends JPanel
 	}
 	
 	private ImageIcon escalarImagenLocal(String direccion,int x,int y) {
-		System.out.println("nigga");
 	    ImageIcon iconoOriginal = new ImageIcon(getClass().getResource(direccion));
 	
 	   

@@ -134,7 +134,6 @@ public class VentanaPrincipalController {
     
     private void handleClose() {
         int option = ventanaPrincipal.confirmarSalir();
-        System.out.println(option);
 
         if (option == JOptionPane.YES_OPTION) {
             new Ventana();

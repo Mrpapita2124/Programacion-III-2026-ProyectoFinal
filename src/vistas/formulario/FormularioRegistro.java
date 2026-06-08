@@ -491,7 +491,6 @@ public class FormularioRegistro extends JFrame{
 		try
 		{
 			userRepository.guardar(usuario);
-			System.out.println("Se Registro Usuario!");
 			JOptionPane.showMessageDialog(this, "Usuario registrado");
 		}
 		catch (Exception e) 

@@ -115,7 +115,6 @@ public class Filtros extends GradientBackground {
             botonBuscar.setIcon(escalarImagen("src\\img\\buscar_Filter.png", 20, 20));
             botonCancelar.setIcon(escalarImagen("src\\img\\cancelar_Filter.png", 20, 20));
         } catch (Exception e) {
-            System.out.println("Iconos no cargados");
         }
         
         setLayout(new GridBagLayout());

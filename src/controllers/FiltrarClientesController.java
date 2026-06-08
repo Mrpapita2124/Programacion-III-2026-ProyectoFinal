@@ -30,7 +30,6 @@ public class FiltrarClientesController {
 
 			if(clientes.size() == 0)
 			{
-				System.out.println("* No hay clientes que cumpla con esos filtros!");
 				Sesion.setClientesFiltrados(null);
 				this.vistaFiltros.getVentana().reload();
 				this.vistaFiltros.getVentana().mostrarVista(VentanaPrincipal.HOME);

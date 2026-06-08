@@ -396,17 +396,7 @@ public class FormularioGeneralPrestamo extends JFrame{
         button.setPreferredSize(new Dimension(buttonAncho, buttonAlto));
         button.setMinimumSize(new Dimension(buttonAncho, buttonAlto));
         
-        /*
-        try 
-        {
-            Image icono = ImageIO.read(getClass().getResource(ruta));
-            icono = icono.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-            button.setIcon(new ImageIcon(icono));
-        }
-        catch (Exception ex)
-        {
-            System.out.println("No se pudo poner el icono");
-        }*/
+        
     }
     
     private JLabel crearErrorLabel() 

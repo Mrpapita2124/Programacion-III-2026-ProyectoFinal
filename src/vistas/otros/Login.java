@@ -234,7 +234,6 @@ public class Login extends JPanel{
 		}
 		catch (Exception ex)
 		{
-			System.out.println("No se pudo poner el icono");
 		}
 	}
 	

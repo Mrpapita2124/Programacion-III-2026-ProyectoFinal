@@ -127,7 +127,6 @@ public class FormularioClienteController {
 	    		
 				String ruta = formularioCliente.getIconoDescription();
 	    		String original = ruta;
-	    		System.out.println(ruta);
 	    		if(!original.equals("/img/icono.png")) {
 	    			
 		    			
@@ -165,7 +164,6 @@ public class FormularioClienteController {
     		
 			String ruta = formularioCliente.getComprobanteIconClientDirection();
     		String original = ruta;
-    		System.out.println(ruta);
     		if(!original.equals("/img/DocumentDefaultIcon.png")) {
     			
 	    			
@@ -202,7 +200,6 @@ public class FormularioClienteController {
 	private void manejarCierre() {
 		
 		int option = formularioCliente.confirmExit();
-		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
 			

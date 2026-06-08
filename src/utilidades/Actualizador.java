@@ -60,7 +60,6 @@ public class Actualizador {
 			for(Cliente cliente : clients) 
 			{
 				List<Prestamo> prestamos=prestamoRepository.getPrestamosDeCliente(cliente);
-				System.out.println("preestamos "+ prestamos.size());
 				List<Integer> puntuaciones= new ArrayList<Integer>();
 				double promedio=0;
 				
@@ -87,19 +86,14 @@ public class Actualizador {
 						promedio+=puntuacion;
 					}
 					promedio=promedio/puntuaciones.size();
-					System.out.println("promedio "+ promedio);
 					if(promedio<0.3) {
 						cliente.setReputacion("mala");
-						System.out.println("1asdddadd");
 					}else if(promedio<1.2) {
 						cliente.setReputacion("regular");
-						System.out.println("2asdasd");
 					}else if(promedio<2.1) {
 						cliente.setReputacion("buena");
-						System.out.println("3asdasd");
 					}else if(promedio<=3) {
 						cliente.setReputacion("excelente");
-						System.out.println("4asdasd");
 					}
 					clienteRepository.actualizar(cliente);
 				}else {

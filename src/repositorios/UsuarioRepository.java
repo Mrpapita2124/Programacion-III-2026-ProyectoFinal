@@ -41,7 +41,6 @@ public class UsuarioRepository {
 			
 		}catch(SQLException ex) {
 			//ex.printStackTrace();
-			System.out.println("sexo tilin");
 		}
 		return false;
 		

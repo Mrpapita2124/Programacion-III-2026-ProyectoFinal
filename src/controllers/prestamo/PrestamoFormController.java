@@ -123,7 +123,6 @@ public class PrestamoFormController {
 	private void manejarCierre() {
 		
 		int opcion = formularioPrestamo.confirmarCierre();
-		System.out.println(opcion);
 
 		if (opcion == JOptionPane.YES_OPTION) {
 			

@@ -40,7 +40,6 @@ public class PrestamoCartas extends PanelPersonalizable
 		
 		List<Prestamo> prestamos = ordenarListaPrestamos(); // Nuevo metodo abajo 
 		
-		System.out.println("ES NULL PRESTAMOS: " + prestamoCards == null);
 		
 		if (prestamos == null || prestamos.isEmpty()) 
 		{

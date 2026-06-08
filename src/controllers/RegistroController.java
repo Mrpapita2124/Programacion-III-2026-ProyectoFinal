@@ -135,7 +135,6 @@ public class RegistroController {
 	    		
 				String ruta = formularioRegsitro.getIconDescription();
 	    		String original = ruta;
-	    		System.out.println(ruta);
 	    		if(!original.equals("/img/iconoWhite.png")) {
 	    			
 		    			
@@ -172,7 +171,6 @@ public class RegistroController {
 	private void manejarCierre() {
 		
 		int option = formularioRegsitro.confirmExit();
-		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
 			loginVentana.dispose();
