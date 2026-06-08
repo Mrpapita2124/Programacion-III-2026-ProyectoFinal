@@ -25,15 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PrestamoCards extends PanelPersonalizable 
+public class PrestamoCartas extends PanelPersonalizable 
 {
-	private Font fontTitulo = Fuentes.setFontSegoe(1,12);
+	private Font fontTitulo = Fuentes.setFontSegoe(1,15);
 	int alto;
 	
-	public PrestamoCards(VentanaPrincipal ventana) 
+	public PrestamoCartas(VentanaPrincipal ventana) 
 	{
 		ArrayList<JPanel> prestamoCards = new ArrayList<JPanel>();
-		PrestamoRepository prestamoRepo = new PrestamoRepository();
 		
 		setOpaque(false);
 		setBackground(new Color(0, 0, 0, 0));
@@ -41,7 +40,7 @@ public class PrestamoCards extends PanelPersonalizable
 		
 		List<Prestamo> prestamos = ordenarListaPrestamos(); // Nuevo metodo abajo 
 		
-		
+		System.out.println("ES NULL PRESTAMOS: " + prestamoCards == null);
 		
 		if (prestamos == null || prestamos.isEmpty()) 
 		{
@@ -54,7 +53,7 @@ public class PrestamoCards extends PanelPersonalizable
 			voidMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
 			alto = 300;
 			
-			add(Box.createRigidArea(new Dimension(0, 85)));
+			add(Box.createRigidArea(new Dimension(0, 250)));
 			add(voidMessage);
 			
 		} else {

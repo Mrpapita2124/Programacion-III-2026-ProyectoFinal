@@ -4,6 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controllers.prestamo.PrestamoFormController;
 import modelos.Cliente;
 import modelos.Prestamo;
@@ -36,18 +38,28 @@ public class CartaClienteController {
 			form.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
-					ventana.getFiltroUsuarioControlador().refrescarClientesFiltrados();
+					ventana.getFiltroClientesControlador().refrescarClientesFiltrados();
 	            }
 			});
 			
 		});
 		
 		this.cartaCliente.getBtnEliminar().addActionListener(e -> {
-			deleteEverythingFromClient(this.cartaCliente.getCliente());
-			clientRepository.eliminar(this.cartaCliente.getCliente());
-			ventana.getFiltroUsuarioControlador().refrescarClientesFiltrados();
-			ventana.recargarPrestamos(true);
-            ventana.getFilterPrestamoViewController().refrescarPrestamosFiltrados(true);
+			int opcion = JOptionPane.showConfirmDialog(
+			        ventana,
+			        "¿Seguro que deseas eliminar cliente? Se perderán todos los datos",
+			        "Eliminar Cliente",
+			        JOptionPane.YES_NO_OPTION
+			    );
+			
+			if(opcion == JOptionPane.YES_OPTION)
+			{
+				deleteEverythingFromClient(this.cartaCliente.getCliente());
+				clientRepository.eliminar(this.cartaCliente.getCliente());
+				ventana.getFiltroClientesControlador().refrescarClientesFiltrados();
+				ventana.recargarPrestamos(true);
+	            ventana.getFilterPrestamoViewController().refrescarPrestamosFiltrados(true);
+			}
 		});
 		this.cartaCliente.getBtnInformacion().addActionListener(e -> {
 			ClientInfoView info = new ClientInfoView(this.cartaCliente.getCliente());

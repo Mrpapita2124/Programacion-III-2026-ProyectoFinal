@@ -85,7 +85,7 @@ public class FiltrarPrestamosController {
 	public List<Prestamo> filtroReputacion(List<Prestamo> prestamos){
 		List<String> reputacion= new ArrayList<String>();
 		
-		if(this.vistaFiltro.getExceelente().isSelected()) {
+		if(this.vistaFiltro.getExcelente().isSelected()) {
 			reputacion.add("excelente");
 		}
 		if(this.vistaFiltro.getBuena().isSelected()) {
@@ -97,7 +97,7 @@ public class FiltrarPrestamosController {
 		if(this.vistaFiltro.getMala().isSelected()) {
 			reputacion.add("mala");
 		}
-		if(this.vistaFiltro.getNoMedida().isSelected()) {
+		if(this.vistaFiltro.getNoMedido().isSelected()) {
 			reputacion.add("no medido");
 		}
 		if(reputacion.size()==0) {

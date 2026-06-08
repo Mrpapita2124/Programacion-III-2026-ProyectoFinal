@@ -208,7 +208,39 @@ public class UsuarioRepository {
 		return false;
 	}	
 	
-	
+	public boolean actualizarSinContrasenia(Usuario usuarioActualizado) throws IOException {
+
+		String sql = "UPDATE usuario SET nombre = ?, apellido = ?, correo_electronico = ?,"
+				+ " capacidad_prestamo = ?, url_foto = ?, rol = ?, guardar = ? "
+				+ "WHERE id_usuario = ?";
+
+		try (Connection connection = DatabaseConnection.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql)) {
+
+			pst.setString(1, usuarioActualizado.getNombre());
+			pst.setString(2, usuarioActualizado.getApellido());
+			pst.setString(3, usuarioActualizado.getCorreo());
+			pst.setDouble(4, usuarioActualizado.getCapacidadPrestamo());
+			pst.setString(5, usuarioActualizado.getFoto());
+			pst.setString(6, usuarioActualizado.getRol());
+			pst.setBoolean(7, usuarioActualizado.isGuardar());
+			pst.setInt(8, usuarioActualizado.getId()); 
+
+			int affectedRows = pst.executeUpdate();
+			
+
+			if(affectedRows > 0) {
+				//System.out.println("Cambios guardados");
+				return true;
+			}			
+
+		}catch(SQLException ex) {
+			//ex.printStackTrace();
+		}
+		
+		//System.out.println("No se hicieron cambios");
+		return false;
+	}
 
 }
 

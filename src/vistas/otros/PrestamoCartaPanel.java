@@ -20,7 +20,7 @@ import utilidades.Fuentes;
 
 
 public class PrestamoCartaPanel extends JPanel {
-	private Font fuenteTexto =  Fuentes.setFontSegoe(1,35);
+	private Font fuenteTexto =  Fuentes.setFontSegoe(1,30);
 	private JButton btnCompletar;
 	private JButton btnEliminar;
 	private JButton btnDeuda;
@@ -42,6 +42,10 @@ public class PrestamoCartaPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));  
 		setAlignmentX(LEFT_ALIGNMENT);
 		setBackground(Colores.CLIENTE_CARTA_FONDO);
+		setBorder(BorderFactory.createCompoundBorder(
+			    BorderFactory.createLineBorder(new Color(55, 85, 120), 2),
+			    BorderFactory.createEmptyBorder(10, 15, 10, 15)
+			));
 		setVisible(true);
 		
 		JPanel topPanel = new JPanel();
@@ -81,14 +85,14 @@ public class PrestamoCartaPanel extends JPanel {
 		else 
 		{
 			estadoTexto = "ACTIVO";
-			estadoColor = Color.YELLOW.darker();
+			estadoColor = new Color(56, 189, 248);
 		}
 		
 		estadoLabel.setBorder(BorderFactory.createEmptyBorder(6, 10, 6, 10));
 		estadoLabel.setBackground(estadoColor);
 		estadoLabel.setOpaque(true);
 		estadoLabel.setText(estadoTexto);
-		estadoLabel.setForeground(estadoColor.darker().darker());
+		estadoLabel.setForeground(Color.WHITE);
 		estadoLabel.setFont(estadoLabel.getFont().deriveFont(Font.BOLD));
 		
 		topPanel.add(estadoLabel);
@@ -99,31 +103,44 @@ public class PrestamoCartaPanel extends JPanel {
 		nombreCliente.setForeground(Colores.ENCABEZADOS_PRIMARIOS);
 		nombreCliente.setFont(fuenteTexto);
 		
-		JLabel prestamoCantidad = new JLabel(String.format( "Monto Total: $%.2f     Monto Restante: $%.2f", this.prestamo.getMontoTotal(), 
-			    estadoPrestamo.getMontoRestante()));
-		
-		prestamoCantidad.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Color prestamoCantidadColor = null;
-		
+
 		EstadoPrestamoRepository estadoPrestamoRepo = new EstadoPrestamoRepository();
 		String estado = estadoPrestamoRepo.getClientPrestamosEstado(prestamo);
-	    
-	    if (estado != null && estado.equals("atrasado")) 
-	    {
-	        prestamoCantidadColor = new Color(225, 20, 16);
-	    } 
-	    else 
-	    {
-	        prestamoCantidadColor = Color.YELLOW.darker();
-	    }
-	    
-	    if(prestamo.getEstado().equals("concluso"))
-	    {
-	    	prestamoCantidadColor = new Color(76, 175, 80);
-	    }
-	    
-	    prestamoCantidad.setForeground(prestamoCantidadColor);
-		prestamoCantidad.setFont(Fuentes.setFontSegoe(1, 20));
+
+		if (estado != null && estado.equals("atrasado"))
+		{
+		    prestamoCantidadColor = new Color(225, 20, 16);
+		}
+		else
+		{
+		    prestamoCantidadColor = new Color(56, 189, 248);
+		}
+
+		if(prestamo.getEstado().equals("concluso"))
+		{
+		    prestamoCantidadColor = new Color(76, 175, 80);
+		}
+
+		JPanel montoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
+		montoPanel.setOpaque(false);
+
+		JLabel lblTotal = new JLabel(
+		    String.format("Total: $%.2f", this.prestamo.getMontoTotal())
+		);
+
+		JLabel lblRestante = new JLabel(
+		    String.format("Restante: $%.2f", estadoPrestamo.getMontoRestante())
+		);
+
+		lblTotal.setForeground(prestamoCantidadColor);
+		lblRestante.setForeground(prestamoCantidadColor);
+
+		lblTotal.setFont(Fuentes.setFontSegoe(1, 20));
+		lblRestante.setFont(Fuentes.setFontSegoe(1, 20));
+
+		montoPanel.add(lblTotal);
+		montoPanel.add(lblRestante);
 		
 		JLabel datosExtra;
 		if(estadoPrestamo.getQuincenasRestantes()==0) {
@@ -133,8 +150,8 @@ public class PrestamoCartaPanel extends JPanel {
 		}
 		
 	    datosExtra.setAlignmentX(Component.CENTER_ALIGNMENT);
-	    datosExtra.setForeground(Color.WHITE);
-	    datosExtra.setFont(Fuentes.setFontSegoe(1, 17));
+	    datosExtra.setFont(Fuentes.setFontSegoe(0, 15));
+	    datosExtra.setForeground(new Color(200, 210, 220));
 	    
 		btnCompletar = new JButton();
 		btnEliminar = new JButton();
@@ -165,7 +182,7 @@ public class PrestamoCartaPanel extends JPanel {
 		
 		
 		
-		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 10));
 		panelBotones.setOpaque(false);
 		
 		
@@ -186,7 +203,7 @@ public class PrestamoCartaPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(0, 20))); 
 		add(nombreCliente);
 		add(Box.createRigidArea(new Dimension(0, 5)));   
-		add(prestamoCantidad);
+		add(montoPanel);
 		add(Box.createRigidArea(new Dimension(0, 15))); 
 		add(datosExtra);
 		add(Box.createRigidArea(new Dimension(0, 30))); 

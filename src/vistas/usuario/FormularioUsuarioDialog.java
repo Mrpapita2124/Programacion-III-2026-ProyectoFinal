@@ -84,7 +84,7 @@ public class FormularioUsuarioDialog extends JDialog{
     	txtErrCorreo.setForeground(Color.RED);
     	txtErrContraseña.setForeground(Color.RED);
 
-    	setSize(600, 500);
+    	setSize(800, 600);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

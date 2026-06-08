@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import excepciones.NumeroInvalidoException;
 import modelos.EstadoPrestamo;
@@ -36,6 +37,8 @@ public class PagoDeudaController {
 		pagoDeuda.getBtnPagar().addActionListener(e -> {
 			if(validarMonto()) {
 				pagarMonto();
+				JOptionPane.showMessageDialog(pagoDeuda, "Deuda pago registrado con éxito.", " Se hizo pago deuda", JOptionPane.INFORMATION_MESSAGE);
+				
 				this.pagoDeuda.getVentana().recargarPrestamos(true);
 		    	this.pagoDeuda.dispose();
 		    	
@@ -48,7 +51,6 @@ public class PagoDeudaController {
 				// TODO Auto-generated method stub
 				pagoDeuda.reiniciarErrorLabels();
 				validarMonto();
-				
 			}
 			
 			@Override
@@ -115,7 +117,7 @@ public class PagoDeudaController {
 		}
 		prestamoRepository.actualizar(prestamo);
 		try {
-			usuarioRepository.actualizar(usuario);
+			usuarioRepository.actualizarSinContrasenia(usuario);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

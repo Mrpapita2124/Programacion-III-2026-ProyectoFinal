@@ -36,12 +36,12 @@ public class ClientesUsuarioPanel extends JPanel {
 	private JButton btnFiltro;
 	ClienteCartas cartas;
 	JScrollPane scrollClientes;
-	VentanaPrincipal ancestro;
+	VentanaPrincipal ventana;
 	
 	
 	public ClientesUsuarioPanel(VentanaPrincipal ancestro) 
 	{
-		this.ancestro=ancestro;
+		this.ventana=ancestro;
 		
 		// Make panel transparent to show gradient
 		setOpaque(false);
@@ -60,7 +60,7 @@ public class ClientesUsuarioPanel extends JPanel {
 		*/
 		
 		ClientesEstadisticas panelEstadisticas = new ClientesEstadisticas();
-		panelEstadisticas.setOpaque(false); // Make stats panel transparent
+		panelEstadisticas.setOpaque(false); 
 	    panelEstadisticas.setMaximumSize(new Dimension(1600, 150));
 	    panelEstadisticas.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    add(panelEstadisticas);
@@ -68,23 +68,34 @@ public class ClientesUsuarioPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(0, 45)));
 		
 		
-		JPanel panelTitulo = new JPanel(new BorderLayout());
+		JPanel panelTitulo = new JPanel();
+		panelTitulo.setLayout(new BoxLayout(panelTitulo, BoxLayout.X_AXIS));
 		panelTitulo.setOpaque(false);
 		panelTitulo.setMaximumSize(new Dimension(1600, 50));
 		panelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-		JLabel saludo = new JLabel("Lista de Clientes"); 
-        saludo.setOpaque(false);
-        saludo.setFont(fontTitulo);
-        saludo.setForeground(Colores.ENCABEZADOS_PRIMARIOS);
-        panelTitulo.add(saludo, BorderLayout.WEST);
-        
+		panelTitulo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
-        JPanel panelDeBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
-        panelDeBotones.setOpaque(false);
+		JLabel capacidadPrestamo = new JLabel("  $" + String.format("%,.2f", Sesion.getusuarioActual().getCapacidadPrestamo()));
+		capacidadPrestamo.setFont(Fuentes.setFontSegoe(1, 25));
+		capacidadPrestamo.setForeground(Colores.BOTON_COLOR1);
+		capacidadPrestamo.setPreferredSize(new Dimension(375, 30)); 
+		capacidadPrestamo.setMaximumSize(new Dimension(375, 30));
+		panelTitulo.add(capacidadPrestamo);
+
+		panelTitulo.add(Box.createHorizontalGlue());
+
+		JLabel saludo = new JLabel("Lista de Clientes"); 
+		saludo.setOpaque(false);
+		saludo.setFont(fontTitulo);
+		saludo.setForeground(Colores.ENCABEZADOS_PRIMARIOS);
+		saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelTitulo.add(saludo);
+
+		panelTitulo.add(Box.createHorizontalGlue());
+
+		JPanel panelDeBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
+		panelDeBotones.setOpaque(false);
         
-        JLabel capacidadPrestamo= new JLabel(String.valueOf("$"+Sesion.getusuarioActual().getCapacidadPrestamo()));
-        capacidadPrestamo.setFont(Fuentes.fontTexto);
         
         btnFiltro = new JButton("Filtrar");
         btnFiltro.setFont(fontBotones);
@@ -104,7 +115,6 @@ public class ClientesUsuarioPanel extends JPanel {
         
         int iconoTamanio = 20;
         
-		panelDeBotones.add(capacidadPrestamo);
 		try 
 		{
 			btnRegistro.setIcon(escalarImagen("src\\img\\cliente_agregar.png", iconoTamanio, iconoTamanio));
@@ -119,9 +129,10 @@ public class ClientesUsuarioPanel extends JPanel {
 		{
 			panelDeBotones.add(btnFiltro);
 		}
-        panelDeBotones.add(btnRegistro);
-        
+
+		panelDeBotones.add(btnRegistro);
         panelTitulo.add(panelDeBotones, BorderLayout.EAST);
+        
         panelTitulo.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
         
@@ -214,11 +225,11 @@ public class ClientesUsuarioPanel extends JPanel {
 	}
 	
 	public VentanaPrincipal getAncestro() {
-		return ancestro;
+		return ventana;
 	}
 	
 	public void setAncestro(VentanaPrincipal ancestro) {
-		this.ancestro = ancestro;
+		this.ventana = ancestro;
 	}
 	
 	

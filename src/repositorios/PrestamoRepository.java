@@ -21,14 +21,16 @@ public class PrestamoRepository {
 	
 	public boolean guardar(Prestamo prestamo) {
 	    EstadoPrestamoRepository estadoRepo = new EstadoPrestamoRepository();
-	    Usuario usuario = Sesion.getusuarioActual();
+	    ClienteRepository clienteRepo = new ClienteRepository();
+	    Cliente cliente = clienteRepo.getClienteDePrestamo(prestamo);	    
+	    
 	    String sql = "insert into prestamo (id_usuario, id_cliente, estado, monto, numero_quincenas, monto_quincenal, monto_total, interes, interes_retraso, fecha) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	    try (
 	        Connection conn = DatabaseConnection.getConnection();
 	        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	    ) {
-	        stmt.setInt(1, usuario.getId());
+	        stmt.setInt(1, cliente.getIdUsuario());
 	        stmt.setInt(2, prestamo.getIdCliente());           
 	        stmt.setString(3, prestamo.getEstado());            
 	        stmt.setDouble(4, prestamo.getMonto());             
@@ -74,14 +76,14 @@ public class PrestamoRepository {
 	
 	public boolean actualizar(Prestamo prestamo) {
 	    String sql = "UPDATE prestamo SET id_usuario = ?, id_cliente = ?, estado = ?, monto = ?, numero_quincenas = ?, monto_quincenal = ?, monto_total = ?, interes = ?, interes_retraso = ?, fecha = ? WHERE id_prestamo = ?";
+	    ClienteRepository clienteRepo = new ClienteRepository();
+	    Cliente cliente = clienteRepo.getClienteDePrestamo(prestamo);	
 
 	    try (
 	        Connection conn = DatabaseConnection.getConnection();
 	        PreparedStatement stmt = conn.prepareStatement(sql);
 	    ) {
-	        Usuario usuario = Sesion.getusuarioActual();
-
-	        stmt.setInt(1, usuario.getId());
+	 	    stmt.setInt(1, cliente.getIdUsuario());
 	        stmt.setInt(2, prestamo.getIdCliente());
 	        stmt.setString(3, prestamo.getEstado());
 	        stmt.setDouble(4, prestamo.getMonto());
@@ -405,8 +407,6 @@ public class PrestamoRepository {
 	}
 	
 	public boolean eliminarDesdeCliente(Cliente client) {
-		EstadoPrestamoRepository estadoRepo= new EstadoPrestamoRepository();
-	    Usuario user = Sesion.getusuarioActual();
 	    String sql = "Delete From prestamo Where id_cliente=?";
 
 	    try (
@@ -428,7 +428,6 @@ public class PrestamoRepository {
 	}
 	
 	public boolean eliminar(Prestamo prestamo) {
-	    Usuario user = Sesion.getusuarioActual();
 	    String sql = "Delete From prestamo Where id_prestamo=?";
 
 	    try (

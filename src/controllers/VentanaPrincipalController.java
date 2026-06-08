@@ -62,7 +62,7 @@ public class VentanaPrincipalController {
 				}
 			});
 		}else {
-			System.out.println("jala?");
+			//System.out.println("jala?");
 			ventanaPrincipal.getBtnUsuarios().addActionListener(e -> {
 				FormularioUsuarioDialog dialog = new FormularioUsuarioDialog(null, Sesion.getusuarioActual());
 				new FormularioUsuarioDialogController(dialog, Sesion.getusuarioActual());

@@ -23,7 +23,7 @@ public class ClientesUsuarioController {
 			formulario.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent e) {
 	                // Aquí puedes ejecutar lógica en el principal
-					ventana.getFiltroUsuarioControlador().refrescarClientesFiltrados();
+					ventana.getFiltroClientesControlador().refrescarClientesFiltrados();
 				}
 			});
 		});

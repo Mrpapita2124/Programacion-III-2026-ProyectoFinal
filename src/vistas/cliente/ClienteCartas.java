@@ -41,19 +41,7 @@ public class ClienteCartas extends PanelPersonalizable
 		setOpaque(false);
 		setBackground(new Color(0, 0, 0, 0));
 		
-		
 		List<Cliente> clientes = Sesion.getClientesFiltrados(); 
-		
-		if(clientes != null)
-		{
-			int counter = 1;
-			
-			for (Cliente cliente : clientes) 
-			{
-				
-				counter++;
-			}
-		}
 		
 		
 		if (clientes == null || clientes.isEmpty()) 
@@ -67,7 +55,7 @@ public class ClienteCartas extends PanelPersonalizable
 			voidMensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
 			alto=300;
 			
-			add(Box.createRigidArea(new Dimension(0, 45)));
+			add(Box.createRigidArea(new Dimension(0, 250)));
 			add(voidMensaje);
 			
 		}else {
@@ -113,7 +101,6 @@ public class ClienteCartas extends PanelPersonalizable
 		}
 			
 			setVisible(true);
-			
 	}
 	
 	public int getAlto() {

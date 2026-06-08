@@ -177,7 +177,7 @@ public class PrestamoFormController {
 	public void restarDineroUsuario() {
 		Sesion.getusuarioActual().setCapacidadPrestamo(Sesion.getusuarioActual().getCapacidadPrestamo()-Double.parseDouble(formularioPrestamo.getMonto().getText()));
 		try {
-			usuarioRepository.actualizar(Sesion.getusuarioActual());
+			usuarioRepository.actualizarSinContrasenia(Sesion.getusuarioActual());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

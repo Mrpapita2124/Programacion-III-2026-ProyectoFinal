@@ -12,12 +12,12 @@ import utilidades.Sesion;
 import vistas.otros.Filtros;
 import vistas.otros.VentanaPrincipal;
 
-public class FiltrarUsuariosController {
+public class FiltrarClientesController {
 	
 	Filtros vistaFiltros;
 	ClienteRepository clientRepository;
 	
-	public FiltrarUsuariosController(Filtros vistaFiltros) 
+	public FiltrarClientesController(Filtros vistaFiltros) 
 	{
 		clientRepository= new ClienteRepository();
 		this.vistaFiltros=vistaFiltros;
@@ -76,7 +76,7 @@ public class FiltrarUsuariosController {
 	public List<Cliente> filtroReputacion(List<Cliente> clientes){
 		List<String> reputacion= new ArrayList<String>();
 		
-		if(this.vistaFiltros.getExceelente().isSelected()) {
+		if(this.vistaFiltros.getExcelente().isSelected()) {
 			reputacion.add("excelente");
 		}
 		if(this.vistaFiltros.getBuena().isSelected()) {
@@ -88,7 +88,7 @@ public class FiltrarUsuariosController {
 		if(this.vistaFiltros.getMala().isSelected()) {
 			reputacion.add("mala");
 		}
-		if(this.vistaFiltros.getNoMedida().isSelected()) {
+		if(this.vistaFiltros.getNoMedido().isSelected()) {
 			//System.out.println("qerfoikjgfodfkasdjshgolkjifdadhgoiaddfhngojauñddefghnòikadlfhngo´ljadfqnbv");
 			reputacion.add("no medido");
 		}

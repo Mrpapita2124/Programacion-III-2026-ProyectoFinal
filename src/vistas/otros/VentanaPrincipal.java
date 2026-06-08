@@ -11,8 +11,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
+import com.mysql.cj.Session;
+
 import controllers.FiltrarPrestamosController;
-import controllers.FiltrarUsuariosController;
+import controllers.FiltrarClientesController;
 import controllers.usuario.ClientesUsuarioController;
 import controllers.usuario.UsuarioPrestamosPnlController;
 import utilidades.GradientBackground;
@@ -43,7 +45,7 @@ public class VentanaPrincipal extends JFrame
 	JPanel filtroUsuariosPanel;
 	JPanel filtroPrestamosPanel;
 	
-	private FiltrarUsuariosController filtroUsuariosController;
+	private FiltrarClientesController filtroClientesController;
 	private FiltrarPrestamosController filtroPrestamosController;
 	
 	public VentanaPrincipal() 
@@ -144,8 +146,9 @@ public class VentanaPrincipal extends JFrame
 		usuariosPanel = new UsuariosTablaVista();
 		
 		Filtros filtros= new Filtros(this);
-		filtroUsuariosController =new FiltrarUsuariosController(filtros);
+		filtroClientesController =new FiltrarClientesController(filtros);
 		filtroUsuariosPanel=filtros;
+		
 		
 		Filtros filtrosPrestamo= new Filtros(this);
 		filtroPrestamosController = new FiltrarPrestamosController(filtrosPrestamo);
@@ -159,9 +162,11 @@ public class VentanaPrincipal extends JFrame
 		
 		add(contenedor, BorderLayout.CENTER);
 		
+		filtroClientesController.refrescarClientesFiltrados();
+		
 	}
 	
-	private void createPrestamosView() 
+	public void createPrestamosView() 
 	{
 		UserPrestamosPanel prestamosCards = new UserPrestamosPanel(this);
 		UsuarioPrestamosPnlController usuarioPrestamosPnlController = new UsuarioPrestamosPnlController(prestamosCards);
@@ -281,12 +286,12 @@ public class VentanaPrincipal extends JFrame
 		return btnInicio;
 	}
 
-	public FiltrarUsuariosController getFiltroUsuarioControlador() {
-		return filtroUsuariosController;
+	public FiltrarClientesController getFiltroClientesControlador() {
+		return filtroClientesController;
 	}
 
-	public void setFiltroUsuarioControlador(FiltrarUsuariosController filtroUsuarioControlador) {
-		this.filtroUsuariosController = filtroUsuarioControlador;
+	public void setFiltroClientesControlador(FiltrarClientesController filtroUsuarioControlador) {
+		this.filtroClientesController = filtroUsuarioControlador;
 	}
 
 	public FiltrarPrestamosController getFilterPrestamoViewController() {

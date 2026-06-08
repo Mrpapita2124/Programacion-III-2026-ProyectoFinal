@@ -12,10 +12,10 @@ import utilidades.UtilidadesContrasenia;
 
 public class LoginRepository {
 
-	public Usuario login(String correo, String contrasena) {
+public Usuario login(String correo, String contrasena) {
 		
 		
-		String sql = "SELECT id_usuario, correo_electronico, contraseña, rol, nombre FROM usuario WHERE correo_electronico = ?";
+		String sql = "SELECT * FROM usuario WHERE correo_electronico = ?";
 		
 		try (
 			Connection conn = DatabaseConnection.getConnection();
@@ -35,11 +35,17 @@ public class LoginRepository {
 				if(!contraseniaValida) 
 					return null;
 				
-				Usuario usuario = new Usuario();
-				usuario.setId(rs.getInt("id_usuario"));
-				usuario.setCorreo(rs.getString("correo_electronico"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setRol(rs.getString("rol"));
+				Usuario usuario = new Usuario(
+			            rs.getInt("id_usuario"),
+			            rs.getString("nombre"),
+			            rs.getString("apellido"),
+			            rs.getString("correo_electronico"),
+			            rs.getString("contraseña"),
+			            rs.getDouble("capacidad_prestamo"),
+			            rs.getString("url_foto"),
+			            rs.getBoolean("guardar"),
+			            rs.getString("rol")
+			            );
 
 				return usuario;
 			}
@@ -51,7 +57,6 @@ public class LoginRepository {
 
 		return null;
 	}
-	
 	
 }
 

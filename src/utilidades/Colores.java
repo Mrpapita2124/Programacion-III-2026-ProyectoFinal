@@ -47,6 +47,7 @@ public class Colores {
     
     // Borders
     public static final Color BORDE_POR_DEFECTO = new Color(55, 65, 81);  
+    public static final Color BORDE_FILTRO = new Color(59, 59, 172);
     
     // Text
     public static final Color ENCABEZADOS_PRIMARIOS = new Color(243, 244, 246); 

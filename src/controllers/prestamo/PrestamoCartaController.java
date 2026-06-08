@@ -50,16 +50,37 @@ public class PrestamoCartaController {
 		this.prestamoPanel.getBtnCompletar().addActionListener(e -> {
 			completarPrestamo(this.prestamoPanel.getPrestamo());
 			
+			JOptionPane.showMessageDialog(ventana, "Pago registrado con éxito.", " Se hizo pago", JOptionPane.INFORMATION_MESSAGE);
 		});
 		
 		this.prestamoPanel.getBtnEliminar().addActionListener(e -> {
-			eliminarPrestamo(this.prestamoPanel.getPrestamo());
+			
+			int opcion = JOptionPane.showConfirmDialog(
+			        ventana,
+			        "¿Seguro que deseas eliminar prestamo? Se perderán todos los datos",
+			        "Eliminar Prestamo",
+			        JOptionPane.YES_NO_OPTION
+			    );
+			
+			if(opcion == JOptionPane.YES_OPTION)
+			{
+				eliminarPrestamo(this.prestamoPanel.getPrestamo());
+			}
 		});
 		this.prestamoPanel.getBtnDeuda().addActionListener(e -> new PagoDeudaController(new PagoDeuda(estadoPrestamo,ventana,this.prestamoPanel.getPrestamo())));
 	}
 	
-	
 	private void eliminarPrestamo(Prestamo prestamo) {
+
+		if(estadoPrestamo == null)
+		{
+			prestamoRepository.eliminar(prestamo);
+	        ventana.getFilterPrestamoViewController().refrescarPrestamosFiltrados(false);
+	        ventana.reload();
+	        ventana.recargarPrestamos(true);
+	        return;
+		}
+	
 		double dineroGanado=prestamo.getMontoTotal()-estadoPrestamo.getMontoRestante();
 		Usuario usuario= Sesion.getusuarioActual();
 		usuario.setCapacidadPrestamo(usuario.getCapacidadPrestamo()-dineroGanado);
@@ -67,7 +88,7 @@ public class PrestamoCartaController {
 		estadoPrestamoRepository.eliminarDesdePrestamo(prestamo);
 		prestamoRepository.eliminar(prestamo);
 		try {
-			usuarioRepository.actualizar(usuario);
+			usuarioRepository.actualizarSinContrasenia(usuario);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,11 +108,12 @@ public class PrestamoCartaController {
 			Usuario usuario= Sesion.getusuarioActual();
 			usuario.setCapacidadPrestamo(usuario.getCapacidadPrestamo()+prestamo.getMontoQuincenal());
 			try {
-				usuarioRepository.actualizar(usuario);
+				usuarioRepository.actualizarSinContrasenia(usuario);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}else {
 			estadoPrestamo.setQuincenasRestantes(estadoPrestamo.getQuincenasRestantes()-1);
 			estadoPrestamo.setMontoRestante(estadoPrestamo.getMontoRestante()-prestamo.getMontoQuincenal());
@@ -99,7 +121,7 @@ public class PrestamoCartaController {
 			Usuario usuario= Sesion.getusuarioActual();
 			usuario.setCapacidadPrestamo(usuario.getCapacidadPrestamo()+prestamo.getMontoQuincenal());
 			try {
-				usuarioRepository.actualizar(usuario);
+				usuarioRepository.actualizarSinContrasenia(usuario);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,11 +129,13 @@ public class PrestamoCartaController {
 			if(estadoPrestamo.getEstado().equals("atrasado")) {
 				JOptionPane.showMessageDialog(ventana, "Quincenas concluidas", " Solicita al cliente que pague lo que falta", JOptionPane.INFORMATION_MESSAGE);
 			}else {
-				JOptionPane.showMessageDialog(ventana, "Prestamo cocnluido", " Felicidades, has concluido por completo tu prestamo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(ventana, "Prestamo concluido", " Felicidades, has concluido por completo tu prestamo", JOptionPane.INFORMATION_MESSAGE);
+				
 				estadoPrestamoRepository.eliminarDesdePrestamo(prestamo);
 				prestamo.setEstado("concluso");
 				prestamoRepository.actualizar(prestamo);
 			}
+			
 		}
 		actualizador.actualizarReputacionClientes();
 		ventana.reload();

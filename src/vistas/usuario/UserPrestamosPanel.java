@@ -24,7 +24,7 @@ import repositorios.PrestamoRepository;
 import utilidades.Colores;
 import utilidades.Fuentes;
 import vistas.otros.VentanaPrincipal;
-import vistas.prestamo.PrestamoCards;
+import vistas.prestamo.PrestamoCartas;
 import vistas.prestamo.PrestamosConclusosCartas;
 
 public class UserPrestamosPanel extends JPanel {
@@ -33,7 +33,7 @@ public class UserPrestamosPanel extends JPanel {
 	private Font fontBotones = Fuentes.setFontSegoe(0, 14);
 	
 	private JButton btnFiltro;
-	PrestamoCards prestamos;
+	PrestamoCartas prestamos;
 	PrestamosConclusosCartas prestamosConlcuidos;
 	JScrollPane scrollPrestamos;
 	VentanaPrincipal ancestro;
@@ -107,13 +107,13 @@ public class UserPrestamosPanel extends JPanel {
 		allPrestamos.setLayout(new BoxLayout(allPrestamos, BoxLayout.Y_AXIS));
 		allPrestamos.setOpaque(false);
 		
-		prestamos = new PrestamoCards(ancestro);
+		prestamos = new PrestamoCartas(ancestro);
 		prestamos.setAlignmentX(Component.CENTER_ALIGNMENT);
 		allPrestamos.add(prestamos);
 		
 		
 		scrollPrestamos = new JScrollPane(allPrestamos);
-		scrollPrestamos.setMaximumSize(new Dimension(1400, 600));
+		scrollPrestamos.setMaximumSize(new Dimension(1400, 400));
 		scrollPrestamos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPrestamos.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPrestamos.setOpaque(false);
@@ -123,8 +123,8 @@ public class UserPrestamosPanel extends JPanel {
 		scrollPrestamos.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			@Override
 			protected void configureScrollBarColors() {
-				this.thumbColor = Colores.BOTON_COLOR1;
-				this.trackColor = Color.LIGHT_GRAY;
+				this.thumbColor = Colores.BOTON_COLOR1;       // color del "pulgar" (la parte que arrastras)
+		        this.trackColor = Color.LIGHT_GRAY;
 			}
 			@Override
 			protected JButton createDecreaseButton(int orientation) {
@@ -154,11 +154,11 @@ public class UserPrestamosPanel extends JPanel {
 		this.btnFiltro = btnFiltro;
 	}
 	
-	public PrestamoCards getPrestamos() {
+	public PrestamoCartas getPrestamos() {
 		return prestamos;
 	}
 
-	public void setPrestamos(PrestamoCards prestamos) {
+	public void setPrestamos(PrestamoCartas prestamos) {
 		this.prestamos = prestamos;
 	}
 	
