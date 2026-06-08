@@ -8,10 +8,9 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
-
-import com.mysql.cj.Session;
 
 import controllers.FiltrarPrestamosController;
 import controllers.FiltrarClientesController;
@@ -114,7 +113,6 @@ public class VentanaPrincipal extends JFrame
         barraNavegacion = new JPanel(new FlowLayout(FlowLayout.LEFT));
         barraNavegacion.setOpaque(true);
         
-        
         if(Sesion.getusuarioActual().getRol().equals("admin")) {
             btnUsuarios = new JButton("Usuarios");
         } else {
@@ -122,7 +120,6 @@ public class VentanaPrincipal extends JFrame
         }
         
         btnInicio = new JButton("Inicio");
-        agregarListener();
 
         if (vistaActual.equals(USERS)) 
         {
@@ -131,7 +128,7 @@ public class VentanaPrincipal extends JFrame
         
         if (!vistaActual.equals(USERS)) 
         {
-        	barraNavegacion.add(btnUsuarios);
+            barraNavegacion.add(btnUsuarios);
         }
         
         add(barraNavegacion, BorderLayout.NORTH);
@@ -198,8 +195,19 @@ public class VentanaPrincipal extends JFrame
         cardLayout.show(contenedor, view);
         vistaActual = view;
         
-        // Actualizar la barra de navegación cuando cambia la vista
         crearBarraNavegacion();
+        
+        correrVistaCambio(view);
+    }
+    
+    private ArrayList<VistaCambioListener> listeners = new ArrayList<>();
+    
+    private void correrVistaCambio(String vista) 
+    {
+        for (VistaCambioListener listener : listeners) 
+        {
+            listener.onVistaCambio(vista);
+        }
     }
     
     public String getVistaActual() 
@@ -340,14 +348,13 @@ public class VentanaPrincipal extends JFrame
         this.contenedor = contenedor;
     }
     
-    public void agregarListener()
-    {
-    	btnInicio.addActionListener(e -> {
-            mostrarVista(HOME);
-        });
-    	
-    	btnUsuarios.addActionListener(e -> {
-            mostrarVista(USERS);
-        });
+    
+    public void addVistaCambioListener(VistaCambioListener listener) {
+        listeners.add(listener);
+    }
+    
+    
+    public interface VistaCambioListener {
+        void onVistaCambio(String vista);
     }
 }
